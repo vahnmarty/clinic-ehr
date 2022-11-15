@@ -49,6 +49,8 @@
                       {{ __('By creating an account means you agree to the Terms and Conditions, and our Privacy Policy') }}
                   </label>
                 </div>
+
+                <x-input-error :messages="$errors->get('agree')" class="mt-2" />
               </div>
 
   
