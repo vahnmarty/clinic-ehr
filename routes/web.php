@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return 'This is your multi-tenant application. The id of the current tenant is ' . tenant('id');
 });
 
 Route::get('/dashboard', function () {
