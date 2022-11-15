@@ -24,7 +24,7 @@
                             </svg>
                             </x-slot>
                             <x-slot name="label">Patients</x-slot>
-                            <p class="text-2xl font-semibold text-gray-900">0</p>
+                            <p class="text-2xl font-semibold text-gray-900">{{ $total_patients }}</p>
                         </x-dashboard-widget>
 
                         <x-dashboard-widget>
