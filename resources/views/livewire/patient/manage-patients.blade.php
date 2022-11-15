@@ -1,9 +1,12 @@
 <div>
     
+    <x-modal ref="create" size="lg">
+        <x-slot name="title">{{ __('Create Patient') }}</x-slot>
+    </x-modal>
     <header class="flex justify-between">
         <h3 class="text-2xl font-bold">{{ __('Patient List') }}</h3>
-        <div>
-            <a href="{{ route('dashboard') }}" class="btn-primary">{{ __('Add New Patient') }}</a>
+        <div x-data>
+            <a href="{{ route('dashboard') }}" x-on:click.prevent="$dispatch('openmodal-create')" class="btn-primary">{{ __('Add New Patient') }}</a>
         </div>
     </header>
     <div class="mt-8 ">
