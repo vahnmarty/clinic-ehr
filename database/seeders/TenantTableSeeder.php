@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\Tenant;
+use App\Models\Patient;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -19,7 +20,7 @@ class TenantTableSeeder extends Seeder
     {
         $tenant = Tenant::firstOrCreate(['id' => 'app']);
 
-        $tenant->domains()->create([
+        $tenant->domains()->firstOrCreate([
             'domain' => 'app.' . env('APP_DOMAIN')
         ]);
 
@@ -29,6 +30,7 @@ class TenantTableSeeder extends Seeder
             $this->createAdmin();
             $this->createProvider();
             $this->createClinicalSupport();
+            $this->createPatients();
         });
     }
 
@@ -70,5 +72,23 @@ class TenantTableSeeder extends Seeder
 
         $user->assignRole('support');
 
+    }
+
+    public function createPatients()
+    {
+        $faker = \Faker\Factory::create();
+
+        Patient::query()->delete();
+
+        foreach(range(1, 20) as $rand){
+            Patient::create([
+                'patient_id' => '0000' . $rand,
+                'first_name' => $faker->firstName,
+                'last_name' => $faker->lastName,
+                'email' => $faker->email,
+                'date_of_birth' => $faker->date()
+            ]);
+        }
+        
     }
 }
