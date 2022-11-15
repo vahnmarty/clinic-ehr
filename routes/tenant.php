@@ -35,5 +35,7 @@ Route::middleware([
         return view('dashboard');
     })->middleware(['auth', 'verified'])->name('dashboard');
 
+    
+
 
 });
