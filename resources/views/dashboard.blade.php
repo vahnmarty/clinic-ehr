@@ -6,7 +6,11 @@
     </x-slot>
 
     <x-slot name="rightHeader">
-        
+        <div class="grid grid-cols-2 gap-4">
+            <x-form.select>
+                <option value="">-- {{ __('Select Clinic Site ') }} --</option>
+            </x-form.select>
+        </div>
     </x-slot>
 
     <div class="py-12">

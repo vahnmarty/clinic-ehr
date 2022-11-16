@@ -1,12 +1,17 @@
 <form method="POST" wire:submit.prevent="store">
     <section>
-        <label for="">
-            <input type="file" accept="image" class="hidden">
+        <label for="avatar">
 
             <div class="flex items-center">
+                @if($avatar)
+                <div class="p-4 bg-gray-100 rounded-full shadow-sm w-32-h-32">
+                    <img src="{{ $avatar->temporaryUrl() }}" class="object-cover w-28 h-28">
+                </div>
+                @else
                 <x-heroicon-m-user-circle class="w-32 h-32 text-gray-600"/>
+                @endif
 
-                <button type="button" class="ml-5 btn-secondary">{{ __("Add Photo") }}</button>
+                <input id="avatar" wire:model="avatar" type="file" accept="image/png, image/gif, image/jpeg"  class="">
             </div>
         </label>
     </section>
