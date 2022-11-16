@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Livewire\InputVitalSign;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
@@ -34,7 +35,7 @@ Route::middleware([
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
-    
+    Route::get('/vital-sign', InputVitalSign::class);
 
 
 });
