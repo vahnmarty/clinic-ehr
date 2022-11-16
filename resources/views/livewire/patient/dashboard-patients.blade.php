@@ -6,6 +6,13 @@
             @livewire('patient.create-patient')
         </div>
     </x-modal>
+
+    <x-modal ref="checkin" size="md">
+        <x-slot name="title">{{ __('Check-in Patient') }}</x-slot>
+        <div class="py-6">
+            @livewire('patient.check-in-patient')
+        </div>
+    </x-modal>
     
     <header class="flex justify-between">
         <h3 class="text-2xl font-bold">{{ __('Patient List') }}</h3>
@@ -53,9 +60,22 @@
                         </x-table.td>
                         <x-table.td class="flex justify-end pr-8">
                             <div class="flex gap-4">
-                                <a href="">
-                                    <x-heroicon-s-pencil class="w-4 h-4 text-gray-500 hover:text-green-700"/>
-                                </a>
+                                <x-dropdown align="right" width="48">
+                                    <x-slot name="trigger">
+                                        <x-heroicon-s-pencil class="w-4 h-4 text-gray-500 cursor-pointer hover:text-green-700"/>
+                                    </x-slot>
+                
+                                    <x-slot name="content">
+                                        <x-dropdown-link :href="route('dashboard')">
+                                                {{ __('Edit Patient Chart') }}
+                                        </x-dropdown-link>
+                                        <x-dropdown-link href="#" 
+                                            wire:click.prevent="checkInPatient(`{{ $patient->id }}`)">
+                                            {{ __('Check In Patient') }}
+                                    </x-dropdown-link>
+                                    </x-slot>
+                                </x-dropdown>
+
                                 <a href="">
                                     <x-heroicon-s-trash class="w-4 h-4 text-gray-500 hover:text-red-700"/>
                                 </a>

@@ -31,23 +31,27 @@
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
-                @foreach ([] as $patient)
+                @foreach ($patients as $checkin)
                     <tr>
                         <x-table.td class="flex justify-center">
-                            <img src="{{ $patient->getAvatar() }}" class="w-6 h-6 rounded-full"
+                            <img src="{{ $checkin->patient->getAvatar() }}" class="w-6 h-6 rounded-full"
                                 alt="">
                         </x-table.td>
                         <x-table.td>
-                            <p>#{{ $patient->patient_id }}</p>
+                            <p>#{{ $checkin->patient->patient_id }}</p>
                         </x-table.td>
                         <x-table.td>
-                            <p>{{ $patient->first_name }}</p>
+                            <p>{{ $checkin->patient->first_name }}</p>
                         </x-table.td>
                         <x-table.td>
-                            <p>{{ $patient->last_name }}</p>
+                            <p>{{ $checkin->visit_reason }}</p>
+                        </x-table.td>
+
+                        <x-table.td>
+                            
                         </x-table.td>
                         <x-table.td>
-                            <p>{{ $patient->date_of_birth }}</p>
+                            <p>{{ $checkin->doctor->name }}</p>
                         </x-table.td>
                         <x-table.td>
                             
@@ -68,6 +72,7 @@
            </x-table.table-wrapper>
 
            <div class="mt-8">
+               {{ $patients->links() }}
            </div>
            
         </div>

@@ -25,8 +25,10 @@ class DashboardController extends Controller
 
     public function clinicDashboard($clinic_id)
     {
-        $clinic = Clinic::find($clinic_id);
+        $clinic = Clinic::with('patients')->find($clinic_id);
         $clinics = Clinic::get();
-        return view('clinic-dashboard', compact('clinics', 'clinic'));
+        $patients = $clinic->patients;
+
+        return view('clinic-dashboard', compact('clinics', 'clinic', 'patients'));
     }
 }

@@ -25,7 +25,11 @@
                 x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                 x-on:click.away="isOpen = false"
                 class="relative px-4 pt-5 pb-4 overflow-hidden text-left transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:w-full sm:max-w-sm sm:p-6"
-                :class="{ 'sm:max-w-7xl': size == 'full', 'sm:max-w-4xl' : size == 'lg' }">
+                :class="{ 
+                        'sm:max-w-7xl': size == 'full', 
+                        'sm:max-w-4xl' : size == 'lg',
+                        'sm:max-w-xl' : size == 'md' 
+                    }">
 
                 <div class="flex justify-between">
                     <header>

@@ -25,4 +25,9 @@ class DashboardPatients extends Component
     {
         $this->clinics = Clinic::get();
     }
+
+    public function checkInPatient($patient_id)
+    {
+        $this->emit('selectCheckIn', $patient_id);
+    }
 }

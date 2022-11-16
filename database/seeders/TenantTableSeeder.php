@@ -33,6 +33,7 @@ class TenantTableSeeder extends Seeder
             $this->createClinicalSupport();
             $this->createPatients();
             $this->createClinics();
+            $this->createDoctors();
         });
     }
 
@@ -101,5 +102,16 @@ class TenantTableSeeder extends Seeder
                 'name' => "Clinic " .  $rand
             ]);
         }
+    }
+
+    public function createDoctors()
+    {
+        Doctor::create([
+            'name' => "Dr. Waddell"
+        ]);
+
+        Doctor::create([
+            'name' => "Dr. Strange"
+        ]);
     }
 }

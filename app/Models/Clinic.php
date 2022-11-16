@@ -10,4 +10,9 @@ class Clinic extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function patients()
+    {
+        return $this->belongsToMany(Patient::class, 'clinic_patients');
+    }
 }
