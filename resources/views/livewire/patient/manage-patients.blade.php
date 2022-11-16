@@ -1,8 +1,6 @@
 <div>
     
-    <x-modal ref="create" size="lg">
-        <x-slot name="title">{{ __('Create Patient') }}</x-slot>
-    </x-modal>
+    @include('livewire.patient._add_patient')
     <header class="flex justify-between">
         <h3 class="text-2xl font-bold">{{ __('Patient List') }}</h3>
         <div x-data>
