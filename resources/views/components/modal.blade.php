@@ -3,6 +3,7 @@
         size: '{{ $size }}'
      }" 
     x-on:openmodal-{{ $ref }}.window="isOpen = true" 
+    x-on:closemodal-{{ $ref }}.window="isOpen = false" 
     x-show="isOpen" 
     x-cloak 
     class="relative z-10"
