@@ -7,9 +7,14 @@
 
     <x-slot name="rightHeader">
         <div class="grid grid-cols-2 gap-4">
-            <x-form.select>
-                <option value="">-- {{ __('Select Clinic Site ') }} --</option>
-            </x-form.select>
+            <form id="form-clinic">
+                <x-form.select name="clinic_id" onchange="document.querySelector('#form-clinic').submit()">
+                    <option value="">-- {{ __('All Clinic ') }} --</option>
+                    @foreach($clinics as $clinic)
+                    <option value="{{ $clinic->id }}">{{ $clinic->name }}</option>
+                    @endforeach
+                </x-form.select>
+            </form>
         </div>
     </x-slot>
 
@@ -45,7 +50,7 @@
             </section>
 
             <div class="py-6">
-                @livewire('patient.manage-patients')
+                @livewire('patient.dashboard-patients')
             </div>
         </div>
     </div>

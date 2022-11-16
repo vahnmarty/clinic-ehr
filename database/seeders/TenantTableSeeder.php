@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Clinic;
 use App\Models\Tenant;
 use App\Models\Patient;
 use Illuminate\Database\Seeder;
@@ -31,6 +32,7 @@ class TenantTableSeeder extends Seeder
             $this->createProvider();
             $this->createClinicalSupport();
             $this->createPatients();
+            $this->createClinics();
         });
     }
 
@@ -90,5 +92,14 @@ class TenantTableSeeder extends Seeder
             ]);
         }
         
+    }
+
+    public function createClinics()
+    {
+        foreach(range(1, 3) as $rand){
+            Clinic::create([
+                'name' => "Clinic " .  $rand
+            ]);
+        }
     }
 }

@@ -14,6 +14,12 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
         @livewireStyles
+
+        <style>
+            [x-cloak]{
+                display: none;
+            }
+        </style>
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
@@ -23,8 +29,10 @@
             @if (isset($header))
                 <header class="bg-white shadow">
                     <div class="px-4 py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
-                        <div class="flex items-end justify-between">
-                            {{ $header }}
+                        <div class="grid items-center grid-cols-3">
+                            <div class="col-span-2">
+                                {{ $header }}
+                            </div>
                             {{ $rightHeader ?? ''}}
                         </div>
                     </div>
