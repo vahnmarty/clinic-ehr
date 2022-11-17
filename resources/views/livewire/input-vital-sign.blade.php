@@ -112,7 +112,7 @@
         <div class="py-6 bg-gray-100">
             <div class="wrapper">
 
-                <div class="grid sm:grid-cols-2">
+                <div class="grid gap-8 sm:grid-cols-2">
                     @foreach($results as $title => $widget)
                     <div class="flex justify-between gap-8 p-4 rounded-md shadow-sm bg-green-50">
                         <div class="flex-1"> 
@@ -126,7 +126,7 @@
                         </div>
                         <div class="w-16">
                             <label class="text-xs font-bold uppercase">Z-Score</label>
-                            <div class="p-2 mt-1 text-sm bg-white">{{ $widget['value'] }}</div>
+                            <div class="p-2 mt-1 text-sm bg-white">{{ round($widget['value'],2) }}</div>
                         </div>
                     </div>
                     @endforeach

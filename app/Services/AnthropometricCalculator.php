@@ -2,11 +2,15 @@
 
 namespace App\Services;
 
+use Carbon\Carbon;
+
 class AnthropometricCalculator{
 
     private $weight, $height, $head_circumference, $tricep_circumference, $edema, $measured_recumbent;
 
-    private $sex;
+    private $sex, $age;
+
+    private $dateOfVisit, $dateOfBirth;
 
     public function __construct()
     {
@@ -48,6 +52,16 @@ class AnthropometricCalculator{
     public function setSex($value)
     {
         $this->sex = $value;
+    }
+
+    public function setDateOfVisit($value)
+    {
+        $this->dateOfVisit = $value;
+    }
+
+    public function setDateOfBirth($value)
+    {
+        $this->dateOfBirth = $value;
     }
 
     // Getters
@@ -105,10 +119,12 @@ class AnthropometricCalculator{
         $centile = $this->getCentile($value);
 
         return [
-            'value' => round($value, 2),
+            'value' => $value,
             'centile' => $centile
         ];
     }
+
+
 
     private function getDataset($file, $value)
     {
@@ -125,14 +141,14 @@ class AnthropometricCalculator{
         $zscore = (pow(($y / $M), $L) - 1) / ($S * $L);
     
         if ($zscore < -3) {
-          $sd3neg = $this.getSDX(-3, $L, $M, $S);
-          $sd2neg = $this.getSDX(-2, $L, $M, $S);
+          $sd3neg = $this->getSDX(-3, $L, $M, $S);
+          $sd2neg = $this->getSDX(-2, $L, $M, $S);
           return (-3) + (($y - $sd3neg) / ($sd2neg - $sd3neg));
         }
     
         if ($zscore > 3) {
-          $sd3pos = $this.getSDX(3, $L, $M, $S);
-          $sd2pos = $this.getSDX(2, $L, $M, $S);
+          $sd3pos = $this->getSDX(3, $L, $M, $S);
+          $sd2pos = $this->getSDX(2, $L, $M, $S);
           return 3 + (($y - $sd3pos) / ($sd3pos - $sd2pos));
         }
     
@@ -169,11 +185,76 @@ class AnthropometricCalculator{
         return round((100 - $centile * 100) * 100) / 100;
     }
 
+    public function getAge()
+    {
+        // Age in Days.
+        return Carbon::now()->diffInDays($this->dateOfBirth);
+        //return ($this->dateOfVisit - $this->dateOfBirth) / 1000 / 60 / 60 / 24;
+    }
+
+
+    public function getWeightForAge()
+    {
+        $sex = $this->sex;
+        $weight = $this->weight;
+        $age = $this->getAge();
+
+        // If patient has oedema, return -
+        if ($this->edema) {
+        return '-';
+        }
+
+        // Get LMS values for the given parameters
+        $LMS = $this->getLMS($sex, $age);
+
+
+        // If getLMS() returned '-', data could not be retrieved
+        if ($LMS === '-') {
+        return $LMS;
+        }
+
+        // Calculate the zscore based on the lms values and the weight
+        $wfa = $this->calcZscore($weight, $LMS['L'], $LMS['M'], $LMS['S']);
+        return [
+            'value' => $wfa,
+            'centile' => $this->getCentile($wfa)
+        ];
+    }
+
+    private function getLMS($sex = null, $age = '-')
+    {
+        if (!$sex || $age == '-') {
+            return '-';
+          }
+      
+          // Round the age to the nearest integer
+          $age = round($age);
+      
+          // Check if age exceeds data limit
+          if ($age > 1856) {
+            return '-';
+          }
+
+      
+          // Get LMS values from age based on sex
+          if ($sex === 'female') {
+            $LMS = $this->getDataset('wfa_girls',$age);
+          }else{
+            $LMS = $this->getDataset('wfa_boys',$age);
+          }
+      
+          return $LMS;
+    }
+
+
+
+    // Results
 
     public function getResults()
     {
         return [
-            'weight_for_length' => $this->getWeightForLength()
+            'weight_for_length' => $this->getWeightForLength(),
+            'weight_for_age' => $this->getWeightForAge()
         ];
     }
 
