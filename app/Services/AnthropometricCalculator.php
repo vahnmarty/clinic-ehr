@@ -192,6 +192,18 @@ class AnthropometricCalculator{
         //return ($this->dateOfVisit - $this->dateOfBirth) / 1000 / 60 / 60 / 24;
     }
 
+    public function getBMI()
+    {
+        $weight = $this->weight;
+        $height = $this->height;
+
+        if (!$weight || !$height || $this->edema) {
+            return '-';
+        }
+      
+        return round($weight / pow($height / 100, 2) * 100) / 100;
+    }
+
 
     public function getWeightForAge()
     {
@@ -205,7 +217,7 @@ class AnthropometricCalculator{
         }
 
         // Get LMS values for the given parameters
-        $LMS = $this->getLMS($sex, $age);
+        $LMS = $this->getLMS($sex, $age, 'wfa_boys', 'wfa_girls');
 
 
         // If getLMS() returned '-', data could not be retrieved
@@ -221,7 +233,7 @@ class AnthropometricCalculator{
         ];
     }
 
-    private function getLMS($sex = null, $age = '-')
+    private function getLMS($sex = null, $age = '-', $dataset_boys, $dataset_girls)
     {
         if (!$sex || $age == '-') {
             return '-';
@@ -238,14 +250,64 @@ class AnthropometricCalculator{
       
           // Get LMS values from age based on sex
           if ($sex === 'female') {
-            $LMS = $this->getDataset('wfa_girls',$age);
+            $LMS = $this->getDataset($dataset_girls,$age);
           }else{
-            $LMS = $this->getDataset('wfa_boys',$age);
+            $LMS = $this->getDataset($dataset_boys,$age);
           }
       
           return $LMS;
     }
 
+    public function getLengthForAge() 
+    {
+        $sex = $this->sex;
+        $height = $this->height;
+        $age = $this->getAge();
+    
+        // Get LMS values for the given parameters
+        $LMS = $this->getLMS($sex, $age, 'lhfa_boys', 'lhfa_girls');
+    
+        // If getLMS() returned '-', data could not be retrieved
+        if ($LMS === '-') {
+          return $LMS;
+        }
+    
+    
+        // Calculate the zscore based on the lms values and the height
+        $lfa = $this->calcZscore($height, $LMS['L'], $LMS['M'], $LMS['S']);
+    
+        return [
+            'value' => $lfa,
+            'centile' => $this->getCentile($lfa)
+        ];
+    }
+
+    public function getBMIForAge(){
+        $sex = $this->sex;
+        $bmi = $this->getBMI();
+        $age = $this->getAge();
+    
+        // If patient has oedema, return -
+        if ($this->edema) {
+          return '-';
+        }
+    
+        // Get LMS values for the given parameters
+        $LMS = $this->getLMS($sex, $age, 'bfa_boys', 'bfa_girls');
+    
+        // If getLMS() returned '-', data could not be retrieved
+        if ($LMS === '-') {
+          return $LMS;
+        }
+    
+        // Calculate the zscore based on the lms values and the bmi
+        $bfa = $this->calcZscore($bmi, $LMS['L'], $LMS['M'], $LMS['S']);
+    
+        return [
+            'value' => $bfa,
+            'centile' => $this->getCentile($bfa)
+        ];
+      }
 
 
     // Results
@@ -254,7 +316,9 @@ class AnthropometricCalculator{
     {
         return [
             'weight_for_length' => $this->getWeightForLength(),
-            'weight_for_age' => $this->getWeightForAge()
+            'weight_for_age' => $this->getWeightForAge(),
+            'length_for_age' => $this->getLengthForAge(),
+            'bmi_for_age' => $this->getBMIForAge(),
         ];
     }
 
