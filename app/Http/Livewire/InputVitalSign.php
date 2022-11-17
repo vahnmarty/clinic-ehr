@@ -7,7 +7,7 @@ use App\Services\AnthropometricCalculator;
 
 class InputVitalSign extends Component
 {
-    public $weight, $height, $head_circumference, $tricep_circumference, $edema, $measured_recumbent;
+    public $weight, $height, $head_circumference, $tricep_circumference, $edema, $measured_recumbent, $muac;
 
     public $sex, $age, $date_of_birth, $date_of_vist;
 
@@ -35,6 +35,7 @@ class InputVitalSign extends Component
         $this->sex = 'male';
         $this->date_of_birth = '2021-11-17';
         $this->date_of_visit = date('Y-m-d');
+        $this->muac = 15;
     }
 
     public function calculator()
@@ -50,10 +51,14 @@ class InputVitalSign extends Component
         $calculator->setMeasuredRecumbent($this->measured_recumbent);
         $calculator->setDateOfBirth($this->date_of_birth);
         $calculator->setDateOfVisit($this->date_of_visit);
+        $calculator->setMuac($this->muac);
 
 
-        $this->results = $calculator->getResults();
+        $results = $calculator->getResults();
         
+        $chunks = collect($results)->chunk(4);
+
+        $this->results = $chunks;
     }
 
 

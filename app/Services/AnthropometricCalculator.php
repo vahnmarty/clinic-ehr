@@ -6,7 +6,7 @@ use Carbon\Carbon;
 
 class AnthropometricCalculator{
 
-    private $weight, $height, $head_circumference, $tricep_circumference, $edema, $measured_recumbent;
+    private $weight, $height, $head_circumference, $tricep_circumference, $edema, $measured_recumbent, $muac;
 
     private $sex, $age;
 
@@ -62,6 +62,11 @@ class AnthropometricCalculator{
     public function setDateOfBirth($value)
     {
         $this->dateOfBirth = $value;
+    }
+
+    public function setMuac($value)
+    {
+        $this->muac = $value;
     }
 
     // Getters
@@ -307,7 +312,95 @@ class AnthropometricCalculator{
             'value' => $bfa,
             'centile' => $this->getCentile($bfa)
         ];
-      }
+    }
+
+    public function getHCForAge() {
+        $sex = $this->sex;
+        $hc = $this->head_circumference;
+        $age = $this->getAge();
+    
+        // Get LMS values for the given parameters
+        $LMS = $this->getLMS($sex, $age, 'hcfa_boys', 'hcfa_girls');
+    
+        // If getLMS() returned '-', data could not be retrieved
+        if ($LMS === '-') {
+          return $LMS;
+        }
+    
+        // Calculate the zscore based on the lms values and the bmi
+        $hcfa = $this->calcZscore($hc, $LMS['L'], $LMS['M'], $LMS['S']);
+    
+        return [
+            'value' => $hcfa,
+            'centile' => $this->getCentile($hcfa)
+        ];
+    }
+
+    public function getMUACForAge() {
+        $sex = $this->sex;
+        $muac = $this->muac;
+        $age = $this->getAge();
+    
+        // Get LMS values for the given parameters
+        $LMS = $this->getLMS($sex, $age, 'acfa_boys', 'acfa_girls');
+    
+        // If getLMS() returned '-', data could not be retrieved
+        if ($LMS === '-') {
+          return $LMS;
+        }
+    
+        // Calculate the zscore based on the lms values and the bmi
+        $acfa = $this->calcZscore($muac, $LMS['L'], $LMS['M'], $LMS['S']);
+    
+        return [
+            'value' => $acfa,
+            'centile' => $this->getCentile($acfa)
+        ];
+    }
+
+    public function getTSFForAge() {
+        $sex = $this->sex;
+        $muac = $this->muac;
+        $age = $this->getAge();
+    
+        // Get LMS values for the given parameters
+        $LMS = $this->getLMS($sex, $age, 'acfa_boys', 'acfa_girls');
+    
+        // If getLMS() returned '-', data could not be retrieved
+        if ($LMS === '-') {
+          return $LMS;
+        }
+    
+        // Calculate the zscore based on the lms values and the bmi
+        $acfa = $this->calcZscore($muac, $LMS['L'], $LMS['M'], $LMS['S']);
+    
+        return [
+            'value' => $acfa,
+            'centile' => $this->getCentile($acfa)
+        ];
+    }
+
+    public function getSSFForAge() {
+        $sex = $this->sex;
+        $muac = $this->muac;
+        $age = $this->getAge();
+    
+        // Get LMS values for the given parameters
+        $LMS = $this->getLMS($sex, $age, 'acfa_boys', 'acfa_girls');
+    
+        // If getLMS() returned '-', data could not be retrieved
+        if ($LMS === '-') {
+          return $LMS;
+        }
+    
+        // Calculate the zscore based on the lms values and the bmi
+        $acfa = $this->calcZscore($muac, $LMS['L'], $LMS['M'], $LMS['S']);
+    
+        return [
+            'value' => $acfa,
+            'centile' => $this->getCentile($acfa)
+        ];
+    }
 
 
     // Results
@@ -319,6 +412,10 @@ class AnthropometricCalculator{
             'weight_for_age' => $this->getWeightForAge(),
             'length_for_age' => $this->getLengthForAge(),
             'bmi_for_age' => $this->getBMIForAge(),
+            'hc_for_age' => $this->getHCForAge(),
+            'muac_for_age' => $this->getMUACForAge(),
+            'tsf_for_age' => $this->getTSFForAge(),
+            'ssf_for_age' => $this->getSSFForAge(),
         ];
     }
 
