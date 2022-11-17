@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
+use App\Services\AnthropometricCalculator;
 
 class InputVitalSign extends Component
 {
@@ -10,16 +11,18 @@ class InputVitalSign extends Component
 
     public $sex;
 
+    public $results = [];
+
     public function render()
     {
+        $this->calculator();
+
         return view('livewire.input-vital-sign');
     }
 
     public function mount()
     {
         $this->createFaker();
-
-        $this->getWeightForLength();
     }
 
     public function createFaker()
@@ -32,87 +35,22 @@ class InputVitalSign extends Component
         $this->sex = 'male';
     }
 
-    public function getWeightForLength()
+    public function calculator()
     {
-        $height = $this->height;
-        $weight = $this->weight;
-        $sex = $this->sex;
+        $calculator = new AnthropometricCalculator;
 
-        // If sex, weight or height are undefined, return -
-        if (!$this->sex || !$this->weight || !$this->height) {
-            return '-';
-        }
-
-        // If patient has oedema, return -
-        if ($this->edema) {
-            return '-';
-        }
-
-         // If the selected height is outside the specifications provided by WHO, return -
-        if ($this->height < 45 || $this->height > 110) {
-            return '-';
-        }
-
-        // Get the two closest applicable LMS value sets
-        $lowheight = floor($height * 10) / 10;
-        $maxheight = round(($lowheight + 0.1) * 10) / 10;
-
-        // Collect the two LMS values for either male or female
-        $lowlms = $this->getDataset('wfl_boys',$lowheight);
-        $highlms = $this->getDataset('wfl_boys',$maxheight);
-
-        // if (this.props['S']ex === 'female') {
-        // lowlms = datasets.wfl_girls[lowheight];
-        // highlms = datasets.wfl_girls[maxheight];
-        // }
-
-        // Get the number of steps.
-        // Example:
-        //  given height: 55.32, low LMS = 55.3
-        // (55.32 - 55.3) * 100 = 2
-        $steps = round(($height - $lowheight) * 100);
+        $calculator->setWeight($this->weight);
+        $calculator->setHeight($this->height);
+        $calculator->setSex($this->sex);
+        $calculator->setHeadCircumference($this->head_circumference);
+        $calculator->setTricepCircumference($this->tricep_circumference);
+        $calculator->setEdema($this->edema);
+        $calculator->setMeasuredRecumbent($this->measured_recumbent);
 
 
-        // Interpolate value of numbers between given WHO LMS table values
-        // Example:
-        //  L at 55.3 = 4.6319, L at 53.4 = 4.6605, given height = 55.32
-        //  4.6319 + ((4.6605 - 4.6319) / 10) * 2 = 4.63762
-        $var_L = $lowlms['L'] + ((($highlms['L'] - $lowlms['L']) / 10) * $steps);
-        $var_M = $lowlms['M'] + ((($highlms['M'] - $lowlms['M']) / 10) * $steps);
-        $var_S = $lowlms['S'] + ((($highlms['S'] - $lowlms['S']) / 10) * $steps);
-
-        $value = $this->calcZScore($weight, $var_L, $var_M, $var_S);
-
-        dd($value);
+        $this->results = $calculator->getResults();
+        
     }
 
-    public function getDataset($file, $value)
-    {
-        $data = global_asset('data/Centile_Tables/' . $file . '.json');
-        $json = json_decode(file_get_contents($data), true);
-        return $json[$value];
-    }
 
-    private function calcZscore ($y, $L, $M, $S) 
-    {
-        $zscore = (pow(($y / $M), $L) - 1) / ($S * $L);
-    
-        if ($zscore < -3) {
-          $sd3neg = $this.getSDX(-3, $L, $M, $S);
-          $sd2neg = $this.getSDX(-2, $L, $M, $S);
-          return (-3) + (($y - $sd3neg) / ($sd2neg - $sd3neg));
-        }
-    
-        if ($zscore > 3) {
-          $sd3pos = $this.getSDX(3, $L, $M, $S);
-          $sd2pos = $this.getSDX(2, $L, $M, $S);
-          return 3 + (($y - $sd3pos) / ($sd3pos - $sd2pos));
-        }
-    
-        return $zscore;
-      }
-
-    private function getSDX ($num, $L, $M, $S){
-        return $M * pow((1 + $L * $S * $num), (1 / $L));
-    }
 }

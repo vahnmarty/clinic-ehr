@@ -111,6 +111,26 @@
         </header>
         <div class="py-6 bg-gray-100">
             <div class="wrapper">
+
+                <div class="grid sm:grid-cols-2">
+                    @foreach($results as $title => $widget)
+                    <div class="flex justify-between gap-8 p-4 rounded-md shadow-sm bg-green-50">
+                        <div class="flex-1"> 
+                            <div class="flex justify-between mt-1">
+                                <label class="text-xs font-bold uppercase">{{ Str::title($title) }}</label>
+                                <div class="text-xs font-bold">{{ $widget['centile'] }}</div>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-1.5 mb-4 dark:bg-gray-700 mt-4">
+                                <div class="bg-blue-600 h-1.5 rounded-full dark:bg-blue-500" style="width: 45%"></div>
+                              </div>
+                        </div>
+                        <div class="w-16">
+                            <label class="text-xs font-bold uppercase">Z-Score</label>
+                            <div class="p-2 mt-1 text-sm bg-white">{{ $widget['value'] }}</div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
                 
             </div>
         </div>
