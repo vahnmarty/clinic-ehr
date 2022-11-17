@@ -114,7 +114,7 @@
 
                 <div class="grid gap-8 sm:grid-cols-2">
                     @foreach($results as $chunk)
-                    <div>
+                    <div class="space-y-8">
                         @foreach($chunk as $title => $widget)
                         <div class="flex justify-between gap-8 p-4 rounded-md shadow-sm bg-green-50">
                             <div class="flex-1"> 

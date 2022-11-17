@@ -6,7 +6,7 @@ use Carbon\Carbon;
 
 class AnthropometricCalculator{
 
-    private $weight, $height, $head_circumference, $tricep_circumference, $edema, $measured_recumbent, $muac;
+    private $weight, $height, $head_circumference, $tricep_skinfold, $subscapular_skinfold, $edema, $measured_recumbent, $muac;
 
     private $sex, $age;
 
@@ -34,9 +34,9 @@ class AnthropometricCalculator{
         $this->head_circumference = $value;
     }
 
-    public function setTricepCircumference($value)
+    public function setTricepSkinfold($value)
     {
-        $this->tricep_circumference = $value;
+        $this->tricep_skinfold = $value;
     }
 
     public function setEdema($value)
@@ -67,6 +67,11 @@ class AnthropometricCalculator{
     public function setMuac($value)
     {
         $this->muac = $value;
+    }
+
+    public function setSubscapularSkinfold($value)
+    {
+        $this->subscapular_skinfold = $value;
     }
 
     // Getters
@@ -360,11 +365,11 @@ class AnthropometricCalculator{
 
     public function getTSFForAge() {
         $sex = $this->sex;
-        $muac = $this->muac;
+        $ts = $this->tricep_skinfold;
         $age = $this->getAge();
     
         // Get LMS values for the given parameters
-        $LMS = $this->getLMS($sex, $age, 'acfa_boys', 'acfa_girls');
+        $LMS = $this->getLMS($sex, $age, 'tsfa_boys', 'tsfa_girls');
     
         // If getLMS() returned '-', data could not be retrieved
         if ($LMS === '-') {
@@ -372,33 +377,40 @@ class AnthropometricCalculator{
         }
     
         // Calculate the zscore based on the lms values and the bmi
-        $acfa = $this->calcZscore($muac, $LMS['L'], $LMS['M'], $LMS['S']);
+        $tsfa = $this->calcZscore($ts, $LMS['L'], $LMS['M'], $LMS['S']);
     
         return [
-            'value' => $acfa,
-            'centile' => $this->getCentile($acfa)
+            'value' => $tsfa,
+            'centile' => $this->getCentile($tsfa)
         ];
     }
 
     public function getSSFForAge() {
         $sex = $this->sex;
-        $muac = $this->muac;
+        $ss = $this->subscapular_skinfold;
         $age = $this->getAge();
-    
+        
+        // No data exists for ages below 91 days
+        if ($age < 91) {
+            return '-';
+        }
+
         // Get LMS values for the given parameters
-        $LMS = $this->getLMS($sex, $age, 'acfa_boys', 'acfa_girls');
+        $LMS = $this->getLMS($sex, $age, 'ssfa_boys', 'ssfa_girls');
     
+        
         // If getLMS() returned '-', data could not be retrieved
         if ($LMS === '-') {
           return $LMS;
         }
     
         // Calculate the zscore based on the lms values and the bmi
-        $acfa = $this->calcZscore($muac, $LMS['L'], $LMS['M'], $LMS['S']);
+        $ssfa = $this->calcZscore($ss, $LMS['L'], $LMS['M'], $LMS['S']);
+
     
         return [
-            'value' => $acfa,
-            'centile' => $this->getCentile($acfa)
+            'value' => $ssfa,
+            'centile' => $this->getCentile($ssfa)
         ];
     }
 
