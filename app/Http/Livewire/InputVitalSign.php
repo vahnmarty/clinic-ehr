@@ -6,9 +6,13 @@ use App\Models\Patient;
 use Livewire\Component;
 use App\Models\VitalSign;
 use App\Services\AnthropometricCalculator;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class InputVitalSign extends Component
 {
+
+    use LivewireAlert;
+    
     public $weight, $height, $head_circumference, $tricep_skinfold, $subscapular_skinfold, $edema, $measured_recumbent, $muac;
 
     public $sex, $age, $age_in_days, $bmi, $date_of_birth, $date_of_vist;
@@ -114,6 +118,8 @@ class InputVitalSign extends Component
 
 
         $this->getHistory();
+
+        $this->alert('success',  __("Entry added!"));
     }
 
 
