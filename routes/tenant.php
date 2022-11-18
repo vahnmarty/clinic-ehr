@@ -35,7 +35,7 @@ Route::middleware([
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
-    Route::get('/vital-sign', InputVitalSign::class);
+    Route::get('/vital-sign/{patientId}', InputVitalSign::class);
 
 
 });

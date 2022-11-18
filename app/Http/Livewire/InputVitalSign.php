@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Patient;
 use Livewire\Component;
 use App\Services\AnthropometricCalculator;
 
@@ -9,9 +10,11 @@ class InputVitalSign extends Component
 {
     public $weight, $height, $head_circumference, $tricep_skinfold, $subscapular_skinfold, $edema, $measured_recumbent, $muac;
 
-    public $sex, $age, $date_of_birth, $date_of_vist;
+    public $sex, $age, $age_in_days, $bmi, $date_of_birth, $date_of_vist;
 
     public $results = [];
+
+    public Patient $patient;
 
     public function render()
     {
@@ -20,9 +23,17 @@ class InputVitalSign extends Component
         return view('livewire.input-vital-sign');
     }
 
-    public function mount()
+    public function mount($patientId)
     {
+        $this->patient_id = $patientId;
         $this->createFaker();
+        $this->getPatient($patientId);
+    }
+
+    public function getPatient($id)
+    {
+        $this->patient = Patient::find($id);
+        $this->date_of_birth = $this->patient->date_of_birth;
     }
 
     public function createFaker()
@@ -44,6 +55,7 @@ class InputVitalSign extends Component
     {
         $calculator = new AnthropometricCalculator;
 
+        // Setters
         $calculator->setWeight($this->weight);
         $calculator->setHeight($this->height);
         $calculator->setSex($this->sex);
@@ -57,6 +69,12 @@ class InputVitalSign extends Component
         $calculator->setSubscapularSkinfold($this->subscapular_skinfold);
 
 
+        // Props
+        $this->age_in_days = $calculator->getAge();
+        $this->bmi = $calculator->getBMI();
+
+
+        // Results
         $results = $calculator->getResults();
         
         $chunks = collect($results)->chunk(4);

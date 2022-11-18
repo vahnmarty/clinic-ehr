@@ -417,7 +417,7 @@ class AnthropometricCalculator{
 
     // Results
 
-    public function getResults()
+    public function partialResults()
     {
         return [
             'weight_for_length' => $this->getWeightForLength(),
@@ -429,6 +429,25 @@ class AnthropometricCalculator{
             'tsf_for_age' => $this->getTSFForAge(),
             'ssf_for_age' => $this->getSSFForAge(),
         ];
+    }
+
+    public function getResults()
+    {
+        return $this->formatResults();
+    }
+
+    public function formatResults()
+    {
+        $array = $this->partialResults();
+
+        foreach($array as $key => $value)
+        {
+            if($value == '-'){
+                $array[$key] = ['value' => 0, 'centile' => 0];
+            }
+        }
+
+        return $array;
     }
 
 }
