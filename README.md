@@ -45,8 +45,20 @@ DB_PASSWORD=
 php artisan migrate
 ```
 
+
+Create a Tenant called `app`
+
 ```
 php artisan db:seed --class=TenantTableSeeder
 ```
 
+## Demo
 
+Go to `http://app.ehr.test` or `http://app.{APP_URL}`
+
+Login
+
+```
+Email: admin@myapp.com
+Password: password
+```
