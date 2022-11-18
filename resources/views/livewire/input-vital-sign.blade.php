@@ -107,7 +107,7 @@
                         <x-form.input-group>
                             <x-form.input-text wire:model="head_circumference" required/>
                             <x-slot name="rightAddon">
-                                <small>kg</small>
+                                <small>cm</small>
                             </x-slot>
                         </x-form.input-group>
                         <x-input-error :messages="$errors->get('head_circumference')" class="mt-2" />
@@ -192,14 +192,17 @@
     <section>
         <header class="py-6 bg-gray-300">
             <div class="wrapper">
-                <h1 class="text-xl font-bold">{{ __("Results") }}</h1>
+                <div class="flex items-center justify-between">
+                    <h1 class="text-xl font-bold">{{ __("Results") }}</h1>
+                    <button type="button" class="btn-secondary" wire:click="calculator">{{ __("Calculate") }}</button>
+                </div>
             </div>
         </header>
         <div class="py-6 bg-gray-100">
             <div class="wrapper">
 
                 <div class="grid gap-8 sm:grid-cols-2">
-                    @foreach($results as $chunk)
+                    @foreach(collect($results)->chunk(4) as $chunk)
                     <div class="space-y-8">
                         @foreach($chunk as $title => $widget)
                         <div class="flex justify-between gap-8 p-4 rounded-md shadow-sm bg-green-50">
@@ -259,8 +262,22 @@
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
-                        @foreach ([] as $item)
-                           
+
+                        @foreach ($history as $item)
+                        <tr>
+                            <x-table.td class="text-center">
+                                <input type="checkbox">
+                            </x-table.td>
+                            <x-table.td>{{ $item->date_of_visit }}</x-table.td>
+                            <x-table.td>{{ $item->height }}</x-table.td>
+                            <x-table.td>{{ $item->weight }}</x-table.td>
+                            <x-table.td>{{ $item->head_circumference }}</x-table.td>
+                            <x-table.td>{{ $item->weight_for_length }}</x-table.td>
+                            <x-table.td>{{ $item->weight_for_age }}</x-table.td>
+                            <x-table.td>{{ $item->hc_for_age }}</x-table.td>
+                            <x-table.td>{{ $item->length_for_age }}</x-table.td>
+                            <x-table.td></x-table.td>
+                        </tr>
                         @endforeach
                     </tbody>
                    </x-table.table-wrapper>

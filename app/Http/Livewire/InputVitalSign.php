@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Patient;
 use Livewire\Component;
+use App\Models\VitalSign;
 use App\Services\AnthropometricCalculator;
 
 class InputVitalSign extends Component
@@ -12,14 +13,12 @@ class InputVitalSign extends Component
 
     public $sex, $age, $age_in_days, $bmi, $date_of_birth, $date_of_vist;
 
-    public $results = [];
+    public $results = [], $history = [];
 
     public Patient $patient;
 
     public function render()
     {
-        $this->calculator();
-
         return view('livewire.input-vital-sign');
     }
 
@@ -28,6 +27,13 @@ class InputVitalSign extends Component
         $this->patient_id = $patientId;
         $this->createFaker();
         $this->getPatient($patientId);
+        $this->getHistory();
+        $this->calculator();
+    }
+
+    public function getHistory()
+    {
+        $this->history = VitalSign::where('patient_id', $this->patient_id)->latest()->get();
     }
 
     public function getPatient($id)
@@ -75,11 +81,39 @@ class InputVitalSign extends Component
 
 
         // Results
-        $results = $calculator->getResults();
-        
-        $chunks = collect($results)->chunk(4);
+        $this->results = $calculator->getResults();
+    
+    }
+    
 
-        $this->results = $chunks;
+    public function save()
+    {
+        $record = new VitalSign;
+
+        // Input
+        $record->patient_id = $this->patient_id;
+        $record->date_of_visit = $this->date_of_visit;
+        $record->age_in_days = $this->age_in_days;
+        $record->bmi = $this->bmi;
+        $record->height = $this->height;
+        $record->weight = $this->weight;
+        $record->head_circumference = $this->head_circumference;
+        $record->muac = $this->muac;
+        $record->tricep_skinfold = $this->tricep_skinfold;
+        $record->subscapular_skinfold = $this->subscapular_skinfold;
+        $record->edema = $this->edema;
+        $record->measured_recumbent = $this->measured_recumbent;
+
+        // Output
+        foreach($this->results as $label =>  $result)
+        {
+            $record->$label = $result['value'];
+        }
+
+        $record->save();
+
+
+        $this->getHistory();
     }
 
 
