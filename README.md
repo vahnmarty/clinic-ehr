@@ -7,7 +7,6 @@ Clone
 
 ```
 git clone https://github.com/vahnmarty/clinic-ehr.git
-
 ```
 
 Setup
@@ -43,6 +42,7 @@ DB_PASSWORD=
 
 ```
 php artisan migrate
+php artisan tenants:migrate
 ```
 
 
