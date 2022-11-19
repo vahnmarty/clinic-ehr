@@ -105,10 +105,10 @@ class AnthropometricCalculator{
         $lowlms = $this->getDataset('wfl_boys',$lowheight);
         $highlms = $this->getDataset('wfl_boys',$maxheight);
 
-        // if (this.props['S']ex === 'female') {
-        // lowlms = datasets.wfl_girls[lowheight];
-        // highlms = datasets.wfl_girls[maxheight];
-        // }
+        if ($this->sex === 'female') {
+        $lowlms = $this->getDataset('wfl_girls',$lowheight);
+        $highlms = $this->getDataset('wfl_girls',$maxheight);
+        }
 
         // Get the number of steps.
         // Example:
@@ -127,10 +127,17 @@ class AnthropometricCalculator{
 
         $value = $this->calcZScore($weight, $var_L, $var_M, $var_S);
         $centile = $this->getCentile($value);
+        $dataset_sd = $this->sex == 'female' ? 'wfl_girls_sd' : 'wfl_boys_sd';
 
         return [
             'value' => $value,
-            'centile' => $centile
+            'centile' => $centile,
+            'chart' => [
+                'title' => 'Weight for Length',
+                'x' => 'Weight (kg)',
+                'y' => 'Height (cm)',
+                'dataset' => $dataset_sd
+            ]
         ];
     }
 
@@ -237,9 +244,18 @@ class AnthropometricCalculator{
 
         // Calculate the zscore based on the lms values and the weight
         $wfa = $this->calcZscore($weight, $LMS['L'], $LMS['M'], $LMS['S']);
+
+        $dataset_sd = $this->sex == 'female' ? 'wfa_girls_sd' : 'wfa_boys_sd';
+
         return [
             'value' => $wfa,
-            'centile' => $this->getCentile($wfa)
+            'centile' => $this->getCentile($wfa),
+            'chart' => [
+                'title' => 'Weight for Age',
+                'x' => 'Age (months)',
+                'y' => 'Weight (kg)',
+                'dataset' => $dataset_sd
+            ]
         ];
     }
 
@@ -285,10 +301,18 @@ class AnthropometricCalculator{
     
         // Calculate the zscore based on the lms values and the height
         $lfa = $this->calcZscore($height, $LMS['L'], $LMS['M'], $LMS['S']);
+
+        $dataset_sd = $this->sex == 'female' ? 'lhfa_girls_sd' : 'lhfa_boys_sd';
     
         return [
             'value' => $lfa,
-            'centile' => $this->getCentile($lfa)
+            'centile' => $this->getCentile($lfa),
+            'chart' => [
+                'title' => 'Length for Age',
+                'x' => 'Age (months)',
+                'y' => 'Height (cm)',
+                'dataset' => $dataset_sd
+            ]
         ];
     }
 
@@ -312,10 +336,18 @@ class AnthropometricCalculator{
     
         // Calculate the zscore based on the lms values and the bmi
         $bfa = $this->calcZscore($bmi, $LMS['L'], $LMS['M'], $LMS['S']);
+
+        $dataset_sd = $this->sex == 'female' ? 'bfa_girls_sd' : 'bfa_boys_sd';
     
         return [
             'value' => $bfa,
-            'centile' => $this->getCentile($bfa)
+            'centile' => $this->getCentile($bfa),
+            'chart' => [
+                'title' => 'Weight for Age',
+                'x' => 'Age (months)',
+                'y' => 'BMI',
+                'dataset' => $dataset_sd
+            ]
         ];
     }
 
@@ -334,10 +366,18 @@ class AnthropometricCalculator{
     
         // Calculate the zscore based on the lms values and the bmi
         $hcfa = $this->calcZscore($hc, $LMS['L'], $LMS['M'], $LMS['S']);
+
+        $dataset_sd = $this->sex == 'female' ? 'hcfa_girls_sd' : 'hcfa_boys_sd';
     
         return [
             'value' => $hcfa,
-            'centile' => $this->getCentile($hcfa)
+            'centile' => $this->getCentile($hcfa),
+            'chart' => [
+                'title' => 'Weight for Age',
+                'x' => 'Age (months)',
+                'y' => 'Head Circumference (cm)',
+                'dataset' => $dataset_sd
+            ]
         ];
     }
 
@@ -356,10 +396,17 @@ class AnthropometricCalculator{
     
         // Calculate the zscore based on the lms values and the bmi
         $acfa = $this->calcZscore($muac, $LMS['L'], $LMS['M'], $LMS['S']);
+        $dataset_sd = $this->sex == 'female' ? 'acfa_girls_sd' : 'acfa_boys_sd';
     
         return [
             'value' => $acfa,
-            'centile' => $this->getCentile($acfa)
+            'centile' => $this->getCentile($acfa),
+            'chart' => [
+                'title' => 'MUAC for Age',
+                'x' => 'Age (months)',
+                'y' => 'MUAC',
+                'dataset' => $dataset_sd
+            ]
         ];
     }
 
@@ -378,10 +425,17 @@ class AnthropometricCalculator{
     
         // Calculate the zscore based on the lms values and the bmi
         $tsfa = $this->calcZscore($ts, $LMS['L'], $LMS['M'], $LMS['S']);
+        $dataset_sd = $this->sex == 'female' ? 'tsfa_girls_sd' : 'tsfa_boys_sd';
     
         return [
             'value' => $tsfa,
-            'centile' => $this->getCentile($tsfa)
+            'centile' => $this->getCentile($tsfa),
+            'chart' => [
+                'title' => 'TSF for Age',
+                'x' => 'Age (months)',
+                'y' => 'BMI',
+                'dataset' => $dataset_sd
+            ]
         ];
     }
 
@@ -406,11 +460,18 @@ class AnthropometricCalculator{
     
         // Calculate the zscore based on the lms values and the bmi
         $ssfa = $this->calcZscore($ss, $LMS['L'], $LMS['M'], $LMS['S']);
+        $dataset_sd = $this->sex == 'female' ? 'ssfa_girls_sd' : 'ssfa_boys_sd';
 
     
         return [
             'value' => $ssfa,
-            'centile' => $this->getCentile($ssfa)
+            'centile' => $this->getCentile($ssfa),
+            'chart' => [
+                'title' => 'SSF for Age',
+                'x' => 'Age (months)',
+                'y' => 'Subscapular skinfold (cm)',
+                'dataset' => $dataset_sd
+            ]
         ];
     }
 

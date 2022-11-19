@@ -220,8 +220,13 @@
                                     <label class="text-xs font-bold uppercase">Z-Score</label>
                                     <div class="p-2 mt-1 text-sm bg-white">{{ round($widget['value'],2) }}</div>
                                 </div>
-                                <button type="button" class="self-end">
-                                    <img src="{{ url('img/icons/export.png') }}"  class="w-10 h-10" alt="">
+                                <button onclick="initChart(
+                                        `{{ $widget['chart']['title'] }}`, 
+                                        `{{ $widget['chart']['x'] }}`, 
+                                        `{{ $widget['chart']['y'] }}`, 
+                                        `{{ $widget['chart']['dataset'] }}`)"
+                                    type="button" class="self-end">
+                                    <img src="{{ url('img/icons/export.png') }}"  class="w-10 h-10 duration-300 ease-in scale-75 hover:scale-100" alt="">
                                 </button>
                             </div>
                         </div>
@@ -230,12 +235,12 @@
                     @endforeach
                 </div>
 
-                <div id="chart" class="mt-8">
-                    
+                <div class="pt-8" id="chart-container">
+                    <div id="chart"></div>
                 </div>
 
                 <div class="flex justify-center mt-8">
-                    <button type="button" class=" btn-secondary" wire:click="save">{{ __("Save Results") }}</button>
+                    <button type="button" class="btn-secondary" wire:click="save">{{ __("Save Results") }}</button>
                 </div>
                 
             </div>
@@ -316,7 +321,8 @@
 
 <script>
 
-    initChart('Weight for Age', 'Weight (kg)', 'Height (cm)', 'wfl_boys_sd');
+
+    //initChart('Weight for Age', 'Weight (kg)', 'Height (cm)', 'wfl_boys_sd');
 
     function initChart($title, $xAxis, $yAxis, $dataset)
     {
@@ -326,6 +332,7 @@
         .then(res => res.json())
         .then(data =>
             createChart($title, $xAxis, $yAxis, data))
+            
         .catch(err => { throw err });
     }
 
@@ -347,7 +354,6 @@
         
         for (let key = 0; key < Object.keys(table).length; key += 10) {
             let num = Object.keys(table)[key];
-            console.log(num);
             let obj = table[num];
             SD4_SD3.push([Number(num), obj.SD4, obj.SD3]);
             SD3_SD2.push([Number(num), obj.SD3, obj.SD2]);
@@ -419,6 +425,10 @@
                 getSeries('line', 'Median', SD0, 'black'),
             ]
         });
+
+        document.getElementById('chart-container').scrollIntoView({
+            behavior: 'smooth'
+          });
     }
 
     
