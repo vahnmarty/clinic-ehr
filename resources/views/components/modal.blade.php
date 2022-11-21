@@ -36,7 +36,7 @@
                         <h1 class="text-lg font-bold">{{ $title }}</h1>
                     </header>
                     <button x-on:click="isOpen = false" type="button">
-                        <x-heroicon-m-x-mark class="w-6 h-6 text-gray-600 hover:text-gray-900" />
+                        X
                     </button>
                 </div>
 

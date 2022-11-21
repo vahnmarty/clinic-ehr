@@ -38,7 +38,7 @@
 
                         <x-dashboard-widget>
                             <x-slot name="icon">
-                                <x-heroicon-s-building-storefront class="w-6 h-6 text-white"/>
+                                <x-heroicon-s-home class="w-6 h-6 text-white"/>
                             </x-slot>
                             <x-slot name="label">Pharmacy</x-slot>
                             <p class="text-2xl font-semibold text-gray-900">0</p>

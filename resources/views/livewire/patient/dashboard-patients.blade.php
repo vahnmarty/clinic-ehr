@@ -61,7 +61,7 @@
                         <x-table.td class="flex justify-end pr-8">
                             <div class="flex gap-4">
                                 <a href="{{ route('patient.show', $patient->id) }}">
-                                    <x-heroicon-s-user-circle class="w-4 h-4 text-gray-500 hover:text-red-700"/>
+                                    <x-heroicon-s-user class="w-4 h-4 text-gray-500 hover:text-red-700"/>
                                 </a>
                                 <x-dropdown align="right" width="48">
                                     <x-slot name="trigger">
@@ -69,7 +69,7 @@
                                     </x-slot>
                 
                                     <x-slot name="content">
-                                        <x-dropdown-link :href="route('dashboard')">
+                                        <x-dropdown-link :href="route('patient.edit', $patient->id)">
                                                 {{ __('Edit Patient Chart') }}
                                         </x-dropdown-link>
                                         <x-dropdown-link href="#" 

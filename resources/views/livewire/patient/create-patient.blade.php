@@ -8,7 +8,7 @@
                     <img src="{{ $avatar->temporaryUrl() }}" class="object-cover w-28 h-28">
                 </div>
                 @else
-                <x-heroicon-m-user-circle class="w-32 h-32 text-gray-600"/>
+                <x-heroicon-s-user class="w-32 h-32 text-gray-600"/>
                 @endif
 
                 <input id="avatar" wire:model="avatar" type="file" accept="image/png, image/gif, image/jpeg"  class="">

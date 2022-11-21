@@ -50,7 +50,7 @@ class EditPatient extends Component implements HasForms
                 ]),
             Grid::make(3)
                 ->schema([
-                    TextInput::make('email')->required(),
+                    TextInput::make('email'),
                     TextInput::make('cellphone'),
                 ]),
             Grid::make(3)
