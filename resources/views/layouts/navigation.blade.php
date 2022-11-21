@@ -33,7 +33,7 @@
             <!-- Settings Dropdown -->
             <div class="hidden gap-4 sm:flex sm:items-center sm:ml-6">
                 <div>
-                    <x-heroicon-s-bell-alert class="w-6 h-6 text-white"/>
+                    <x-heroicon-s-bell class="w-6 h-6 text-white"/>
                 </div>
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">

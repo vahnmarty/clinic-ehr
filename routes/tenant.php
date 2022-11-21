@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Http\Livewire\InputVitalSign;
 use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\Patient\EditPatient;
 use App\Http\Livewire\Patient\ShowPatient;
 use App\Http\Controllers\DashboardController;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
@@ -42,6 +43,7 @@ Route::middleware([
         Route::get('/vital-sign/{patientId}', InputVitalSign::class);
 
         Route::get('patient/{id}', ShowPatient::class)->name('patient.show');
+        Route::get('patient/{id}/edit', EditPatient::class)->name('patient.edit');
     });
 
 
