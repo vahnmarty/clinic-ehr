@@ -74,12 +74,15 @@
                                         </x-dropdown-link>
                                         <x-dropdown-link href="#" 
                                             wire:click.prevent="checkInPatient(`{{ $patient->id }}`)">
-                                            {{ __('Check In Patient') }}
-                                    </x-dropdown-link>
+                                                {{ __('Check In Patient') }}
+                                        </x-dropdown-link>
+                                        <x-dropdown-link href="{{ route('patient.vital-sign', $patient->id) }}" >
+                                                {{ __('Input Vital Sign') }}
+                                        </x-dropdown-link>
                                     </x-slot>
                                 </x-dropdown>
 
-                                <a href="">
+                                <a href="#" wire:click="deletePatient(`{{ $patient->id }}`)">
                                     <x-heroicon-s-trash class="w-4 h-4 text-gray-500 hover:text-red-700"/>
                                 </a>
                             </div>

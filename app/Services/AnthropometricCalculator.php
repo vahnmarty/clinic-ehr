@@ -145,8 +145,23 @@ class AnthropometricCalculator{
 
     private function getDataset($file, $value)
     {
+        $n = $value;
+        $whole = floor($n);      // 1
+        $fraction = $n - $whole;
+        
         $data = global_asset('data/Centile_Tables/' . $file . '.json');
         $json = json_decode(file_get_contents($data), true);
+
+        $whole = (int) $whole;
+        if($fraction == 0){
+            try {
+                return $json[$whole];
+            } catch (\Throwable $th) {
+                dd($whole, $file, $json);
+            }
+            
+        }
+
         return $json[$value];
     }
 
@@ -386,6 +401,11 @@ class AnthropometricCalculator{
         $muac = $this->muac;
         $age = $this->getAge();
     
+         // No data exists for ages below 91 days
+        if ($age < 91) {
+            return '-';
+        }
+
         // Get LMS values for the given parameters
         $LMS = $this->getLMS($sex, $age, 'acfa_boys', 'acfa_girls');
     
@@ -414,7 +434,11 @@ class AnthropometricCalculator{
         $sex = $this->sex;
         $ts = $this->tricep_skinfold;
         $age = $this->getAge();
-    
+        
+        // No data exists for ages below 91 days
+        if ($age < 91) {
+            return '-';
+        }
         // Get LMS values for the given parameters
         $LMS = $this->getLMS($sex, $age, 'tsfa_boys', 'tsfa_girls');
     

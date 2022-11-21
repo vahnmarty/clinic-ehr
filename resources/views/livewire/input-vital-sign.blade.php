@@ -220,6 +220,7 @@
                                     <label class="text-xs font-bold uppercase">Z-Score</label>
                                     <div class="p-2 mt-1 text-sm bg-white">{{ round($widget['value'],2) }}</div>
                                 </div>
+                                @if(!empty($widget['chart']))
                                 <button onclick="initChart(
                                         `{{ $widget['chart']['title'] }}`, 
                                         `{{ $widget['chart']['x'] }}`, 
@@ -228,6 +229,7 @@
                                     type="button" class="self-end">
                                     <img src="{{ url('img/icons/export.png') }}"  class="w-10 h-10 duration-300 ease-in scale-75 hover:scale-100" alt="">
                                 </button>
+                                @endif
                             </div>
                         </div>
                         @endforeach

@@ -26,11 +26,11 @@ class InputVitalSign extends Component
         return view('livewire.input-vital-sign');
     }
 
-    public function mount($patientId)
+    public function mount($id)
     {
-        $this->patient_id = $patientId;
+        $this->patient_id = $id;
         $this->createFaker();
-        $this->getPatient($patientId);
+        $this->getPatient($id);
         $this->getHistory();
         $this->calculator();
     }
