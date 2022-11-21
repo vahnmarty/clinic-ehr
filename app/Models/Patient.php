@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Storage;
+use App\Models\MedicalProblem;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Patient extends Model
 {
@@ -41,5 +42,10 @@ class Patient extends Model
     public function clinics()
     {
         return $this->belongsToMany(Clinic::class, 'clinic_patients');
+    }
+
+    public function medicalProblems()
+    {
+        return $this->hasMany(MedicalProblem::class);
     }
 }

@@ -23,3 +23,11 @@
 .btn-lg {
     @apply px-12 py-3 text-lg;
 }
+
+.btn-sm {
+    @apply px-4 py-1 text-xs;
+}
+
+.btn-icon {
+    @apply inline-flex justify-center px-1 py-1 text-xs font-medium text-white border border-transparent rounded-md shadow-sm bg-emerald-500 hover:bg-emerald-600 focus:ring-emerald-500 focus:ring-offset-2;
+}

@@ -54,9 +54,6 @@
     <div class="text-gray-900 bg-white rounded-md wrapper">
         <header class="px-16 py-6">
             <h3 class="text-xl font-bold">{{ __("Patient Information") }}</h3>
-            <p class="text-gray-700">
-                {{ __("Personal details and application") }}
-            </p>
         </header>
         <div class="px-16">
             <div class="py-6 border-t">
@@ -107,17 +104,47 @@
 
         <header class="px-16 py-6">
             <h3 class="text-xl font-bold">{{ __("Medical History") }}</h3>
-            <p class="text-gray-700">
-                {{ __("Medical details") }}
-            </p>
         </header>
         <div class="px-16">
             <div class="py-6 border-t">
                 <dl>
+                    <div 
+                    x-data="{ isOpen: false }"
+                    x-on:click.away="isOpen = false">
                     <x-description-list
                         :striped="true"
-                        label="{{ __('Medical Problems') }}"
-                    ></x-description-list>
+                    >
+                    <x-slot name="label">
+                        <div class="flex">
+                            <p>{{ __('Medical Problems') }}</p>
+                            <div class="ml-2">
+                                <button x-on:click="isOpen = !isOpen" type="button" class="btn-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </x-slot>
+                    <div>
+                        @foreach($patient->medicalProblems as $item)
+                        <button wire:click="promptDeleteMedicalProblem(`{{ $item->id }}`)" 
+                                type="button" class="flex justify-between w-full p-1 text-left border border-transparent hover:bg-red-100">
+                                {{ $item->name }}
+                                <x-heroicon-s-x class="w-5 h-5 text-red-700"/>
+                        </button>
+                        @endforeach
+                        <form x-show="isOpen" wire:submit.prevent="addMedicalProblem" class="mt-2">
+                            <div class="relative flex items-center gap-1">
+                                <x-form.input-text wire:model.defer="medical_problem">
+                                </x-form.input-text>
+                                <button type="submit" class="btn-secondary">Add</button>
+                            </div>
+                        </form>
+                    </div>
+                    </x-description-list>
+                </div>
+                    
                     <x-description-list
                         label="{{ __('Current Medications') }}"
                     ></x-description-list>
