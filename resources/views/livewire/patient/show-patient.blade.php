@@ -7,6 +7,14 @@
 <x-slot name="rightHeader"> </x-slot>
 
 <div class="py-12 space-y-8">
+
+    <x-modal ref="create-parent" size="lg">
+        <x-slot name="title">{{ __('Add Parent/Guardian') }}</x-slot>
+        <div class="py-6">
+            @livewire('patient.create-parent')
+        </div>
+    </x-modal>
+
     <div class="wrapper">
         <div>
             <!-- Page header -->
@@ -106,11 +114,17 @@
 
                     <x-description-list :striped="true" label="Primary Language">{{ $patient->primary_language }}
                     </x-description-list>
-                    <x-description-list label="Parent/Guardian">
-                        <button type="button" class="btn-secondary">
-                            Add Parent
-                        </button>
-                    </x-description-list>
+                    <x-description-cta>
+                        <x-slot name="label">
+                            <div class="flex justify-between pr-8">
+                                Parent/Guardian
+                                <button x-data x-on:click="$dispatch('openmodal-create-parent');" type="button" class="ml-1 btn-icon">
+                                    <x-heroicon-s-plus class="w-3 h-3" />
+                                </button>
+                            </div>
+                        </x-slot>
+                        <div></div>
+                    </x-description-cta>
                 </dl>
             </div>
         </div>
@@ -124,12 +138,13 @@
                     <div x-data="{ isOpen: false }" x-on:click.away="isOpen = false">
                         <x-description-list :striped="true">
                             <x-slot name="label">
-                                <div class="flex">
+                                <div class="flex justify-between pr-8">
                                     <p>{{ __('Medical Problems') }}</p>
                                     <div class="ml-2">
                                         <button x-on:click="isOpen = !isOpen" type="button" class="btn-icon">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                stroke-width="1.5" stroke="currentColor" class="w-3 h-3">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                class="w-3 h-3">
                                                 <path stroke-linecap="round" stroke-linejoin="round"
                                                     d="M12 4.5v15m7.5-7.5h-15" />
                                             </svg>
@@ -160,7 +175,7 @@
                     <div x-data="{ isOpen: false }" x-on:click.away="isOpen = false">
                         <x-description-list :striped="false">
                             <x-slot name="label">
-                                <div class="flex">
+                                <div class="flex justify-between pr-8">
                                     <p>{{ __('Current Medications') }}</p>
                                     <div class="ml-2">
                                         <button x-on:click="isOpen = !isOpen" type="button" class="btn-icon">

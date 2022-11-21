@@ -10,7 +10,4 @@
     <dd class="mt-1 text-sm font-bold text-gray-900 sm:col-span-2 sm:mt-0">
         {{ $slot }}
     </dd>
-    <dd class="mt-1 text-sm font-bold text-gray-900 sm:col-span-1 sm:mt-0">
-        {{ $cta ?? "" }}
-    </dd>
 </div>
