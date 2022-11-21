@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\Clinic;
+use App\Models\Doctor;
 use App\Models\Tenant;
 use App\Models\Patient;
 use Illuminate\Database\Seeder;
@@ -89,7 +90,9 @@ class TenantTableSeeder extends Seeder
                 'first_name' => $faker->firstName,
                 'last_name' => $faker->lastName,
                 'email' => $faker->email,
-                'date_of_birth' => $faker->date()
+                'date_of_birth' => $faker->date(),
+                'sex' => $faker->randomElement(['male', 'female']),
+                
             ]);
         }
         

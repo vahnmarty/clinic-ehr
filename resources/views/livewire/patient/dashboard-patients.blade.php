@@ -60,6 +60,9 @@
                         </x-table.td>
                         <x-table.td class="flex justify-end pr-8">
                             <div class="flex gap-4">
+                                <a href="{{ route('patient.show', $patient->id) }}">
+                                    <x-heroicon-s-user-circle class="w-4 h-4 text-gray-500 hover:text-red-700"/>
+                                </a>
                                 <x-dropdown align="right" width="48">
                                     <x-slot name="trigger">
                                         <x-heroicon-s-pencil class="w-4 h-4 text-gray-500 cursor-pointer hover:text-green-700"/>

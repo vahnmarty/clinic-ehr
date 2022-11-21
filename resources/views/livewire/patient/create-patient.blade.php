@@ -45,6 +45,16 @@
             <x-form.input-text type="date" wire:model.defer="date_of_birth"/>
             <x-input-error :messages="$errors->get('date_of_birth')" class="mt-2" />
         </x-form.form-group>
+        <x-form.form-group>
+            <x-slot name="label">
+                {{ __('Sex') }}
+            </x-slot>
+            <x-form.select wire:model="sex">
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </x-form.select>
+            <x-input-error :messages="$errors->get('sex')" class="mt-2" />
+        </x-form.form-group>
     </section>
 
     <div class="mt-8">

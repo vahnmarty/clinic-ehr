@@ -28,6 +28,12 @@ class Patient extends Model
         return $this->first_name . ' ' . $this->last_name;
     }
 
+    public function getAddress()
+    {
+        $array = [$this->address1, $this->city, $this->state, $this->zip_code, $this->country];
+        return implode(', ', $array);
+    }
+
     public function scopeFromClinic($query, $clinic_id){
         return $query->clinics->wherePivot('clinic_id', $clinic_id);
     }
