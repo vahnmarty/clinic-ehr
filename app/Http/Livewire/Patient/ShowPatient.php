@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Patient;
 
 use App\Models\Patient;
 use Livewire\Component;
+use App\Models\Medication;
 use App\Models\MedicalProblem;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
@@ -15,11 +16,16 @@ class ShowPatient extends Component
 
     public $medical_problem, $medical_problem_id;
 
-    protected $listeners = ['confirmDeleteMedicalProblem' => 'destroyMedicalProblem'];
+    public $medication, $medication_id;
+
+    protected $listeners = [
+        'confirmDeleteMedicalProblem' => 'destroyMedicalProblem', 
+        'confirmDeleteMedication' => 'destroyMedication'
+    ];
 
     public function render()
     {
-        $patient = Patient::with('medicalProblems')->findOrFail($this->patient_id);
+        $patient = Patient::with('medicalProblems', 'medications')->findOrFail($this->patient_id);
 
         return view('livewire.patient.show-patient', compact('patient'));
     }
@@ -28,6 +34,8 @@ class ShowPatient extends Component
     {
         $this->patient_id = $id;
     }
+
+    // Medical Problems
 
     public function addMedicalProblem()
     {
@@ -60,6 +68,41 @@ class ShowPatient extends Component
         $this->reset('medical_problem_id');
 
         $this->alert('success', 'Deleted medical problem!');
+    }
+
+    // Current Medication
+
+    public function addMedication()
+    {
+        $patient = Patient::find($this->patient_id);
+
+        $patient->medications()->create([
+            'name' => $this->medication
+        ]);
+
+        $this->reset('medication');
+
+        $this->alert('success', 'Added current medication!');
+    }
+
+    public function promptDeleteMedication($medicationId)
+    {
+        $this->medication_id = $medicationId;
+
+        $this->alert('question', 'Are you sure you want to delete this item?', [
+            'showConfirmButton' => true,
+            'confirmButtonText' => 'Yes, confirm delete',
+            'onConfirmed' => 'confirmDeleteMedication',
+        ]);
+    }
+
+    public function destroyMedication()
+    {
+        Medication::destroy($this->medication_id);
+
+        $this->reset('medication_id');
+
+        $this->alert('success', 'Deleted current medication!');
     }
     
 }
