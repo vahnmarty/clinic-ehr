@@ -1,0 +1,23 @@
+id: 39338
+name: ehr
+environments:
+    production:
+        memory: 1024
+        cli-memory: 512
+        runtime: 'php-8.1:al2'
+        build:
+            - 'COMPOSER_MIRROR_PATH_REPOS=1 composer install --no-dev'
+            - 'php artisan event:cache'
+            - 'npm ci && npm run build && rm -rf node_modules'
+    staging:
+        memory: 1024
+        cli-memory: 512
+        runtime: 'php-8.1:al2'
+        build:
+            - 'COMPOSER_MIRROR_PATH_REPOS=1 composer install'
+            - 'php artisan migrate --force'
+            - 'php artisan tenants:migrate'
+            - 'php artisan db:seed'
+            - 'php artisan db:seed --class=TenantTableSeeder'
+            - 'php artisan event:cache'
+            - 'npm ci && npm run build && rm -rf node_modules'
