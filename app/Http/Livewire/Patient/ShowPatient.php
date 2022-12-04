@@ -20,7 +20,8 @@ class ShowPatient extends Component
 
     protected $listeners = [
         'confirmDeleteMedicalProblem' => 'destroyMedicalProblem', 
-        'confirmDeleteMedication' => 'destroyMedication'
+        'confirmDeleteMedication' => 'destroyMedication',
+        'refreshParent' => '$refresh'
     ];
 
     public function render()

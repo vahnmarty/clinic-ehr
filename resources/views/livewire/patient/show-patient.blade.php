@@ -123,7 +123,28 @@
                                 </button>
                             </div>
                         </x-slot>
-                        <div></div>
+                        <div>
+                            @foreach ($patient->guardians as $guardian)
+                            <div wire:key="guardian-{{ $guardian->id .'-'. time() }}" class="font-medium">
+                                <button type="button"
+                                    x-data
+                                    x-on:click="$dispatch('openmodal-show-parent-{{ $guardian->id }}')"
+                                    class="flex justify-between w-full p-1 text-left border border-dashed hover:bg-green-100">
+                                    <p>
+                                        <strong>({{ $guardian->parent_type->description }})</strong>
+                                        {{ $guardian->first_name . ' ' .$guardian->last_name }}
+                                    </p>
+                                    <x-heroicon-s-eye class="w-5 h-5 text-green-700" />
+                                </button>
+                                <x-modal ref="show-parent-{{ $guardian->id }}" size="lg">
+                                    <x-slot name="title">{{ __('Parent/Guardian') }}</x-slot>
+                                    <div class="py-6">
+                                        @livewire('patient.edit-parent', ['guardianId' => $guardian->id])
+                                    </div>
+                                </x-modal>
+                            </div>
+                            @endforeach
+                        </div>
                     </x-description-cta>
                 </dl>
             </div>
