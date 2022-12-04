@@ -88,5 +88,6 @@ class CreateParent extends Component implements HasForms
 
         $this->dispatchBrowserEvent('closemodal-create-parent');
         
+        $this->emitUp('refreshParent');
     }
 }

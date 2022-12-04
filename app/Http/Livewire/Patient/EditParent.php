@@ -31,6 +31,8 @@ class EditParent extends Component implements HasForms
 
     public $cellphone, $whatsapp, $email, $address1, $country, $city, $state, $zip_code, $district, $dpi_number, $is_migrant;
 
+    protected $listeners = ['confirmDeleteParent' => 'destroy'];
+
     public function render()
     {
         return view('livewire.patient.edit-parent');
@@ -90,6 +92,27 @@ class EditParent extends Component implements HasForms
         $guardian->save();
 
         $this->alert('success', "Patient's Guardian  updated successfuly.");
+
+        $this->dispatchBrowserEvent('closemodal-show-parent-' . $this->guardian_id);
+
+        $this->emitUp('refreshParent');
+    }
+
+    public function promptDelete()
+    {
+        $this->alert('question', 'Are you sure you want to delete this parent/guardian?', [
+            'showConfirmButton' => true,
+            'confirmButtonText' => 'Yes, confirm delete',
+            'onConfirmed' => 'confirmDeleteParent',
+        ]);
+    }
+
+    public function destroy()
+    {
+        $guardian = Guardian::find($this->guardian_id);
+        $guardian->delete();
+
+        $this->alert('success', "Patient's Guardian  deleted successfuly.");
 
         $this->dispatchBrowserEvent('closemodal-show-parent-' . $this->guardian_id);
 

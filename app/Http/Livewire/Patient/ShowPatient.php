@@ -21,6 +21,7 @@ class ShowPatient extends Component
     protected $listeners = [
         'confirmDeleteMedicalProblem' => 'destroyMedicalProblem', 
         'confirmDeleteMedication' => 'destroyMedication',
+        'confirmDeleteGuardian' => 'destroyGuardian',
         'refreshParent' => '$refresh'
     ];
 
