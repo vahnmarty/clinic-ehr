@@ -11,7 +11,7 @@
     <x-modal ref="create-parent" size="lg">
         <x-slot name="title">{{ __('Add Parent/Guardian') }}</x-slot>
         <div class="py-6">
-            @livewire('patient.create-parent')
+            @livewire('patient.create-parent', ['patientId' => $patient_id])
         </div>
     </x-modal>
 

@@ -53,4 +53,9 @@ class Patient extends Model
     {
         return $this->hasMany(Medication::class);
     }
+
+    public function guardians()
+    {
+        return $this->hasMany(Guardian::class);
+    }
 }
