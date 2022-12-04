@@ -58,4 +58,9 @@ class Patient extends Model
     {
         return $this->hasMany(Guardian::class);
     }
+
+    public function prenatal()
+    {
+        return $this->hasOne(PrenatalHistory::class);
+    }
 }

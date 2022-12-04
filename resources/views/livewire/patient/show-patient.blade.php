@@ -8,12 +8,20 @@
 
 <div class="py-12 space-y-8">
 
+    <!-- Modals -->
     <x-modal ref="create-parent" size="lg">
         <x-slot name="title">{{ __('Add Parent/Guardian') }}</x-slot>
         <div class="py-6">
             @livewire('patient.create-parent', ['patientId' => $patient_id])
         </div>
     </x-modal>
+    <x-modal ref="prenatal-history" size="lg">
+        <x-slot name="title">{{ __('Prenatal History') }}</x-slot>
+        <div class="py-6">
+            @livewire('patient.show-prenatal-history', ['patientId' => $patient_id])
+        </div>
+    </x-modal>
+    <!-- End of Modals -->
 
     <div class="wrapper">
         <div>
@@ -72,17 +80,11 @@
                                     <a href="{{ route('patient.edit', $patient->id) }}"
                                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem"
                                         tabindex="-1">
-                                        Edit Patient
+                                        Edit Patient (Birth; Demographics)
                                     </a>
 
-                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem">
-                                        Edit Birth Information
-                                    </a>
-                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem">
+                                    <a href="#" x-on:click.prevent="$dispatch('openmodal-prenatal-history'); isOpen = false" class="block px-4 py-2 text-sm text-gray-700" role="menuitem">
                                         Edit Prenatal History
-                                    </a>
-                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem">
-                                        Edit Patient Demographics
                                     </a>
                                 </div>
                             </div>
