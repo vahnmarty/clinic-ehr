@@ -68,4 +68,9 @@ class Patient extends Model
     {
         return $this->hasMany(Allergy::class);
     }
+
+    public function vaccines()
+    {
+        return $this->hasMany(Vaccine::class);
+    }
 }

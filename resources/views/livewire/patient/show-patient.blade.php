@@ -329,4 +329,8 @@
     <div class="mt-8 wrapper">
         @livewire('patient.patient-clinical-encounter')
     </div>
+
+    <div class="mt-8 wrapper">
+        @livewire('patient.vaccine-records', ['patientId' => $patient_id])
+    </div>
 </div>
