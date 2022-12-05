@@ -220,13 +220,28 @@
                             </x-slot>
                             <div>
                                 @foreach ($patient->medications as $item)
-                                <button wire:key="medic-{{ $item['id'] . '-' . time() }}"
-                                    wire:click="promptDeleteMedication(`{{ $item['id'] }}`)" type="button"
-                                    class="flex justify-between w-full p-1 text-left border border-transparent hover:bg-red-100">
-                                    {{ $item->name }}
-                                    <x-heroicon-s-x class="w-5 h-5 text-red-700" />
-                                </button>
+                                <div x-data="{ edit: false, medication: `{{ $item->name }}` }"
+                                    x-on:close-edit.window="edit = false"
+                                    x-on:click.away="edit = false"
+                                    wire:key="medic-{{ $item['id'] . '-' . time() }}">
+                                    <button 
+                                        x-on:click="edit = true;"
+                                        x-show="!edit"
+                                        type="button"
+                                        class="flex justify-between w-full p-1 text-left border border-transparent hover:bg-green-100">
+                                        {{ $item->name }}
+                                        <x-heroicon-s-pencil class="w-5 h-5 text-yellow-700" />
+                                    </button>
+                                    <form x-show="edit" class="mt-2">
+                                        <div class="relative flex items-center gap-1">
+                                            <x-form.input-text x-model="medication" required/>
+                                            <button x-on:click="$wire.updateMedication(`{{ $item->id }}`, medication)" type="button" class="btn-secondary">Update</button>
+                                            <button wire:click="promptDeleteMedication(`{{ $item['id'] }}`)" type="button" class="btn-danger">Delete</button>
+                                        </div>
+                                    </form>
+                                </div>
                                 @endforeach
+
                                 <form x-show="isOpen" wire:submit.prevent="addMedication" class="mt-2">
                                     <div class="relative flex items-center gap-1">
                                         <x-form.input-text wire:model.defer="medication" required>
@@ -238,7 +253,53 @@
                         </x-description-list>
                     </div>
 
-                    <x-description-list :striped="true" label="{{ __('Allergies') }}"></x-description-list>
+
+                    <div x-data="{ isOpen: false }" x-on:click.away="isOpen = false">
+                        <x-description-list :striped="true">
+                            <x-slot name="label">
+                                <div class="flex justify-between pr-8">
+                                    <p>{{ __('Allergies') }}</p>
+                                    <div class="ml-2">
+                                        <button x-on:click="isOpen = !isOpen" type="button" class="btn-icon">
+                                            <x-heroicon-s-plus class="w-3 h-3" />
+                                        </button>
+                                    </div>
+                                </div>
+                            </x-slot>
+                            <div>
+                                @foreach ($patient->allergies as $item)
+                                <div x-data="{ edit: false, allergy: `{{ $item->name }}` }"
+                                    x-on:close-edit.window="edit = false"
+                                    x-on:click.away="edit = false"
+                                    wire:key="allerg-{{ $item['id'] . '-' . time() }}">
+                                    <button 
+                                        x-on:click="edit = true;"
+                                        x-show="!edit"
+                                        type="button"
+                                        class="flex justify-between w-full p-1 text-left border border-transparent hover:bg-green-100">
+                                        {{ $item->name }}
+                                        <x-heroicon-s-pencil class="w-5 h-5 text-yellow-700" />
+                                    </button>
+                                    <form x-show="edit" class="mt-2">
+                                        <div class="relative flex items-center gap-1">
+                                            <x-form.input-text x-model="allergy" required/>
+                                            <button x-on:click="$wire.updateAllergy(`{{ $item->id }}`, allergy)" type="button" class="btn-secondary">Update</button>
+                                            <button wire:click="promptDeleteAllergy(`{{ $item['id'] }}`)" type="button" class="btn-danger">Delete</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                @endforeach
+
+                                <form x-show="isOpen" wire:submit.prevent="addAllergy" class="mt-2">
+                                    <div class="relative flex items-center gap-1">
+                                        <x-form.input-text wire:model.defer="allergy" required>
+                                        </x-form.input-text>
+                                        <button type="submit" class="btn-secondary">Add</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </x-description-list>
+                    </div>
 
                     <div x-data>
                         <x-description-list :striped="false">
@@ -253,7 +314,9 @@
                                 </div>
                             </x-slot>
                             <div>
-                                {{ $patient->prenatal->pregnancy_number }}
+                                <div class="p-1 hover:bg-green-100">
+                                    {{ $patient->prenatal->pregnancy_number }}
+                                </div>
                             </div>
                         </x-description-list>
                     </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Patient;
 
+use App\Models\Allergy;
 use App\Models\Patient;
 use Livewire\Component;
 use App\Models\Medication;
@@ -18,16 +19,19 @@ class ShowPatient extends Component
 
     public $medication, $medication_id;
 
+    public $allergy, $allergy_id;
+
     protected $listeners = [
         'confirmDeleteMedicalProblem' => 'destroyMedicalProblem', 
         'confirmDeleteMedication' => 'destroyMedication',
         'confirmDeleteGuardian' => 'destroyGuardian',
+        'confirmDeleteAllergy' => 'destroyAllergy',
         'refreshParent' => '$refresh'
     ];
 
     public function render()
     {
-        $patient = Patient::with('medicalProblems', 'medications', 'prenatal')->findOrFail($this->patient_id);
+        $patient = Patient::with('medicalProblems', 'medications', 'prenatal', 'allergies')->findOrFail($this->patient_id);
 
         return view('livewire.patient.show-patient', compact('patient'));
     }
@@ -57,8 +61,6 @@ class ShowPatient extends Component
         $medicalProblem = MedicalProblem::find($medicalProblemId);
         $medicalProblem->name = $newName;
         $medicalProblem->save();
-
-        $this->reset('medical_problem');
 
         $this->alert('success', 'Updated successfully!');
 
@@ -100,6 +102,17 @@ class ShowPatient extends Component
         $this->alert('success', 'Added current medication!');
     }
 
+    public function updateMedication($medicationId, $newName)
+    {
+        $medication = Medication::find($medicationId);
+        $medication->name = $newName;
+        $medication->save();
+
+        $this->alert('success', 'Updated successfully!');
+
+        $this->dispatchBrowserEvent('close-edit');
+    }
+
     public function promptDeleteMedication($medicationId)
     {
         $this->medication_id = $medicationId;
@@ -118,6 +131,53 @@ class ShowPatient extends Component
         $this->reset('medication_id');
 
         $this->alert('success', 'Deleted current medication!');
+    }
+
+
+    // Allergies
+
+    public function addAllergy()
+    {
+        $patient = Patient::find($this->patient_id);
+
+        $patient->allergies()->create([
+            'name' => $this->allergy
+        ]);
+
+        $this->reset('allergy');
+
+        $this->alert('success', 'Added allergy!');
+    }
+
+    public function updateAllergy($medicationId, $newName)
+    {
+        $medication = Medication::find($medicationId);
+        $medication->name = $newName;
+        $medication->save();
+
+        $this->alert('success', 'Updated successfully!');
+
+        $this->dispatchBrowserEvent('close-edit');
+    }
+
+    public function promptDeleteAllergy($allergyId)
+    {
+        $this->allergy_id = $allergyId;
+
+        $this->alert('question', 'Are you sure you want to delete this allergy item?', [
+            'showConfirmButton' => true,
+            'confirmButtonText' => 'Yes, confirm delete',
+            'onConfirmed' => 'confirmDeleteAllergy',
+        ]);
+    }
+
+    public function destroyAllergy()
+    {
+        Allergy::destroy($this->allergy_id);
+
+        $this->reset('allergy_id');
+
+        $this->alert('success', 'Deleted allergy!');
     }
     
 }
