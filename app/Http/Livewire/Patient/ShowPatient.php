@@ -52,6 +52,19 @@ class ShowPatient extends Component
         $this->alert('success', 'Added medical problem!');
     }
 
+    public function updateMedicalProblem($medicalProblemId, $newName)
+    {
+        $medicalProblem = MedicalProblem::find($medicalProblemId);
+        $medicalProblem->name = $newName;
+        $medicalProblem->save();
+
+        $this->reset('medical_problem');
+
+        $this->alert('success', 'Updated successfully!');
+
+        $this->dispatchBrowserEvent('close-edit');
+    }
+
     public function promptDeleteMedicalProblem($medicalProblemId)
     {
         $this->medical_problem_id = $medicalProblemId;

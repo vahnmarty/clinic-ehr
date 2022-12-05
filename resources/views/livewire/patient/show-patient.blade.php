@@ -154,7 +154,8 @@
         <div class="px-16">
             <div class="py-6 border-t">
                 <dl>
-                    <div x-data="{ isOpen: false }" x-on:click.away="isOpen = false">
+                    <div x-data="{ isOpen: false, edit: false }" 
+                        x-on:click.away="isOpen = false">
                         <x-description-list :striped="true">
                             <x-slot name="label">
                                 <div class="flex justify-between pr-8">
@@ -173,13 +174,26 @@
                             </x-slot>
                             <div>
                                 @foreach ($patient->medicalProblems as $item)
-                                    <button wire:key="mp-{{ $item['id'] . '-' . time() }}"
-                                        wire:click="promptDeleteMedicalProblem(`{{ $item['id'] }}`)"
+                                <div x-data="{ edit: false, medical_problem: `{{ $item->name }}` }"
+                                    x-on:close-edit.window="edit = false"
+                                    x-on:click.away="edit = false"
+                                    wire:key="mp-{{ $item['id'] . '-' . time() }}">
+                                    <button 
+                                        x-on:click="edit = true;"
+                                        x-show="!edit"
                                         type="button"
-                                        class="flex justify-between w-full p-1 text-left border border-transparent hover:bg-red-100">
+                                        class="flex justify-between w-full p-1 text-left border border-transparent hover:bg-green-100">
                                         {{ $item->name }}
-                                        <x-heroicon-s-x class="w-5 h-5 text-red-700" />
+                                        <x-heroicon-s-pencil class="w-5 h-5 text-yellow-700" />
                                     </button>
+                                    <form x-show="edit" class="mt-2">
+                                        <div class="relative flex items-center gap-1">
+                                            <x-form.input-text x-model="medical_problem" required/>
+                                            <button x-on:click="$wire.updateMedicalProblem(`{{ $item->id }}`, medical_problem)" type="button" class="btn-secondary">Update</button>
+                                            <button wire:click="promptDeleteMedicalProblem(`{{ $item['id'] }}`)" type="button" class="btn-danger">Delete</button>
+                                        </div>
+                                    </form>
+                                </div>
                                 @endforeach
                                 <form x-show="isOpen" wire:submit.prevent="addMedicalProblem" class="mt-2">
                                     <div class="relative flex items-center gap-1">

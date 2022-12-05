@@ -7,7 +7,7 @@
     <dt class="text-sm font-medium text-gray-700">
         {{ $label }}
     </dt>
-    <dd class="mt-1 text-sm font-bold text-gray-900 sm:col-span-2 sm:mt-0">
+    <dd class="mt-1 text-sm font-bold text-gray-900 sm:col-span-3 lg:col-span-2 sm:mt-0">
         {{ $slot }}
     </dd>
 </div>
