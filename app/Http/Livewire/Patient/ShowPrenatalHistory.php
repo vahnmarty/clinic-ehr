@@ -21,7 +21,7 @@ class ShowPrenatalHistory extends Component implements HasForms
 
     public $patient_id;
 
-    public $prenatal_course, $pregnancy_number, $hish_risk, $abortion_risk, $premature_parturition_risk, $diagnosis;
+    public $prenatal_course, $pregnancy_number, $high_risk, $abortion_risk, $premature_parturition_risk, $diagnosis;
 
     public function render()
     {
@@ -34,7 +34,10 @@ class ShowPrenatalHistory extends Component implements HasForms
 
         $patient = Patient::with('prenatal')->find($patientId);
 
-        $this->form->fill($patient->prenatal?->toArray());
+        if($patient->prenatal){
+            $this->form->fill($patient->prenatal?->toArray());
+        }
+        
     }
 
     protected function getFormSchema(): array 
@@ -68,16 +71,18 @@ class ShowPrenatalHistory extends Component implements HasForms
         if($patient->prenatal){
 
             $patient->prenatal->update($data);
+
+             $this->alert('success', "Patient's Prenatal History updated successfuly.");
+
+             $this->dispatchBrowserEvent('closemodal-prenatal-history');
+
+             $this->emitUp('refreshParent');
     
         }else{
             $patient->prenatal()->create($data);
         }
 
-        $this->alert('success', "Patient's Prenatal History updated successfuly.");
-
-        $this->dispatchBrowserEvent('closemodal-prenatal-history');
-
-        $this->emitUp('refreshParent');
+        
         
     }
 }

@@ -128,24 +128,20 @@
                         <div>
                             @foreach ($patient->guardians as $guardian)
                             <div wire:key="guardian-{{ $guardian->id .'-'. time() }}" class="font-medium">
-                                <button type="button"
-                                    x-data
-                                    x-on:click="$dispatch('openmodal-show-parent-{{ $guardian->id }}')"
+                                <a href="{{ route('patient.edit-parent', ['id' => $patient->id, 'parentId' => $guardian->id]) }}"
                                     class="flex justify-between w-full p-1 text-left border border-dashed hover:bg-green-100">
                                     <p>
                                         <strong>({{ $guardian->parent_type->description }})</strong>
                                         {{ $guardian->first_name . ' ' .$guardian->last_name }}
                                     </p>
                                     <x-heroicon-s-eye class="w-5 h-5 text-green-700" />
-                                </button>
-                                <x-modal ref="show-parent-{{ $guardian->id }}" size="lg">
-                                    <x-slot name="title">{{ __('Parent/Guardian') }}</x-slot>
-                                    <div class="py-6">
-                                        @livewire('patient.edit-parent', ['guardianId' => $guardian->id])
-                                    </div>
-                                </x-modal>
+                                </a>
+                                
                             </div>
                             @endforeach
+
+                            
+                            
                         </div>
                     </x-description-cta>
                 </dl>
@@ -177,7 +173,8 @@
                             </x-slot>
                             <div>
                                 @foreach ($patient->medicalProblems as $item)
-                                    <button wire:click="promptDeleteMedicalProblem(`{{ $item->id }}`)"
+                                    <button wire:key="mp-{{ $item['id'] . '-' . time() }}"
+                                        wire:click="promptDeleteMedicalProblem(`{{ $item['id'] }}`)"
                                         type="button"
                                         class="flex justify-between w-full p-1 text-left border border-transparent hover:bg-red-100">
                                         {{ $item->name }}
@@ -209,11 +206,12 @@
                             </x-slot>
                             <div>
                                 @foreach ($patient->medications as $item)
-                                    <button wire:click="promptDeleteMedication(`{{ $item->id }}`)" type="button"
-                                        class="flex justify-between w-full p-1 text-left border border-transparent hover:bg-red-100">
-                                        {{ $item->name }}
-                                        <x-heroicon-s-x class="w-5 h-5 text-red-700" />
-                                    </button>
+                                <button wire:key="medic-{{ $item['id'] . '-' . time() }}"
+                                    wire:click="promptDeleteMedication(`{{ $item['id'] }}`)" type="button"
+                                    class="flex justify-between w-full p-1 text-left border border-transparent hover:bg-red-100">
+                                    {{ $item->name }}
+                                    <x-heroicon-s-x class="w-5 h-5 text-red-700" />
+                                </button>
                                 @endforeach
                                 <form x-show="isOpen" wire:submit.prevent="addMedication" class="mt-2">
                                     <div class="relative flex items-center gap-1">
@@ -227,7 +225,24 @@
                     </div>
 
                     <x-description-list :striped="true" label="{{ __('Allergies') }}"></x-description-list>
-                    <x-description-list label="{{ __('Prenatal History') }}"></x-description-list>
+
+                    <div x-data>
+                        <x-description-list :striped="false">
+                            <x-slot name="label">
+                                <div class="flex justify-between pr-8">
+                                    <p>{{ __('Prenatal History') }}</p>
+                                    <div class="ml-2">
+                                        <button x-on:click="$dispatch('openmodal-prenatal-history')" type="button" class="btn-icon">
+                                            <x-heroicon-s-pencil class="w-3 h-3" />
+                                        </button>
+                                    </div>
+                                </div>
+                            </x-slot>
+                            <div>
+                                {{ $patient->prenatal->pregnancy_number }}
+                            </div>
+                        </x-description-list>
+                    </div>
 
                     <x-description-list :striped="true" label="{{ __('Birth History') }}"></x-description-list>
                 </dl>

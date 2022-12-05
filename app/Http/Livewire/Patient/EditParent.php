@@ -25,7 +25,7 @@ class EditParent extends Component implements HasForms
 
     use LivewireAlert;
 
-    public $guardian_id;
+    public $guardian_id, $patient_id;
 
     public $parent_type, $first_name, $last_name, $date_of_birth, $primary_language, $racial_identity, $marital_status, $is_primary_caregiver, $different_caregiver;
 
@@ -35,13 +35,15 @@ class EditParent extends Component implements HasForms
 
     public function render()
     {
-        return view('livewire.patient.edit-parent');
+        $patient = Patient::findOrFail($this->patient_id);
+        return view('livewire.patient.edit-parent', compact('patient'));
     }
 
-    public function mount($guardianId)
+    public function mount($id, $parentId)
     {
-        $this->guardian_id = $guardianId;
-        $guardian = Guardian::find($guardianId);
+        $this->guardian_id = $parentId;
+        $this->patient_id = $id;
+        $guardian = Guardian::find($parentId);
 
         $this->form->fill($guardian->toArray());
     }
@@ -93,9 +95,7 @@ class EditParent extends Component implements HasForms
 
         $this->alert('success', "Patient's Guardian  updated successfuly.");
 
-        $this->dispatchBrowserEvent('closemodal-show-parent-' . $this->guardian_id);
-
-        $this->emitUp('refreshParent');
+        //return redirect()->route('patient.show', $this->patient_id);
     }
 
     public function promptDelete()
@@ -113,9 +113,6 @@ class EditParent extends Component implements HasForms
         $guardian->delete();
 
         $this->alert('success', "Patient's Guardian  deleted successfuly.");
-
-        $this->dispatchBrowserEvent('closemodal-show-parent-' . $this->guardian_id);
-
-        $this->emitUp('refreshParent');
+        return redirect()->route('patient.show', $this->patient_id);
     }
 }

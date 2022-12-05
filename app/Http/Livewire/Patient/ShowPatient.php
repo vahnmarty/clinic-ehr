@@ -27,7 +27,7 @@ class ShowPatient extends Component
 
     public function render()
     {
-        $patient = Patient::with('medicalProblems', 'medications')->findOrFail($this->patient_id);
+        $patient = Patient::with('medicalProblems', 'medications', 'prenatal')->findOrFail($this->patient_id);
 
         return view('livewire.patient.show-patient', compact('patient'));
     }
