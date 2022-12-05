@@ -69,25 +69,22 @@ class VaccineRecords extends Component implements HasTable
             Action::make('edit')
                 ->label('Edit')
                 ->icon('heroicon-o-pencil')
-                ->mountUsing(fn (ComponentContainer $form, Vaccine $vax) => $form->fill([
-                    'id' => $form->model->id,
-                    'name' => $form->model->name,
-                    'date_administered' => $form->model->date_administered,
-                    'injection_sight' => $form->model->injection_sight,
-                    'lot_number' => $form->model->lot_number,
+                ->mountUsing(fn (ComponentContainer $form, Vaccine $record) => $form->fill([
+                    'name' => $record->name,
+                    'date_administered' => $record->date_administered,
+                    'injection_sight' => $record->injection_sight,
+                    'lot_number' => $record->lot_number,
                 ]))
                 ->form([
                     Grid::make(2)->schema([
-                        Hidden::make('id')->required(),
                         TextInput::make('name')->required(),
                         DatePicker::make('date_administered')->required(),
                         TextInput::make('injection_sight')->nullable(),
                         TextInput::make('lot_number')->nullable(),
                     ])
                 ])
-                ->action(function (Vaccine $vax, array $data): void {
-                    $vaccine = Vaccine::find($data['id']);
-                    $vaccine->update($data);
+                ->action(function (Vaccine $record, array $data): void {
+                    $record->update($data);
                 }),
             DeleteAction::make(),
         ];
