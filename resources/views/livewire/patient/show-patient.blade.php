@@ -315,7 +315,7 @@
                             </x-slot>
                             <div>
                                 <div class="p-1 hover:bg-green-100">
-                                    {{ $patient->prenatal->pregnancy_number }}
+                                    {{ $patient->prenatal->pregnancy_number ?? '' }}
                                 </div>
                             </div>
                         </x-description-list>

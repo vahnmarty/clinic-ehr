@@ -40,7 +40,7 @@ class VaccineRecords extends Component implements HasTable
 
     protected function getTableQuery(): Builder 
     {
-        return Vaccine::query();
+        return Vaccine::where('patient_id', $this->patient_id);
     } 
 
     protected function getFormSchema(): array
