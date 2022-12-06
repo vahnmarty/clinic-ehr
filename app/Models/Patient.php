@@ -13,10 +13,11 @@ class Patient extends Model
 
     protected $guarded = [];
 
+    protected $appends = [ 'full_name', 'image_avatar' ];
+
     public function getAvatar()
     {
         if($this->avatar){
-
             return Storage::disk('local')->url($this->avatar);
 
         }else{
@@ -24,9 +25,18 @@ class Patient extends Model
         }
     }
 
+    public function getImageAvatarAttribute()
+    {
+        return $this->getAvatar();
+    }
+
     public function getFullName()
     {
         return $this->first_name . ' ' . $this->last_name;
+    }
+
+    public function getFullNameAttribute(){
+        return $this->getFullName();
     }
 
     public function getAddress()
@@ -37,6 +47,12 @@ class Patient extends Model
 
     public function scopeFromClinic($query, $clinic_id){
         return $query->clinics->wherePivot('clinic_id', $clinic_id);
+    }
+
+    public function scopeSearch($query, $keyword){
+        return $query->where('patient_id', 'LIKE', '%' . $keyword . '%')
+                    ->orWhere('first_name', 'LIKE', '%' . $keyword . '%')
+                    ->orWhere('last_name', 'LIKE', '%' . $keyword . '%');
     }
 
     public function clinics()

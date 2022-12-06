@@ -32,6 +32,12 @@
 
             <!-- Settings Dropdown -->
             <div class="hidden gap-4 sm:flex sm:items-center sm:ml-6">
+                <div x-data>
+                    <button x-on:click="$dispatch('openmodal-search')" type="button" class="inline-flex justify-center px-8 py-2 text-sm font-medium text-white duration-150 ease-in bg-transparent border-2 border-white rounded-md shadow-sm hover:bg-white hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+                        <x-heroicon-s-search class="w-5 h-5 mr-2 "/>
+                        {{ __('Search Patient') }}
+                    </button>
+                </div>
                 <div>
                     <x-heroicon-s-bell class="w-6 h-6 text-white"/>
                 </div>

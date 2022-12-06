@@ -50,6 +50,7 @@
   
         <x-livewire-alert::scripts />
         @livewire('notifications')
+        @livewire('search-patient')
         @stack('scripts')
     </body>
 </html>
