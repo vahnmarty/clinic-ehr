@@ -56,6 +56,9 @@
                         <x-dropdown-link :href="route('station.patient-details')">
                             {{ __('Patient Details') }}
                         </x-dropdown-link>
+                        <x-dropdown-link :href="route('station.vital-sign')">
+                            {{ __('Vital Sign') }}
+                        </x-dropdown-link>
                     </x-slot>
                 </x-dropdown>
                 <div>

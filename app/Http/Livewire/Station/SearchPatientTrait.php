@@ -14,7 +14,16 @@ trait SearchPatientTrait
     {
         $this->patient_id = $id;
         $this->patient = Patient::find($id);
+
+        try {
+            $this->fillFilamentForm();
+        } catch (\Throwable $th) {
+        }
+
+        try {
+            $this->fillForm();
+        } catch (\Throwable $th) {
+        }
         
-        $this->fillFilamentForm();
     }
 }

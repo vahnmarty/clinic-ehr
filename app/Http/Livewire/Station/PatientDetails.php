@@ -3,11 +3,12 @@
 namespace App\Http\Livewire\Station;
 
 use Livewire\Component;
+use App\Models\Application;
 use App\Enums\RacialIdentity;
 use App\Enums\PrimaryLanguage;
 use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Select;
 
+use Filament\Forms\Components\Select;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Fieldset;
@@ -140,6 +141,11 @@ class PatientDetails extends Component implements HasForms
 
     public function confirmMedicalHistory()
     {
+        $app = Application::where('patient_id', $this->patient_id)->latest()->first();
+        $app->patient_info_finished_at = now();
+        $app->patient_info_user_id = auth()->id();
+        $app->save();
+        
         $this->alert('success', 'Patient Information updated successfully!', ['timer' => 3000]);
 
         $this->dispatchBrowserEvent('refresh-browser');

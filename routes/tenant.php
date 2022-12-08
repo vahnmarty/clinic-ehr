@@ -10,6 +10,7 @@ use App\Http\Livewire\Patient\EditPatient;
 use App\Http\Livewire\Patient\ShowPatient;
 use App\Http\Controllers\DashboardController;
 use App\Http\Livewire\Station\PatientDetails;
+use App\Http\Livewire\Station\PatientVitalSign;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
@@ -54,6 +55,7 @@ Route::middleware([
 
         Route::get('check-in', CheckIn::class)->name('station.checkin');
         Route::get('patient-details', PatientDetails::class)->name('station.patient-details');
+        Route::get('vital-sign', PatientVitalSign::class)->name('station.vital-sign');
         
     });
 
