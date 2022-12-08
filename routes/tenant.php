@@ -8,9 +8,11 @@ use App\Http\Livewire\Station\CheckIn;
 use App\Http\Livewire\Patient\EditParent;
 use App\Http\Livewire\Patient\EditPatient;
 use App\Http\Livewire\Patient\ShowPatient;
+use App\Http\Livewire\Station\ResearchForms;
 use App\Http\Controllers\DashboardController;
 use App\Http\Livewire\Station\PatientDetails;
 use App\Http\Livewire\Station\PatientVitalSign;
+use App\Http\Livewire\Research\IntermittentHealthForm;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
@@ -56,6 +58,8 @@ Route::middleware([
         Route::get('check-in', CheckIn::class)->name('station.checkin');
         Route::get('patient-details', PatientDetails::class)->name('station.patient-details');
         Route::get('vital-sign', PatientVitalSign::class)->name('station.vital-sign');
+        Route::get('research', ResearchForms::class)->name('station.research');
+        Route::get('research/{uuid}/IntermittentHealthForm', IntermittentHealthForm::class)->name('station.research.intermittent-health-form');
         
     });
 
