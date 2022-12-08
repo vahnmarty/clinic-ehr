@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Station;
 use App\Models\Patient;
 use Livewire\Component;
 use App\Models\VitalSign;
+use App\Models\Application;
 use App\Services\AnthropometricCalculator;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use App\Http\Livewire\Station\SearchPatientTrait;
@@ -97,8 +98,10 @@ class PatientVitalSign extends Component
     public function save()
     {
         $record = new VitalSign;
+        $latestApp = Application::where('patient_id', $this->patient_id)->latest()->first();
 
         // Input
+        $record->application_id = $latestApp->id;
         $record->patient_id = $this->patient_id;
         $record->date_of_visit = $this->date_of_visit;
         $record->age_in_days = $this->age_in_days;
@@ -119,6 +122,10 @@ class PatientVitalSign extends Component
         }
 
         $record->save();
+
+        $latestApp->vital_sign_finished_at = now();
+        $latestApp->vital_sign_user_id   = auth()->id();
+        $latestApp->save();
 
 
         $this->getHistory();

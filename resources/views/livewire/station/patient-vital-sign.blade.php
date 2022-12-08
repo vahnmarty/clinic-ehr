@@ -323,12 +323,6 @@
                             </tbody>
                         </x-table.table-wrapper>
 
-
-                        <div class="mt-8">
-                            <button type="button" class="btn-secondary"
-                                wire:click="save">{{ __('Ready for Encounter') }}</button>
-                        </div>
-
                     </div>
                 </div>
             </section>
