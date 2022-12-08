@@ -1,4 +1,4 @@
-<form method="POST" wire:submit.prevent="store">
+<form method="POST" wire:submit.prevent="save">
     <section class="grid grid-cols-2 gap-6 mt-8">
         <x-form.form-group>
             <x-slot name="label">
@@ -42,8 +42,7 @@
         </x-form.form-group>
     </section>
 
-    <div class="grid grid-cols-2 gap-6 mt-8">
-        <button type="button" wire:click="saveAndClose" class="btn-secondary">{{ __('Check In & Close') }}</button>
-        <button type="button" wire:click="saveThenDashboard" class="btn-primary">{{ __("Check In & Open Dashboard") }}</button>
+    <div class="flex justify-end mt-8">
+        <button type="submit" class="btn-secondary">{{ __("Check In") }}</button>
     </div>
 </form>

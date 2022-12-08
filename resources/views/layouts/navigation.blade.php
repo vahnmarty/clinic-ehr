@@ -31,24 +31,45 @@
             </div>
 
             <!-- Settings Dropdown -->
-            <div class="hidden gap-4 sm:flex sm:items-center sm:ml-6">
-                <div x-data>
-                    <button x-on:click="$dispatch('openmodal-search')" type="button" class="inline-flex justify-center px-8 py-2 text-sm font-medium text-white duration-150 ease-in bg-transparent border-2 border-white rounded-md shadow-sm hover:bg-white hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
-                        <x-heroicon-s-search class="w-5 h-5 mr-2 "/>
-                        {{ __('Search Patient') }}
-                    </button>
-                </div>
+            <div class="hidden gap-4 sm:ml-6 sm:flex sm:items-center">
+                <x-dropdown align="right" width="48">
+                    <x-slot name="trigger">
+                        <button
+                            class="flex items-center text-sm font-medium text-white transition duration-150 ease-in-out hover:border-gray-300 hover:text-white focus:border-gray-300 focus:text-white focus:outline-none">
+                            <div>{{ __('Stations') }}</div>
+
+                            <div class="ml-1">
+                                <svg class="w-4 h-4 fill-current" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd"
+                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                        </button>
+                    </x-slot>
+
+                    <x-slot name="content">
+                        <x-dropdown-link :href="route('station.checkin')">
+                            {{ __('Check-in Patient') }}
+                        </x-dropdown-link>
+                    </x-slot>
+                </x-dropdown>
                 <div>
-                    <x-heroicon-s-bell class="w-6 h-6 text-white"/>
+                    <x-heroicon-s-bell class="w-6 h-6 text-white" />
                 </div>
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
-                        <button class="flex items-center text-sm font-medium text-white transition duration-150 ease-in-out hover:text-white hover:border-gray-300 focus:outline-none focus:text-white focus:border-gray-300">
+                        <button
+                            class="flex items-center text-sm font-medium text-white transition duration-150 ease-in-out hover:border-gray-300 hover:text-white focus:border-gray-300 focus:text-white focus:outline-none">
                             <div>{{ Auth::user()->name }}</div>
 
                             <div class="ml-1">
-                                <svg class="w-4 h-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                <svg class="w-4 h-4 fill-current" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd"
+                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                        clip-rule="evenodd" />
                                 </svg>
                             </div>
                         </button>
@@ -60,7 +81,7 @@
                             @csrf
 
                             <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
+                                onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                                 {{ __('Log Out') }}
                             </x-dropdown-link>
@@ -71,10 +92,14 @@
 
             <!-- Hamburger -->
             <div class="flex items-center -mr-2 sm:hidden">
-                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 text-gray-400 transition duration-150 ease-in-out rounded-md hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500">
+                <button @click="open = ! open"
+                    class="inline-flex items-center justify-center p-2 text-gray-400 transition duration-150 ease-in-out rounded-md hover:bg-gray-100 hover:text-gray-500 focus:bg-gray-100 focus:text-gray-500 focus:outline-none">
                     <svg class="w-6 h-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        <path :class="{ 'hidden': open, 'inline-flex': !open }" class="inline-flex"
+                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16" />
+                        <path :class="{ 'hidden': !open, 'inline-flex': open }" class="hidden" stroke-linecap="round"
+                            stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
             </div>
@@ -82,7 +107,7 @@
     </div>
 
     <!-- Responsive Navigation Menu -->
-    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
+    <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
@@ -102,7 +127,7 @@
                     @csrf
 
                     <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault();
+                        onclick="event.preventDefault();
                                         this.closest('form').submit();">
                         {{ __('Log Out') }}
                     </x-responsive-nav-link>

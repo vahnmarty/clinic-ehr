@@ -101,7 +101,7 @@ class TenantTableSeeder extends Seeder
     public function createClinics()
     {
         foreach(range(1, 3) as $rand){
-            Clinic::create([
+            Clinic::firstOrCreate([
                 'name' => "Clinic " .  $rand
             ]);
         }
@@ -109,11 +109,11 @@ class TenantTableSeeder extends Seeder
 
     public function createDoctors()
     {
-        Doctor::create([
+        Doctor::firstOrCreate([
             'name' => "Dr. Waddell"
         ]);
 
-        Doctor::create([
+        Doctor::firstOrCreate([
             'name' => "Dr. Strange"
         ]);
     }

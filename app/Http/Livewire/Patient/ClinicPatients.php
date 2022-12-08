@@ -18,7 +18,7 @@ class ClinicPatients extends Component
  
     public function render()
     {
-        $patients = ClinicPatient::orderBy('id', 'desc')->whereClinicId($this->clinic_id)->paginate(10);
+        $patients = ClinicPatient::with('patient')->orderBy('id', 'desc')->whereClinicId($this->clinic_id)->paginate(10);
 
         return view('livewire.patient.clinic-patients', compact('patients'));
     }

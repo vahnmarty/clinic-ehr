@@ -34,7 +34,7 @@
                 @foreach ($patients as $checkin)
                     <tr>
                         <x-table.td class="flex justify-center">
-                            <img src="{{ $checkin->patient->getAvatar() }}" class="w-6 h-6 rounded-full"
+                            <img src="{{ $checkin->patient->image_avatar ?? '' }}" class="w-6 h-6 rounded-full"
                                 alt="">
                         </x-table.td>
                         <x-table.td>

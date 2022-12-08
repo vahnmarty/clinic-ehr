@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Http\Livewire\InputVitalSign;
 use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\Station\CheckIn;
 use App\Http\Livewire\Patient\EditParent;
 use App\Http\Livewire\Patient\EditPatient;
 use App\Http\Livewire\Patient\ShowPatient;
@@ -41,12 +42,17 @@ Route::middleware([
     
     Route::group(['middleware' => ['auth']], function(){
 
-        
-
         Route::get('patient/{id}', ShowPatient::class)->name('patient.show');
         Route::get('patient/{id}/edit', EditPatient::class)->name('patient.edit');
         Route::get('patient/{id}/vital-sign', InputVitalSign::class)->name("patient.vital-sign");
         Route::get('patient/{id}/parent/{parentId}', EditParent::class)->name('patient.edit-parent');
+        
+    });
+
+    Route::group(['middleware' => ['auth'], 'prefix' => 'station'], function(){
+
+        Route::get('check-in', CheckIn::class)->name('station.checkin');
+        
     });
 
 
