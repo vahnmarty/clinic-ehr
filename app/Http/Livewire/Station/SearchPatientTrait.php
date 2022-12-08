@@ -17,12 +17,4 @@ trait SearchPatientTrait
         
         $this->fillFilamentForm();
     }
-    
-
-    public function getListeners()
-    {
-        return $this->listeners + [
-            'selectPatient'
-        ];
-    }
 }

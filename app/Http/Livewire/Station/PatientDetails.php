@@ -23,7 +23,11 @@ class PatientDetails extends Component implements HasForms
     use InteractsWithForms;
     use LivewireAlert;
 
-    public $step = 'medical';
+    public $step = 'basic';
+
+    protected $listeners = ['selectPatient' , 'confirmMedicalHistory'];
+
+    public $patient_number, $first_name, $last_name, $email, $date_of_birth;
 
     public function render()
     {
@@ -32,7 +36,7 @@ class PatientDetails extends Component implements HasForms
 
     public function mount()
     {
-        $this->selectPatient(82);
+        //$this->selectPatient(82);
     }
 
     public function fillFilamentForm()
@@ -123,6 +127,23 @@ class PatientDetails extends Component implements HasForms
         }
 
         return $this->next('medical');
+    }
+
+    public function promptMedicalHistory()
+    {
+        $this->alert('question', "This is the last step for Patient's Information.  Done with the Medical History?", [
+            'showConfirmButton' => true,
+            'confirmButtonText' => 'Yes, Save changes',
+            'onConfirmed' => 'confirmMedicalHistory' 
+        ]);
+    }
+
+    public function confirmMedicalHistory()
+    {
+        $this->alert('success', 'Patient Information updated successfully!', ['timer' => 3000]);
+
+        $this->dispatchBrowserEvent('refresh-browser');
+        
     }
     
 }
