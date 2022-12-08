@@ -54,7 +54,7 @@ class PatientParent extends Component implements HasTable
     protected function getTableColumns(): array
     {
         return [
-            TextColumn::make('parent_type')->enum(GuardianType::asSelectArray()),
+            TextColumn::make('parent_type')->formatStateUsing(fn (string $state): string => GuardianType::fromValue((int)$state)->key),
             TextColumn::make('first_name'),
             TextColumn::make('last_name'),
         ];
