@@ -23,7 +23,7 @@ class PatientDetails extends Component implements HasForms
     use InteractsWithForms;
     use LivewireAlert;
 
-    public $step = 'parents';
+    public $step = 'medical';
 
     public function render()
     {
@@ -113,6 +113,16 @@ class PatientDetails extends Component implements HasForms
     public function next($step)
     {
         $this->step = $step;
+    }
+
+    public function saveParents()
+    {
+        if( !$this->patient->guardians()->count()){
+            $this->alert('error', 'No parents/guardian.');
+            return;
+        }
+
+        return $this->next('medical');
     }
     
 }

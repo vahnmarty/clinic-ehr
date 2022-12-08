@@ -47,6 +47,24 @@
 
                 @if ($step == 'parents')
                     @livewire('station.patient-parent', ['patientId' => $patient_id])
+
+                    <div class="flex justify-end gap-4 mt-8">
+                        <button type="button" wire:click="saveParents()"
+                            class="btn-secondary">{{ __('Save Changes and Proceed') }}</button>
+                        <button type="button" wire:click="next('medical')"
+                            class="btn-light">{{ __('Skip') }}</button>
+                    </div>
+                @endif
+
+                @if ($step == 'medical')
+                    @livewire('station.patient-medical-history', ['patientId' => $patient_id])
+
+                    <div class="flex justify-end gap-4 mt-8">
+                        <button type="button" wire:click="saveParents()"
+                            class="btn-secondary">{{ __('Save Changes and Proceed') }}</button>
+                        <button type="button" wire:click="next('medical')"
+                            class="btn-light">{{ __('Skip') }}</button>
+                    </div>
                 @endif
             @endif
         @endif
