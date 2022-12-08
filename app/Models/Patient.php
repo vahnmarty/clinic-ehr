@@ -50,7 +50,7 @@ class Patient extends Model
     }
 
     public function scopeSearch($query, $keyword){
-        return $query->where('patient_id', 'LIKE', '%' . $keyword . '%')
+        return $query->where('patient_number', 'LIKE', '%' . $keyword . '%')
                     ->orWhere('first_name', 'LIKE', '%' . $keyword . '%')
                     ->orWhere('last_name', 'LIKE', '%' . $keyword . '%');
     }

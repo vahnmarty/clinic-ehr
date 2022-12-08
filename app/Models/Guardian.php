@@ -14,7 +14,6 @@ class Guardian extends Model
     use HasFactory;
 
     protected $casts = [
-        'parent_type' => GuardianType::class,
         'primary_language' => PrimaryLanguage::class,
         'racial_identity' => RacialIdentity::class,
         'marital_status' => MaritalStatus::class,

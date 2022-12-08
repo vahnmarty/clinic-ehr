@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Http\Livewire\Patient;
+namespace App\Http\Livewire\Station;
 
-use App\Models\Patient;
 use Livewire\Component;
+use App\Enums\RacialIdentity;
+use App\Enums\PrimaryLanguage;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Select;
+
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Fieldset;
@@ -13,27 +15,31 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DatePicker;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Filament\Forms\Concerns\InteractsWithForms;
+use App\Http\Livewire\Station\SearchPatientTrait;
 
-class EditPatient extends Component implements HasForms
+class PatientDetails extends Component implements HasForms
 {
+    use SearchPatientTrait;
     use InteractsWithForms;
-
     use LivewireAlert;
 
-    public Patient $patient;
-    
-    public $patient_number, $first_name, $last_name, $email, $date_of_birth;
-    
+    public $step = 'parents';
+
     public function render()
     {
-        return view('livewire.patient.edit-patient');
+        return view('livewire.station.patient-details');
     }
 
-    public function mount($id)
+    public function mount()
     {
-        $this->patient = Patient::find($id);
+        $this->selectPatient(82);
+    }
 
-        $this->form->fill($this->patient->toArray());
+    public function fillFilamentForm()
+    {
+        if($this->patient){
+            $this->form->fill($this->patient->toArray());
+        }
     }
 
     protected function getFormSchema(): array 
@@ -62,8 +68,8 @@ class EditPatient extends Component implements HasForms
             Grid::make(3)
                 ->schema([
                     TextInput::make('dpi_number'),
-                    TextInput::make('identity'),
-                    Select::make('primary_language')->options(['en' => 'English', 'es' => 'Spanish'])->required(),
+                    Select::make('identity')->options(RacialIdentity::asSelectArray())->required(),
+                    Select::make('primary_language')->options(PrimaryLanguage::asSelectArray())->required(),
                 ]),
             Fieldset::make('Demographics')
                 ->schema([
@@ -91,15 +97,22 @@ class EditPatient extends Component implements HasForms
                     ])
                 ])
         ];
-    } 
+    }
 
-    public function submit()
+    public function save()
     {
         $data = $this->validate();
-        
+
         $this->patient->update($data);
 
-        $this->alert('success', 'Patient information updated successfuly.');
-        
+        $this->alert('success', 'Patient updated successfully!');
+
+        $this->next('parents');
     }
+
+    public function next($step)
+    {
+        $this->step = $step;
+    }
+    
 }

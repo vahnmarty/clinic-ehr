@@ -14,4 +14,10 @@ class SearchPatient extends Component
         $results = $this->search ? Patient::search($this->search)->get() : [];
         return view('livewire.search-patient', compact('results'));
     }
+
+    public function setPatient($id)
+    {
+        $this->emit('selectPatient', $id);
+        $this->dispatchBrowserEvent('closemodal-search');
+    }
 }

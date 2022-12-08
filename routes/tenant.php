@@ -9,6 +9,7 @@ use App\Http\Livewire\Patient\EditParent;
 use App\Http\Livewire\Patient\EditPatient;
 use App\Http\Livewire\Patient\ShowPatient;
 use App\Http\Controllers\DashboardController;
+use App\Http\Livewire\Station\PatientDetails;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
@@ -52,6 +53,7 @@ Route::middleware([
     Route::group(['middleware' => ['auth'], 'prefix' => 'station'], function(){
 
         Route::get('check-in', CheckIn::class)->name('station.checkin');
+        Route::get('patient-details', PatientDetails::class)->name('station.patient-details');
         
     });
 

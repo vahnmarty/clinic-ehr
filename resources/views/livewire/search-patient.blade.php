@@ -16,7 +16,8 @@
         <div class="mt-8 max-h-[28rem] min-h-[24rem] overflow-auto">
             <div class="space-y-1">
                 @foreach ($results as $result)
-                    <div
+                    <div wire:key="sp-{{ $result->id . '-' . time() }}"
+                        wire:click="setPatient(`{{ $result->id }}`)"
                         class="p-4 py-4 duration-300 ease-in-out border cursor-pointer hover:bg-blue-100 hover:shadow-lg">
                         <div class="flex">
                             <div class="w-16 h-16 overflow-hidden border-2 rounded-full shadow-lg">
