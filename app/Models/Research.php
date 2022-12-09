@@ -13,4 +13,11 @@ class Research extends Model
     protected $casts = [
         'form_type' => FormType::class
     ];
+
+    protected $guarded = [];
+
+    public function intermittent()
+    {
+        return $this->belonsgTo(ResearchIntermittentHealthForm::class, 'intermittent_form_id');
+    }
 }

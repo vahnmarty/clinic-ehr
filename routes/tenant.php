@@ -58,8 +58,9 @@ Route::middleware([
         Route::get('check-in', CheckIn::class)->name('station.checkin');
         Route::get('patient-details', PatientDetails::class)->name('station.patient-details');
         Route::get('vital-sign', PatientVitalSign::class)->name('station.vital-sign');
-        Route::get('research', ResearchForms::class)->name('station.research');
+        Route::get('research/{uuid?}', ResearchForms::class)->name('station.research');
         Route::get('research/{uuid}/IntermittentHealthForm', IntermittentHealthForm::class)->name('station.research.intermittent-health-form');
+        Route::get('research/{uuid}/IntermittentHealthForm/{id}/edit', IntermittentHealthForm::class)->name('station.research.intermittent-health-form.edit');
         
     });
 

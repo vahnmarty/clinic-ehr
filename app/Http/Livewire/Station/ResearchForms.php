@@ -9,6 +9,8 @@ use App\Models\Research;
 use App\Models\Application;
 use Filament\Tables\Actions\Action;
 use Filament\Forms\Components\Select;
+use Filament\Forms\ComponentContainer;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Concerns\InteractsWithTable;
 use App\Http\Livewire\Station\SearchPatientTrait;
@@ -20,20 +22,46 @@ class ResearchForms extends Component implements HasTable
     use SearchPatientTrait;
 
     protected $listeners = ['selectPatient'];
+
+    public $needsUuid = true;
+
+    public $uuid;
     
     public function render()
     {
         return view('livewire.station.research-forms');
     }
 
-    public function mount()
+    public function mount($uuid = null)
     {
-        $this->selectPatient(82);
+        if($uuid){
+            $this->uuid = $this->uuid;
+            $this->app = Application::whereUuid($this->uuid)->first();
+            $this->patient = $this->app->patient;
+            $this->patient_id = $this->patient->id;
+        }
+        
+    }
+
+    public function redirectWithUuid()
+    {
+        $app = Application::where('patient_id', $this->patient_id)->latest()->first();
+        return redirect('station/research/' . $app->uuid);
     }
 
     protected function getTableQuery(): Builder 
     {
         return Research::where('patient_id', $this->patient_id);
+    }
+
+    protected function getTableColumns(): array
+    {
+        return [
+            TextColumn::make('#')->rowIndex(),
+            TextColumn::make('created_at')->date(),
+            TextColumn::make('form_type')->formatStateUsing(fn (string $state): string => FormType::fromValue((int)$state)->description),
+            
+        ];
     }
 
     protected function getTableHeaderActions() : array
@@ -52,6 +80,22 @@ class ResearchForms extends Component implements HasTable
                     
                 })
                 ->button()
+        ];
+    }
+
+    protected function getTableActions() : array
+    {
+        return [
+            Action::make('view')
+                ->label('View Submission')
+                ->url(fn ($record): string => url('station/research', $record))
+                ->openUrlInNewTab()
+                ->button(),
+            Action::make('edit')
+                ->label('Edit')
+                ->url(fn ($record): string => url('station/research', $record))
+                ->openUrlInNewTab()
+                ->icon('heroicon-o-pencil'),
         ];
     }
 }

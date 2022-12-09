@@ -10,4 +10,14 @@ class Application extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function patient()
+    {
+        return $this->belongsTo(Patient::class);
+    }
+
+    public function researches()
+    {
+        return $this->hasMany(Research::class);
+    }
 }

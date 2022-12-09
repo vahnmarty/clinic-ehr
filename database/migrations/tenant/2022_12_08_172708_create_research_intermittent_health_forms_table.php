@@ -37,7 +37,7 @@ return new class extends Migration
 
             // Fieldset 3
             $table->boolean('has_no_food_symptoms')->nullable();
-            $table->boolean('has_abdominal_paid')->nullable();
+            $table->boolean('has_abdominal_pain')->nullable();
             $table->boolean('has_difficulty_swallowing')->nullable();
             $table->boolean('has_reflux')->nullable();
             $table->boolean('has_rash')->nullable();

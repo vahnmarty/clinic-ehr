@@ -15,6 +15,10 @@ trait SearchPatientTrait
         $this->patient_id = $id;
         $this->patient = Patient::find($id);
 
+        if(!empty($this->needsUuid)){
+            return $this->redirectWithUuid();
+        }
+
         try {
             $this->fillFilamentForm();
         } catch (\Throwable $th) {
