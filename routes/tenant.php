@@ -9,6 +9,7 @@ use App\Http\Controllers\PdfController;
 use App\Http\Livewire\Patient\EditParent;
 use App\Http\Livewire\Patient\EditPatient;
 use App\Http\Livewire\Patient\ShowPatient;
+use App\Http\Livewire\Station\EditResearch;
 use App\Http\Livewire\Station\ResearchForms;
 use App\Http\Controllers\DashboardController;
 use App\Http\Livewire\Station\PatientDetails;
@@ -60,10 +61,14 @@ Route::middleware([
         Route::get('check-in', CheckIn::class)->name('station.checkin');
         Route::get('patient-details', PatientDetails::class)->name('station.patient-details');
         Route::get('vital-sign', PatientVitalSign::class)->name('station.vital-sign');
+
+
+        // Research Forms
         Route::get('research/{patientId?}', ResearchForms::class)->name('station.research');
         Route::get('research/{patientId}/view/{researchId}', ViewResearchForm::class)->name('station.research.show');
-        Route::get('research/{uuid}/IntermittentHealthForm', IntermittentHealthForm::class)->name('station.research.intermittent-health-form');
-        Route::get('research/{uuid}/IntermittentHealthForm/{id}/edit', IntermittentHealthForm::class)->name('station.research.intermittent-health-form.edit');
+        Route::get('research/{patientId}/IntermittentHealthForm', IntermittentHealthForm::class)->name('station.research.intermittent-health-form');
+        Route::get('research/{researchId}/edit', EditResearch::class);
+        Route::get('research/{patientId}/IntermittentHealthForm/{researchId?}/edit', IntermittentHealthForm::class)->name('station.research.intermittent-health-form.edit');
         
     });
 

@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Research;
 use App\Enums\FormType;
 use App\Models\Patient;
 use Livewire\Component;
+use App\Models\Research;
 use App\Models\Application;
 use App\Enums\BooleanOption;
 use Filament\Forms\Components\Grid;
@@ -26,7 +27,7 @@ class IntermittentHealthForm extends Component implements HasForms
     public Patient $patient;
     public Application $app;
 
-    public $form_type;
+    public $form_type, $is_edit, $research_id;
 
     public $has_diarrhea, $has_diarrheal_stools, $has_toilet, $has_diagnosed_gastrointestinal, $has_presented_anything, $diarrhea_last;
     
@@ -39,11 +40,18 @@ class IntermittentHealthForm extends Component implements HasForms
         return view('livewire.research.intermittent-health-form');
     }
 
-    public function mount($uuid)
+    public function mount($patientId, $researchId = null)
     {
-        $this->app = Application::whereUuid($uuid)->first();
-        $this->patient = $this->app->patient;
+        $this->patient_id = $patientId;
+        $this->patient = Patient::find($patientId);
         $this->form_type = FormType::IntermittentHealthForm;
+
+        if($researchId){
+            $this->is_edit = true;
+            $this->research_id = $researchId;
+            $research = Research::with('intermittent')->find($researchId);
+            $this->form->fill($research->intermittent->toArray());
+        }
     }
 
     protected function getFormSchema(): array 
@@ -89,8 +97,12 @@ class IntermittentHealthForm extends Component implements HasForms
 
     public function save()
     {
-        $data = $this->validate();
+        
 
+        if($this->is_edit){
+            return $this->update();
+        }
+        $data = $this->validate();
         $form = new ResearchIntermittentHealthForm;
         $form->patient_id = $this->patient->id;
         $form->fill($data);
@@ -105,5 +117,19 @@ class IntermittentHealthForm extends Component implements HasForms
 
         return redirect('station/research');
         
+    }
+
+    public function update()
+    {
+        $data = $this->validate();
+
+        $research = Research::with('intermittent')->find($this->research_id);
+        $form = $research->intermittent;
+
+        $form->update($data);
+
+        $this->alert('success', 'Form updated successfully!');
+        
+        // return redirect('station/research/' . $research->patient_id);
     }
 }

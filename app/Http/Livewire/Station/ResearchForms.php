@@ -61,8 +61,7 @@ class ResearchForms extends Component implements HasTable
                 ])
                 ->action(function (array $data) {
                     $type = FormType::fromValue((int)$data['form_type']);
-                    $app = Application::where('patient_id', $this->patient_id)->latest()->first();
-                    return redirect('station/research/' . $app->uuid . '/' . $type->key);
+                    return redirect('station/research/' . $this->patient_id . '/' . $type->key);
                     
                 })
                 ->button()
@@ -79,7 +78,7 @@ class ResearchForms extends Component implements HasTable
                 ->button(),
             Action::make('edit')
                 ->label('Edit')
-                ->url(fn ($record): string => url('station/research', $record))
+                ->url(fn ($record): string => url('station/research/'. $record->id . '/edit'))
                 ->openUrlInNewTab()
                 ->icon('heroicon-o-pencil'),
         ];

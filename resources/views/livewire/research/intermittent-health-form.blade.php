@@ -23,10 +23,6 @@
                                 <span>{{ $patient->date_of_birth }}
                                     ({{ Carbon\Carbon::parse($patient->date_of_birth)->age }} yrs old) </span>
                             </p>
-                            <p>
-                                <strong>Application: </strong>
-                                <span>{{ explode('-', $app->uuid)[0] . ': ' . $app->created_at->format('Y-m-d') }}</span>
-                            </p>
                         </div>
                     </div>
                 </div>
@@ -37,7 +33,10 @@
         <form wire:submit.prevent="save">
             {{ $this->form }}
 
-            <button type="submit" class="mt-8 btn-secondary">Save</button>
+            <button type="submit" class="mt-8 btn-secondary">{{ $is_edit ? 'Update' : 'Save'}}</button>
+            @if($is_edit)
+            <a href="{{ url('station/research', $patient_id) }}" class="btn-light">Back</a>
+            @endif
         </form>
     </div>
 </div>
