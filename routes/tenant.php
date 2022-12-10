@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Http\Livewire\InputVitalSign;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Station\CheckIn;
+use App\Http\Controllers\PdfController;
 use App\Http\Livewire\Patient\EditParent;
 use App\Http\Livewire\Patient\EditPatient;
 use App\Http\Livewire\Patient\ShowPatient;
@@ -13,6 +14,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Livewire\Station\PatientDetails;
 use App\Http\Livewire\Station\PatientVitalSign;
 use App\Http\Livewire\Research\IntermittentHealthForm;
+use App\Http\Livewire\Station\Research\ViewResearchForm;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
@@ -58,11 +60,14 @@ Route::middleware([
         Route::get('check-in', CheckIn::class)->name('station.checkin');
         Route::get('patient-details', PatientDetails::class)->name('station.patient-details');
         Route::get('vital-sign', PatientVitalSign::class)->name('station.vital-sign');
-        Route::get('research/{uuid?}', ResearchForms::class)->name('station.research');
+        Route::get('research/{patientId?}', ResearchForms::class)->name('station.research');
+        Route::get('research/{patientId}/view/{researchId}', ViewResearchForm::class)->name('station.research.show');
         Route::get('research/{uuid}/IntermittentHealthForm', IntermittentHealthForm::class)->name('station.research.intermittent-health-form');
         Route::get('research/{uuid}/IntermittentHealthForm/{id}/edit', IntermittentHealthForm::class)->name('station.research.intermittent-health-form.edit');
         
     });
+
+    Route::get('pdf/research/{id}', [PdfController::class, 'research']);
 
 
 });

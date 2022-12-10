@@ -22,36 +22,22 @@ class ResearchForms extends Component implements HasTable
     use SearchPatientTrait;
 
     protected $listeners = ['selectPatient'];
-
-    public $needsUuid = true;
-
-    public $uuid;
     
     public function render()
     {
         return view('livewire.station.research-forms');
     }
 
-    public function mount($uuid = null)
+    public function mount($patientId = null)
     {
-        if($uuid){
-            $this->uuid = $this->uuid;
-            $this->app = Application::whereUuid($this->uuid)->first();
-            $this->patient = $this->app->patient;
-            $this->patient_id = $this->patient->id;
+        if($patientId){
+            $this->selectPatient($patientId);
         }
-        
-    }
-
-    public function redirectWithUuid()
-    {
-        $app = Application::where('patient_id', $this->patient_id)->latest()->first();
-        return redirect('station/research/' . $app->uuid);
     }
 
     protected function getTableQuery(): Builder 
     {
-        return Research::where('patient_id', $this->patient_id);
+        return Research::where('patient_id', $this->patient_id)->latest();
     }
 
     protected function getTableColumns(): array
@@ -88,7 +74,7 @@ class ResearchForms extends Component implements HasTable
         return [
             Action::make('view')
                 ->label('View Submission')
-                ->url(fn ($record): string => url('station/research', $record))
+                ->url(fn ($record): string => route('station.research.show', ['patientId' => $this->patient_id, 'researchId' => $record]))
                 ->openUrlInNewTab()
                 ->button(),
             Action::make('edit')

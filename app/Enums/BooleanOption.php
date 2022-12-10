@@ -11,6 +11,7 @@ use BenSampo\Enum\Enum;
  */
 final class BooleanOption extends Enum
 {
-    const No = 0;
+
     const Yes = 1;
+    const No = 0;
 }

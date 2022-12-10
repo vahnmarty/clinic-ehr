@@ -16,8 +16,13 @@ class Research extends Model
 
     protected $guarded = [];
 
+    public function patient()
+    {
+        return $this->belongsTo(Patient::class);
+    }
+
     public function intermittent()
     {
-        return $this->belonsgTo(ResearchIntermittentHealthForm::class, 'intermittent_form_id');
+        return $this->belongsTo(ResearchIntermittentHealthForm::class, 'intermittent_form_id');
     }
 }

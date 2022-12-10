@@ -62,7 +62,7 @@ class IntermittentHealthForm extends Component implements HasForms
                 ->columns(3)
                 ->schema([
                     Checkbox::make('has_cough')->label('Cough')->inline(),
-                    Checkbox::make('has_respiratory_distress')->label('Intercostal retractions (sinking of ribs)')->inline(),
+                    Checkbox::make('has_respiratory_distress')->label('Respiratory distress')->inline(),
                     Checkbox::make('has_intercostal_retractions')->label('Intercostal retractions (sinking of ribs)')->inline(),
                     Checkbox::make('has_fever')->label('Fever')->inline(),
                     Checkbox::make('has_rapid_breathing')->label('Fast or rapid breathing?')->inline(),
@@ -74,9 +74,9 @@ class IntermittentHealthForm extends Component implements HasForms
                 ->columns(3)
                 ->schema([
                     Checkbox::make('has_no_food_symptoms')->label('None')->inline(),
-                    Checkbox::make('has_reflux')->label('Refluxx')->inline(),
+                    Checkbox::make('has_reflux')->label('Reflux')->inline(),
                     Checkbox::make('has_diarrhea_scraps')->label('Diarrhea (with food scraps)')->inline(),
-                    Checkbox::make('has_abdominal_pain')->label('Adbdominal Pain')->inline(),
+                    Checkbox::make('has_abdominal_pain')->label('Abdominal Pain')->inline(),
                     Checkbox::make('has_rash')->label('Rash?')->inline(),
                     Checkbox::make('has_glossitis')->label('Glossitis?')->inline(),
                     Checkbox::make('has_difficulty_swallowing')->label('Difficulty Swallowing')->inline(),
