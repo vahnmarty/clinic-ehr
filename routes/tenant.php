@@ -14,6 +14,7 @@ use App\Http\Livewire\Station\ResearchForms;
 use App\Http\Controllers\DashboardController;
 use App\Http\Livewire\Station\PatientDetails;
 use App\Http\Livewire\Station\PatientVitalSign;
+use App\Http\Livewire\Station\ClinicalEncounter;
 use App\Http\Livewire\Research\IntermittentHealthForm;
 use App\Http\Livewire\Station\Research\ViewResearchForm;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
@@ -61,6 +62,7 @@ Route::middleware([
         Route::get('check-in', CheckIn::class)->name('station.checkin');
         Route::get('patient-details', PatientDetails::class)->name('station.patient-details');
         Route::get('vital-sign', PatientVitalSign::class)->name('station.vital-sign');
+        Route::get('clinical-encounter', ClinicalEncounter::class)->name('station.clinical-encounter');
 
 
         // Research Forms
