@@ -16,15 +16,20 @@ class ClinicalEncounter extends Component
     
     public function render()
     {
+        if(!$this->vital_sign){
+            if($this->patient){
+                $this->vital_sign = $this->patient->vitalSigns()->latest()->first();
+            }
+        }
+        
+
         return view('livewire.station.clinical-encounter');
     }
 
     public function mount()
     {
-        $this->selectPatient(82);
-
-        $this->vital_sign = $this->patient->vitalSigns()->latest()->first();
-    
+        
+        
     }
     
     
