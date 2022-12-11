@@ -60,11 +60,14 @@
                             <div class="bg-white border border-gray-300 rounded-lg shadow-sm">
                                 <header class="flex items-center justify-between px-6 py-4 pb-0">
                                     <h3 class="font-bold">{{ __('Vital Signs') }}</h3>
+                                    @if( !empty($vital_sign) )
                                     <div class="flex items-center gap-2">
                                         <x-heroicon-o-clock class="w-5 h-5 text-gray-600" />
                                         <p class="text-sm">{{ $vital_sign->created_at->format('m/d/Y h:i a') }}</p>
                                     </div>
+                                    @endif
                                 </header>
+                                @if(!empty($vital_sign))
                                 <div class="grid grid-cols-2 gap-6 p-6">
                                     <div>
                                         <label>Height</label>
@@ -83,6 +86,7 @@
                                         <p class="font-bold">{{ $vital_sign->weight_for_age }}</p>
                                     </div>
                                 </div>
+                                @endif
                             </div>
                             <div class="bg-white border border-gray-300 rounded-lg shadow-sm">
                                 <header class="p-6 py-4 pb-0">
