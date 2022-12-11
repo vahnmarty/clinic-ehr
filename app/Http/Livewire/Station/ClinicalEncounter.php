@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Station;
 
 use Livewire\Component;
+use App\Models\MedicalCode;
 use App\Http\Livewire\Station\SearchPatientTrait;
 
 class ClinicalEncounter extends Component
@@ -11,7 +12,7 @@ class ClinicalEncounter extends Component
 
     protected $listeners = ['selectPatient'];
 
-    public $vital_sign;
+    public $vital_sign, $medications;
     
     public function render()
     {
@@ -23,6 +24,7 @@ class ClinicalEncounter extends Component
         $this->selectPatient(82);
 
         $this->vital_sign = $this->patient->vitalSigns()->latest()->first();
+    
     }
     
     

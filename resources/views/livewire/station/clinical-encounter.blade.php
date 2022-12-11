@@ -133,10 +133,11 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="px-4 py-4 bg-gray-300">
                     <h3 class="text-xl font-bold text-gray-900">Assessment</h3>
                 </div>
-                <div class="p-4 bg-white rouded-md">
+                <div>
                     <div class="grid grid-cols-2">
                         <div>
                             <x-form.form-group>
@@ -148,7 +149,22 @@
                             </x-form.form-group>
                         </div>
                     </div>
+                    <div class="mt-8">
+                        <h4 class="mb-2 font-bold">Medical Coding</h4>
+                        @livewire('station.assessment-medical-coding', ['patientId' => $patient_id])
+                    </div>
                 </div>
+
+
+                <div class="px-4 py-4 bg-gray-300">
+                    <h3 class="text-xl font-bold text-gray-900">Plan</h3>
+                </div>
+                <div>
+                    <h4 class="mb-2 font-bold">Medication</h4>
+
+                    @livewire('station.encounter-medication', ['patientId' => $patient_id])
+                </div>
+
             @endif
         @endif
     </div>

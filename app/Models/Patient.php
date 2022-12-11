@@ -94,4 +94,14 @@ class Patient extends Model
     {
         return $this->hasMany(VitalSign::class);
     }
+
+    public function planMedications()
+    {
+        return $this->hasMany(PlanMedication::class);
+    }
+
+    public function medicalCodings()
+    {
+        return $this->hasMany(MedicalCoding::class);
+    }
 }
