@@ -89,4 +89,9 @@ class Patient extends Model
     {
         return $this->hasMany(Vaccine::class);
     }
+
+    public function vitalSigns()
+    {
+        return $this->hasMany(VitalSign::class);
+    }
 }

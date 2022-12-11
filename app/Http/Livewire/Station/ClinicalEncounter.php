@@ -10,6 +10,8 @@ class ClinicalEncounter extends Component
     use SearchPatientTrait;
 
     protected $listeners = ['selectPatient'];
+
+    public $vital_sign;
     
     public function render()
     {
@@ -19,5 +21,9 @@ class ClinicalEncounter extends Component
     public function mount()
     {
         $this->selectPatient(82);
+
+        $this->vital_sign = $this->patient->vitalSigns()->latest()->first();
     }
+    
+    
 }
