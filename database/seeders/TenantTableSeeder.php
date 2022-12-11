@@ -86,7 +86,7 @@ class TenantTableSeeder extends Seeder
 
         foreach(range(1, 20) as $rand){
             Patient::create([
-                'patient_id' => '0000' . $rand,
+                'patient_number' => '0000' . $rand,
                 'first_name' => $faker->firstName,
                 'last_name' => $faker->lastName,
                 'email' => $faker->email,
