@@ -13,6 +13,7 @@ use App\Http\Livewire\Station\EditResearch;
 use App\Http\Livewire\Station\ResearchForms;
 use App\Http\Controllers\DashboardController;
 use App\Http\Livewire\Station\PatientDetails;
+use App\Http\Livewire\Pharmacy\ManageProducts;
 use App\Http\Livewire\Station\PatientVitalSign;
 use App\Http\Livewire\Station\ClinicalEncounter;
 use App\Http\Livewire\Research\IntermittentHealthForm;
@@ -75,6 +76,9 @@ Route::middleware([
     });
 
     Route::get('pdf/research/{id}', [PdfController::class, 'research']);
+
+
+    Route::get('pharmacy/products', ManageProducts::class);
 
 
 });

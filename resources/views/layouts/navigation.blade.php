@@ -20,7 +20,7 @@
                         {{ __('Clinic') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('pharmacy')">
+                    <x-nav-link :href="url('pharmacy/products')" :active="request()->routeIs('pharmacy')">
                         {{ __('Pharmacy') }}
                     </x-nav-link>
 
