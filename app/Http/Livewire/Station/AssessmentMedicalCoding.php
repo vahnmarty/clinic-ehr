@@ -39,6 +39,7 @@ class AssessmentMedicalCoding extends Component implements HasTable
     protected function getTableColumns(): array
     {
         return [
+            TextColumn::make('index')->rowIndex()->label(''),
             TextColumn::make('medical_code'),
             TextColumn::make('code'),
             TextColumn::make('description'),

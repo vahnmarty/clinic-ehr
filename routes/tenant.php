@@ -16,6 +16,7 @@ use App\Http\Livewire\Station\PatientDetails;
 use App\Http\Livewire\Pharmacy\ManageProducts;
 use App\Http\Livewire\Station\PatientVitalSign;
 use App\Http\Livewire\Station\ClinicalEncounter;
+use App\Http\Livewire\Pharmacy\ManageLaboratories;
 use App\Http\Livewire\Research\IntermittentHealthForm;
 use App\Http\Livewire\Station\Research\ViewResearchForm;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
@@ -79,6 +80,7 @@ Route::middleware([
 
 
     Route::get('pharmacy/products', ManageProducts::class);
+    Route::get('pharmacy/laboratories', ManageLaboratories::class);
 
 
 });

@@ -21,7 +21,11 @@
                     </x-nav-link>
 
                     <x-nav-link :href="url('pharmacy/products')" :active="request()->routeIs('pharmacy')">
-                        {{ __('Pharmacy') }}
+                        {{ __('Products') }}
+                    </x-nav-link>
+                    
+                    <x-nav-link :href="url('pharmacy/laboratories')" :active="request()->routeIs('pharmacy')">
+                        {{ __('Laboratories') }}
                     </x-nav-link>
 
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('reports')">

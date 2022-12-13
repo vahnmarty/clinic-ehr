@@ -28,8 +28,7 @@ class ClinicalEncounter extends Component
 
     public function mount()
     {
-        
-        
+        $this->selectPatient(82);
     }
     
     

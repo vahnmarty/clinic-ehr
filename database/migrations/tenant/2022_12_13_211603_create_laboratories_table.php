@@ -13,16 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('plan_medications', function (Blueprint $table) {
+        Schema::create('laboratories', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('clinic_encounter_id')->nullable();
-            $table->unsignedBigInteger('patient_id');
-            $table->unsignedBigInteger('product_id')->nullable();
-            $table->string('drug')->nullable();
+            $table->string('name');
             $table->string('description')->nullable();
-            $table->string('dosage');
-            $table->string('period');
-            $table->string('dosage_form');
             $table->timestamps();
         });
     }
@@ -34,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('plan_medications');
+        Schema::dropIfExists('laboratories');
     }
 };
