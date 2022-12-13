@@ -8,9 +8,11 @@ use App\Enums\ProductType;
 use Filament\Forms\Components\Grid;
 use Filament\Tables\Actions\Action;
 use Filament\Forms\Components\Select;
+use Filament\Forms\ComponentContainer;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Forms\Components\TextInput;
+use Filament\Tables\Actions\DeleteAction;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Filament\Tables\Concerns\InteractsWithTable;
 
@@ -67,6 +69,21 @@ class ManageProducts extends Component implements HasTable
                     $this->alert('success', 'Product added successfully!');
                 })
                 ->button()
+        ];
+    }
+
+    protected function getTableActions() : array
+    {
+        return [
+            Action::make('edit')
+                ->label('Edit')
+                ->icon('heroicon-o-pencil')
+                ->mountUsing(fn (ComponentContainer $form, Product $record) => $form->fill($record->toArray()))
+                ->form($this->getForm())
+                ->action(function (Product $record, array $data): void {
+                    $record->update($data);
+                }),
+            DeleteAction::make(),
         ];
     }
 }
