@@ -104,4 +104,9 @@ class Patient extends Model
     {
         return $this->hasMany(MedicalCoding::class);
     }
+
+    public function planLaboratories()
+    {
+        return $this->hasMany(PlanLaboratory::class);
+    }
 }

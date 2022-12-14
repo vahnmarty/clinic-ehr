@@ -168,6 +168,11 @@
 
                     @livewire('station.encounter-medication', ['patientId' => $patient_id])
                 </div>
+                <div>
+                    <h4 class="mb-2 font-bold">Laboratory</h4>
+
+                    @livewire('station.encounter-laboratory', ['patientId' => $patient_id])
+                </div>
 
             @endif
         @endif

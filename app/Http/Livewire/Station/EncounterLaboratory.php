@@ -6,6 +6,8 @@ use Closure;
 use App\Models\Patient;
 use App\Models\Product;
 use Livewire\Component;
+use App\Models\Laboratory;
+use App\Models\PlanLaboratory;
 use App\Models\PlanMedication;
 use Filament\Forms\Components\Grid;
 use Filament\Tables\Actions\Action;
@@ -17,7 +19,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Concerns\InteractsWithTable;
 
-class EncounterMedication extends Component implements HasTable
+class EncounterLaboratory extends Component implements HasTable
 {
 
     use InteractsWithTable;
@@ -26,7 +28,7 @@ class EncounterMedication extends Component implements HasTable
 
     public function render()
     {
-        return view('livewire.station.encounter-medication');
+        return view('livewire.station.encounter-laboratory');
     }
 
     public function mount($patientId)
@@ -36,16 +38,16 @@ class EncounterMedication extends Component implements HasTable
 
     protected function getTableQuery() 
     {
-        return PlanMedication::where('patient_id', $this->patient_id);
+        return PlanLaboratory::where('patient_id', $this->patient_id);
     }
 
     protected function getTableColumns(): array
     {
         return [
             TextColumn::make('index')->rowIndex()->label(''),
-            TextColumn::make('drug'),
-            TextColumn::make('description')->label('Drug Name/Description'),
-            TextColumn::make('period'),
+            TextColumn::make('laboratory'),
+            TextColumn::make('user.name')->label('Provider'), 
+            TextColumn::make('created_at'),
         ];
     }
 
@@ -53,20 +55,9 @@ class EncounterMedication extends Component implements HasTable
     {
         return [ 
             Grid::make(3)->schema([
-                Select::make('product_id')
-                    ->label('Search')
-                    ->searchable()
-                    ->reactive()
-                    ->getSearchResultsUsing(fn (string $search) => Product::search($search)->limit(50)->get()->pluck('name', 'id'))
-                    ->afterStateUpdated(function (Closure $set, $state) {
-                        $product = Product::find($state);
-                        $set('drug', $product->name);
-                    }),
-                Hidden::make('drug'),
-                TextInput::make('description')->disabled(),
-                TextInput::make('dosage')->required(),
-                TextInput::make('period')->required(),
-                TextInput::make('dosage_form')->required(),
+                Select::make('laboratory_id')
+                    ->label('Select Request')
+                    ->options(Laboratory::orderBy('name')->get()->pluck('name', 'id')),
             ])
         ];
     }
@@ -81,11 +72,15 @@ class EncounterMedication extends Component implements HasTable
                 ->form($this->getForm())
                 ->action(function (array $data): void {
                     $patient = Patient::find($this->patient_id);
-                    $product = Product::find($data['product_id']);
-                    $patient->planMedications()->create($data);
+                    $lab = Laboratory::find($data['laboratory_id']);
+                    $patient->planLaboratories()->create([
+                        'user_id' => auth()->id(),
+                        'laboratory_id' => $data['laboratory_id'],
+                        'laboratory' => $data['laboratory']
+                    ]);
                     
                 })
-                ->button()
+                ->button(),
         ];
     }
 
