@@ -7,13 +7,16 @@ use Livewire\Component;
 use Spatie\Permission\Models\Role;
 use Filament\Forms\Components\Grid;
 use Filament\Tables\Actions\Action;
+use Filament\Tables\Filters\Filter;
 use Filament\Forms\Components\Select;
 use Filament\Forms\ComponentContainer;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Forms\Components\TextInput;
+use Filament\Tables\Actions\DeleteAction;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Filament\Tables\Concerns\InteractsWithTable;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 
 class ManageUsers extends Component implements HasTable
 {
@@ -27,16 +30,16 @@ class ManageUsers extends Component implements HasTable
 
     protected function getTableQuery() 
     {
-        return User::query();
+        return User::withTrashed();
     }
 
     protected function getTableColumns(): array
     {
         return [
-            TextColumn::make('id'),
-            TextColumn::make('name'),
-            TextColumn::make('email'),
-            TextColumn::make('roles.name'),
+            TextColumn::make('id')->sortable()->searchable(),
+            TextColumn::make('name')->sortable()->searchable(),
+            TextColumn::make('email')->sortable()->searchable(),
+            TextColumn::make('roles.name')->sortable(),
             TextColumn::make('created_at'),
         ];
     }
@@ -45,8 +48,10 @@ class ManageUsers extends Component implements HasTable
     {
         return [
             Action::make('edit')
-                ->label('Edit')
+                ->label('')
+                ->modalHeading('Edit User')
                 ->icon('heroicon-o-pencil')
+                ->color('warning')
                 ->mountUsing(function (ComponentContainer $form, User $record) {
                     $form->fill($record->toArray());
                 })
@@ -67,9 +72,11 @@ class ManageUsers extends Component implements HasTable
                     $record->syncRoles( [$data['role']] ) ;
 
                     $this->alert('success', 'User updated successfully!');
-                }),
+                })
+                ->hidden(fn (User $record): bool => $record->deleted_at ? true : false ),
             Action::make('password')
-                ->label('Password')
+                ->label('')
+                ->modalHeading('Change Password')
                 ->icon('heroicon-o-key')
                 ->form([
                     Grid::make(2)
@@ -81,7 +88,17 @@ class ManageUsers extends Component implements HasTable
                     $record->update($data);
 
                     $this->alert('success', 'Password updated successfully!');
-                }),
+                })
+                ->hidden(fn (User $record): bool => $record->deleted_at ? true : false ),
+            DeleteAction::make()->label(''),
+            Action::make('recover')
+                    ->visible(fn (User $record): bool => $record->deleted_at ? true : false )
+                    ->action(function (User $record, array $data): void {
+                        $record->deleted_at = null;
+                        $record->save();
+                        $this->alert('success', 'User recovered successfully!');
+                    })
+                    ->requiresConfirmation()
         ];
     }
 
@@ -113,6 +130,14 @@ class ManageUsers extends Component implements HasTable
                     
                 })
                 ->button()
+        ];
+    }
+
+    protected function getTableFilters(): array
+    {
+        return [
+            Filter::make('deleted')
+                    ->query(fn (Builder $query): Builder => $query->withTrashed()->whereNotNull('deleted_at'))
         ];
     }
 }
