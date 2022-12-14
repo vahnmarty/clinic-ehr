@@ -11,7 +11,7 @@ class SearchPatient extends Component
 
     public function render()
     {
-        $results = $this->search ? Patient::search($this->search)->get() : [];
+        $results = $this->search ? Patient::search($this->search)->get() : Patient::get();
         return view('livewire.search-patient', compact('results'));
     }
 
