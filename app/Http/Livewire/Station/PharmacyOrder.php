@@ -32,7 +32,7 @@ class PharmacyOrder extends Component implements HasTable
 
     public function mount()
     {
-        $this->selectPatient(82);
+        
     }
 
     protected function getTableQuery() 

@@ -37,7 +37,7 @@ class PatientDetails extends Component implements HasForms
 
     public function mount()
     {
-        //$this->selectPatient(82);
+        
     }
 
     public function fillFilamentForm()
