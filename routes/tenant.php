@@ -18,6 +18,7 @@ use App\Http\Livewire\Station\PatientDetails;
 use App\Http\Livewire\Pharmacy\ManageProducts;
 use App\Http\Livewire\Station\PatientVitalSign;
 use App\Http\Livewire\Station\ClinicalEncounter;
+use App\Http\Livewire\Research\MaternalHealthForm;
 use App\Http\Livewire\Pharmacy\ManageLaboratories;
 use App\Http\Livewire\Research\IntermittentHealthForm;
 use App\Http\Livewire\Station\Research\ViewResearchForm;
@@ -82,6 +83,9 @@ Route::middleware([
         Route::get('research/{patientId}/IntermittentHealthForm', IntermittentHealthForm::class)->name('station.research.intermittent-health-form');
         Route::get('research/{researchId}/edit', EditResearch::class);
         Route::get('research/{patientId}/IntermittentHealthForm/{researchId?}/edit', IntermittentHealthForm::class)->name('station.research.intermittent-health-form.edit');
+
+        Route::get('research/{patientId}/MaternalHealthQuestionairre', MaternalHealthForm::class);
+        
         
     });
 
