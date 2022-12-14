@@ -76,7 +76,7 @@ class EncounterLaboratory extends Component implements HasTable
                     $patient->planLaboratories()->create([
                         'user_id' => auth()->id(),
                         'laboratory_id' => $data['laboratory_id'],
-                        'laboratory' => $data['laboratory']
+                        'laboratory' => $lab->name
                     ]);
                     
                 })

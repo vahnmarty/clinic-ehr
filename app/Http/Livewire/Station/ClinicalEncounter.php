@@ -3,10 +3,11 @@
 namespace App\Http\Livewire\Station;
 
 use Livewire\Component;
+use App\Enums\OrderStatus;
 use App\Models\MedicalCode;
+use App\Models\ClinicEncounter;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use App\Http\Livewire\Station\SearchPatientTrait;
-use App\Models\ClinicEncounter;
 
 class ClinicalEncounter extends Component
 {
@@ -67,12 +68,18 @@ class ClinicalEncounter extends Component
 
         foreach($patient->medicalCodings as $medicalCoding)
         {
-            $medicalCoding->update(['clinic_encounter_id' => $encounter->id]);
+            $medicalCoding->update([
+                    'clinic_encounter_id' => $encounter->id,
+                ]);
         }
 
         foreach($patient->planMedications as $medication)
         {
-            $medication->update(['clinic_encounter_id' => $encounter->id]);
+            $medication->update([
+                'clinic_encounter_id' => $encounter->id, 
+                'order_number' => $medication->generateOrderNumber(),
+                'order_status' => OrderStatus::PENDING
+            ]);
         }
 
         foreach($patient->planLaboratories as $laboratory)
