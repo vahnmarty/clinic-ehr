@@ -10,6 +10,7 @@ use App\Http\Livewire\Patient\EditParent;
 use App\Http\Livewire\Patient\EditPatient;
 use App\Http\Livewire\Patient\ShowPatient;
 use App\Http\Livewire\Station\EditResearch;
+use App\Http\Livewire\Station\PharmacyOrder;
 use App\Http\Livewire\Station\ResearchForms;
 use App\Http\Controllers\DashboardController;
 use App\Http\Livewire\Station\PatientDetails;
@@ -65,6 +66,7 @@ Route::middleware([
         Route::get('patient-details', PatientDetails::class)->name('station.patient-details');
         Route::get('vital-sign', PatientVitalSign::class)->name('station.vital-sign');
         Route::get('clinical-encounter', ClinicalEncounter::class)->name('station.clinical-encounter');
+        Route::get('pharmacy-order', PharmacyOrder::class)->name('station.pharmacy-order');
 
 
         // Research Forms

@@ -69,6 +69,9 @@
                         <x-dropdown-link :href="route('station.clinical-encounter')">
                             {{ __('Clinical Encounter') }}
                         </x-dropdown-link>
+                        <x-dropdown-link :href="route('station.pharmacy-order')">
+                            {{ __('Pharmacy Order') }}
+                        </x-dropdown-link>
                     </x-slot>
                 </x-dropdown>
                 <div>
