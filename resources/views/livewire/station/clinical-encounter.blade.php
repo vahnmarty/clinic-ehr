@@ -33,28 +33,30 @@
                 </div>
                 <div>
                     <div class="grid grid-cols-5 gap-4">
-                        <div class="col-span-3 space-y-4">
-                            <x-form.form-group>
-                                <x-slot name="label">
-                                    {{ __('Chief Complaint') }} <x-required/>
-                                </x-slot>
-                                <x-form.input-text value="" placeholder="Chief Complaint" class="bg-white"/>
-                                <x-input-error :messages="$errors->get('chief_complaint')" class="mt-2" />
-                            </x-form.form-group>
-                            <x-form.form-group>
-                                <x-slot name="label">
-                                    {{ __('History of Illness') }} <x-required/>
-                                </x-slot>
-                                <textarea class="w-full bg-white border-gray-300 rounded-md" rows="6"></textarea>
-                                <x-input-error :messages="$errors->get('history_illness')" class="mt-2" />
-                            </x-form.form-group>
-                            <x-form.form-group>
-                                <x-slot name="label">
-                                    {{ __('Physical Exam') }} <x-required/>
-                                </x-slot>
-                                <textarea class="w-full bg-white border-gray-300 rounded-md" rows="6"></textarea>
-                                <x-input-error :messages="$errors->get('physical_exam')" class="mt-2" />
-                            </x-form.form-group>
+                        <div class="col-span-3">
+                            <form wire:submit.prevent="prompt" id="formEncounter" class="space-y-4">
+                                <x-form.form-group>
+                                    <x-slot name="label">
+                                        {{ __('Chief Complaint') }} <x-required/>
+                                    </x-slot>
+                                    <x-form.input-text wire:model.defer="chief_complaint" placeholder="Chief Complaint" class="bg-white" required/>
+                                    <x-input-error :messages="$errors->get('chief_complaint')" class="mt-2" />
+                                </x-form.form-group>
+                                <x-form.form-group>
+                                    <x-slot name="label">
+                                        {{ __('History of Illness') }} <x-required/>
+                                    </x-slot>
+                                    <textarea wire:model.defer="illness_history" class="w-full bg-white border-gray-300 rounded-md" rows="6"></textarea>
+                                    <x-input-error :messages="$errors->get('history_illness')" class="mt-2" />
+                                </x-form.form-group>
+                                <x-form.form-group>
+                                    <x-slot name="label">
+                                        {{ __('Physical Exam') }} <x-required/>
+                                    </x-slot>
+                                    <textarea wire:model.defer="physical_exam" class="w-full bg-white border-gray-300 rounded-md" rows="6"></textarea>
+                                    <x-input-error :messages="$errors->get('physical_exam')" class="mt-2" />
+                                </x-form.form-group>
+                            </form>
                         </div>
                         <div class="col-span-2 space-y-4">
                             <div class="bg-white border border-gray-300 rounded-lg shadow-sm">
@@ -146,10 +148,10 @@
                         <div>
                             <x-form.form-group>
                                 <x-slot name="label">
-                                    {{ __('Physical Exam') }} <x-required/>
+                                    {{ __('Encounter Impression') }} <x-required/>
                                 </x-slot>
-                                <textarea class="w-full bg-white border-gray-300 rounded-md" rows="6"></textarea>
-                                <x-input-error :messages="$errors->get('physical_exam')" class="mt-2" />
+                                <textarea wire:model.defer="impression" form="formEncounter" class="w-full bg-white border-gray-300 rounded-md" rows="6"></textarea>
+                                <x-input-error :messages="$errors->get('encounter_impression')" class="mt-2" />
                             </x-form.form-group>
                         </div>
                     </div>
@@ -172,6 +174,12 @@
                     <h4 class="mb-2 font-bold">Laboratory</h4>
 
                     @livewire('station.encounter-laboratory', ['patientId' => $patient_id])
+                </div>
+
+
+                <div class="flex justify-between px-6 py-4 bg-green-300">
+                    <h3 class="text-xl font-bold text-gray-900">Sign Encounter</h3>
+                    <button class="btn-secondary" type="submit" form="formEncounter">Sign Encounter</button>
                 </div>
 
             @endif

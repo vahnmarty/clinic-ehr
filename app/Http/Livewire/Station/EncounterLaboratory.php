@@ -38,7 +38,7 @@ class EncounterLaboratory extends Component implements HasTable
 
     protected function getTableQuery() 
     {
-        return PlanLaboratory::where('patient_id', $this->patient_id);
+        return PlanLaboratory::where('patient_id', $this->patient_id)->whereNull('clinic_encounter_id');;
     }
 
     protected function getTableColumns(): array

@@ -33,7 +33,7 @@ class AssessmentMedicalCoding extends Component implements HasTable
 
     protected function getTableQuery() 
     {
-        return MedicalCoding::where('patient_id', $this->patient_id);
+        return MedicalCoding::where('patient_id', $this->patient_id)->whereNull('clinic_encounter_id');
     }
 
     protected function getTableColumns(): array

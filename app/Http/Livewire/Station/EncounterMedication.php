@@ -36,7 +36,7 @@ class EncounterMedication extends Component implements HasTable
 
     protected function getTableQuery() 
     {
-        return PlanMedication::where('patient_id', $this->patient_id);
+        return PlanMedication::where('patient_id', $this->patient_id)->whereNull('clinic_encounter_id');
     }
 
     protected function getTableColumns(): array
