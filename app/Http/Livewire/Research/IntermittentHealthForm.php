@@ -108,14 +108,14 @@ class IntermittentHealthForm extends Component implements HasForms
         $form->fill($data);
         $form->save();
 
-        $this->app->researches()->create([
+        Research::create([
             'patient_id' => $this->patient->id,
             'form_type' => $this->form_type,
             'intermittent_form_id' => $form->id,
             'created_by' => auth()->id()
         ]);
 
-        return redirect('station/research');
+        return redirect('station/research/' . $this->patient_id);
         
     }
 

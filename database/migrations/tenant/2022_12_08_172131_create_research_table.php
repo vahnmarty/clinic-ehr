@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('research', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('patient_id');
-            $table->unsignedBigInteger('application_id');
+            $table->unsignedBigInteger('application_id')->nullable();
             $table->integer('form_type');
             $table->unsignedBigInteger('created_by')->nullable();
             $table->timestamps();

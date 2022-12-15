@@ -56,6 +56,7 @@ return new class extends Migration
             $table->boolean('has_pelvic_disease');
             $table->string('pelvic_disease_explanation')->nullable();
             $table->boolean('has_fertility_problems');
+            $table->string('fertility_explanation')->nullable();
             $table->boolean('desire_future_fertility');
             $table->string('pregnancy_previous_evaluation')->nullable();
             $table->timestamps();
