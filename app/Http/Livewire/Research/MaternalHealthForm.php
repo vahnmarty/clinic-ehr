@@ -99,7 +99,7 @@ class MaternalHealthForm extends Component implements HasForms
                         ->label('Intermenstrual Bleeding?')
                         ->boolean(),
                     Radio::make('has_vasomor_symptoms')
-                        ->label('Associated pain? ')
+                        ->label('Vasomor Symptoms')
                         ->boolean(),
                     Radio::make('has_hormone_therapy')
                         ->label('On hormone replacement therapy? ')
