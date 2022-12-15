@@ -17,5 +17,11 @@ class PdfController extends Controller
             $form = $research->intermittent;
             return view('pdf.research.intermittent-health-form', compact('research', 'form'));
         }
+
+        if($research->form_type->value == FormType::MaternalHealthQuestionairre)
+        {
+            $form = $research->maternal;
+            return view('pdf.research.maternal-health-form', compact('research', 'form'));
+        }
     }
 }
