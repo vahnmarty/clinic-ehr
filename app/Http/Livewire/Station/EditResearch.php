@@ -21,5 +21,10 @@ class EditResearch extends Component
         {
             return redirect('station/research/' . $research->patient_id . '/IntermittentHealthForm/' . $research->id . '/edit');
         }
+
+        if($research->form_type->value == FormType::MaternalHealthQuestionairre)
+        {
+            return redirect('station/research/' . $research->patient_id . '/MaternalHealthQuestionairre/' . $research->id . '/edit');
+        }
     }
 }

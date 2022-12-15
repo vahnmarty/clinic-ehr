@@ -177,8 +177,8 @@ class MaternalHealthForm extends Component implements HasForms
     {
         $data = $this->validate();
 
-        $research = Research::with('intermittent')->find($this->research_id);
-        $form = $research->intermittent;
+        $research = Research::with('maternal')->find($this->research_id);
+        $form = $research->maternal;
 
         $form->update($data);
 

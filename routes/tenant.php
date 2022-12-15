@@ -85,6 +85,7 @@ Route::middleware([
         Route::get('research/{patientId}/IntermittentHealthForm/{researchId?}/edit', IntermittentHealthForm::class)->name('station.research.intermittent-health-form.edit');
 
         Route::get('research/{patientId}/MaternalHealthQuestionairre', MaternalHealthForm::class);
+        Route::get('research/{patientId}/MaternalHealthQuestionairre/{researchId?}/edit', MaternalHealthForm::class);
         
         
     });
