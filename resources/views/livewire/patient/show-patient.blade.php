@@ -8,7 +8,7 @@
 
 <div class="py-6 space-y-8">
 
-    <div class="wrapper">
+    <div class="py-3 wrapper">
         <div>
             <!-- Page header -->
             <div class="flex justify-between">
@@ -25,7 +25,7 @@
                         </h1>
                         <div class="flex space-x-10">
                             <p class="text-sm font-medium text-gray-500">
-                                Patient ID: {{ $patient->patient_id }}
+                                Patient ID: {{ $patient->patient_number }}
                             </p>
                             <p class="text-sm font-medium text-gray-500">
                                 DOB: {{ $patient->date_of_birth }}
@@ -65,9 +65,9 @@
 
                     <x-description-list :striped="true" label="DPI Number">{{ $patient->dpi_number }}
                     </x-description-list>
-                    <x-description-list label="Identity">{{ $patient->identity }}</x-description-list>
+                    <x-description-list label="Identity">{{ $patient->identity->description }}</x-description-list>
 
-                    <x-description-list :striped="true" label="Primary Language">{{ $patient->primary_language }}
+                    <x-description-list :striped="true" label="Primary Language">{{ $patient->primary_language->description }}
                     </x-description-list>
 
                     <x-description-list :striped="false" label="Parent/Guardian">

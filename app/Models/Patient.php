@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Storage;
+use App\Enums\RacialIdentity;
+use App\Enums\PrimaryLanguage;
 use App\Models\MedicalProblem;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,6 +16,11 @@ class Patient extends Model
     protected $guarded = [];
 
     protected $appends = [ 'full_name', 'image_avatar' ];
+
+    protected $casts = [
+        'identity' => RacialIdentity::class,
+        'primary_language' => PrimaryLanguage::class,
+    ];
 
     public function getAvatar()
     {
