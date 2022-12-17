@@ -109,4 +109,14 @@ class Patient extends Model
     {
         return $this->hasMany(PlanLaboratory::class);
     }
+
+    public function applications()
+    {
+        return $this->hasMany(Application::class);
+    }
+
+
+    public function latestApp() {
+        return $this->hasOne(Application::class)->latest();
+    }
 }

@@ -1,4 +1,4 @@
-<div class="p-4 bg-white rounded-md">
+<div class="flex items-center justify-between p-4 pr-8 bg-white rounded-md">
     <div class="flex">
         <div class="w-20 h-20 overflow-hidden border-2 rounded-full shadow-lg">
             <img src="{{ $patient->image_avatar }}" class="w-20 h-20" alt="">
@@ -18,5 +18,16 @@
                     ({{ Carbon\Carbon::parse($patient->date_of_birth)->age }} yrs old) </span>
             </p>
         </div>
+    </div>
+    <div>
+        <nav aria-label="Progress" class="-mt-2">
+            <ol role="list" class="flex items-center">
+                <x-progress-item label="Check-in" :done="$patient->latestApp->check_in_at ? true : false"/>
+                <x-progress-item label="Vitals" :done="$patient->latestApp->vital_sign_finished_at ? true : false"/>
+                <x-progress-item label="Public Health" :done="$patient->latestApp->research_form_finished_at ? true : false"/>
+                <x-progress-item label="Encounter" :done="$patient->latestApp->clinic_encounter_finished_at ? true : false"/>
+                <x-progress-item label="Orders" :done="$patient->latestApp->pharmacy_order_finished_at ? true : false" :last="true"/>
+            </ol>
+        </nav>
     </div>
 </div>

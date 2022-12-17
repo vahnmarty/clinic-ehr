@@ -27,8 +27,12 @@ class ClinicDashboard extends Component implements HasTable
         return view('livewire.clinic-dashboard');
     }
 
-    public function mount($clinicId)
+    public function mount($clinicId = null)
     {
+        if(!$clinicId){
+            $clinicId = Clinic::first()->id;
+        }
+
         $this->clinic_id = $clinicId;
         $this->clinic = Clinic::findOrFail($clinicId);
         $this->clinics = Clinic::get();

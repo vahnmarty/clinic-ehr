@@ -169,7 +169,12 @@ class MaternalHealthForm extends Component implements HasForms
             'created_by' => auth()->id()
         ]);
 
-        return redirect('station/research/' . $this->patient_id);
+        $app = Application::wherePatientId($this->patient->id)->latest()->first();
+        $app->research_form_finished_at = now();
+        $app->research_form_user_id = auth()->id();
+        $app->save();
+
+        return redirect()->route('station.research', $this->patient_id);
         
     }
 
