@@ -42,6 +42,13 @@ class PatientVitalSign extends Component
         return view('livewire.station.patient-vital-sign');
     }
 
+    public function mount($patientId = null)
+    {
+        if($patientId){
+            $this->selectPatient($patientId);
+        }
+    }
+
     public function getHistory()
     {
         $this->history = VitalSign::where('patient_id', $this->patient_id)->latest()->get();

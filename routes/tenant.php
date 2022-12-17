@@ -59,7 +59,6 @@ Route::middleware([
 
         Route::get('patient/{id}', ShowPatient::class)->name('patient.show');
         Route::get('patient/{id}/edit', EditPatient::class)->name('patient.edit');
-        Route::get('patient/{id}/vital-sign', InputVitalSign::class)->name("patient.vital-sign");
         Route::get('patient/{id}/parent/{parentId}', EditParent::class)->name('patient.edit-parent');
 
 
@@ -74,13 +73,13 @@ Route::middleware([
 
         Route::get('check-in', CheckIn::class)->name('station.checkin');
         Route::get('patient-details', PatientDetails::class)->name('station.patient-details');
-        Route::get('vital-sign', PatientVitalSign::class)->name('station.vital-sign');
-        Route::get('clinical-encounter', ClinicalEncounter::class)->name('station.clinical-encounter');
-        Route::get('pharmacy-order', PharmacyOrder::class)->name('station.pharmacy-order');
+        Route::get('{patientId?}/vital-sign', PatientVitalSign::class)->name('station.vital-sign');
+        Route::get('{patientId?}/clinical-encounter', ClinicalEncounter::class)->name('station.clinical-encounter');
+        Route::get('{patientId?}/pharmacy-order', PharmacyOrder::class)->name('station.pharmacy-order');
+        Route::get('{patientId?}/research', ResearchForms::class)->name('station.research');
 
 
         // Research Forms
-        Route::get('research/{patientId?}', ResearchForms::class)->name('station.research');
         Route::get('research/{patientId}/view/{researchId}', ViewResearchForm::class)->name('station.research.show');
         Route::get('research/{patientId}/IntermittentHealthForm', IntermittentHealthForm::class)->name('station.research.intermittent-health-form');
         Route::get('research/{researchId}/edit', EditResearch::class);

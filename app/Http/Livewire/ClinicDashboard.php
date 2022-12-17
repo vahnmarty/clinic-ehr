@@ -72,7 +72,7 @@ class ClinicDashboard extends Component implements HasTable
                     ->openUrlInNewTab(),
                 Action::make('vital')
                     ->label('Vital Signs')
-                    ->url(fn (Application $record): string => route('patient.vital-sign', $record->patient_id))
+                    ->url(fn (Application $record): string => route('station.vital-sign', $record->patient_id))
                     ->openUrlInNewTab(),
                 Action::make('research')
                     ->label('Research Form')

@@ -39,9 +39,11 @@ class ClinicalEncounter extends Component
         return view('livewire.station.clinical-encounter');
     }
 
-    public function mount()
+    public function mount($patientId = null)
     {
-        
+        if($patientId){
+            $this->selectPatient($patientId);
+        }
     }
     
     public function prompt()

@@ -30,9 +30,11 @@ class PharmacyOrder extends Component implements HasTable
         return view('livewire.station.pharmacy-order');
     }
 
-    public function mount()
+    public function mount($patientId = null)
     {
-        
+        if($patientId){
+            $this->selectPatient($patientId);
+        }
     }
 
     protected function getTableQuery() 

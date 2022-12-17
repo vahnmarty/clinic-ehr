@@ -5,7 +5,7 @@
 </x-slot>
 
 <x-slot name="rightHeader">
-    <div class="grid grid-cols-2 gap-4">
+    <div class>
         <form id="form-clinic" x-data="{ clinic_id: {{ $clinic->id }} }">
             <x-form.select name="clinic_id" onchange="document.querySelector('#form-clinic').submit()">
                 <option value="">-- {{ __('All Clinic ') }} --</option>
