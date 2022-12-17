@@ -21,6 +21,7 @@ use App\Http\Livewire\Station\PatientVitalSign;
 use App\Http\Livewire\Station\ClinicalEncounter;
 use App\Http\Livewire\Pharmacy\ManageLaboratories;
 use App\Http\Livewire\Research\MaternalHealthForm;
+use App\Http\Livewire\Patient\ViewClinicalEncounter;
 use App\Http\Livewire\Research\IntermittentHealthForm;
 use App\Http\Livewire\Station\Research\ViewResearchForm;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
@@ -61,6 +62,8 @@ Route::middleware([
         Route::get('patient/{id}/edit', EditPatient::class)->name('patient.edit');
         Route::get('patient/{id}/parent/{parentId}', EditParent::class)->name('patient.edit-parent');
 
+        Route::get('patient/clinical-encounter/{id}', ViewClinicalEncounter::class)->name('station.clinical-encounter.show');
+
 
         Route::group(['middleware' => ['role:admin']], function(){
             Route::get('users', ManageUsers::class)->name('users');
@@ -71,20 +74,25 @@ Route::middleware([
 
     Route::group(['middleware' => ['auth'], 'prefix' => 'station'], function(){
 
+
+        
+
+        
         Route::get('check-in', CheckIn::class)->name('station.checkin');
         Route::get('patient-details', PatientDetails::class)->name('station.patient-details');
         Route::get('vital-sign/{patientId?}', PatientVitalSign::class)->name('station.vital-sign');
         Route::get('clinical-encounter/{patientId?}', ClinicalEncounter::class)->name('station.clinical-encounter');
         Route::get('pharmacy-order/{patientId?}', PharmacyOrder::class)->name('station.pharmacy-order');
         Route::get('research/{patientId?}', ResearchForms::class)->name('station.research');
+        
+        
 
 
         // Research Forms
+        Route::get('research/{researchId}/edit', EditResearch::class);
         Route::get('research/{patientId}/view/{researchId}', ViewResearchForm::class)->name('station.research.show');
         Route::get('research/{patientId}/IntermittentHealthForm', IntermittentHealthForm::class)->name('station.research.intermittent-health-form');
-        Route::get('research/{researchId}/edit', EditResearch::class);
         Route::get('research/{patientId}/IntermittentHealthForm/{researchId?}/edit', IntermittentHealthForm::class)->name('station.research.intermittent-health-form.edit');
-
         Route::get('research/{patientId}/MaternalHealthQuestionairre', MaternalHealthForm::class);
         Route::get('research/{patientId}/MaternalHealthQuestionairre/{researchId?}/edit', MaternalHealthForm::class);
         

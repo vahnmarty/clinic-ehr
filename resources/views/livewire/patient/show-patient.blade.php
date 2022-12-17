@@ -49,73 +49,75 @@
         </div>
     </div>
 
-    <div class="text-gray-900 bg-white rounded-md wrapper">
-        <header class="px-16 py-6">
-            <h3 class="text-xl font-bold">{{ __('Patient Information') }}</h3>
-        </header>
-        <div class="px-16">
-            <div class="py-6 border-t">
-                <dl>
-                    <x-description-list :striped="true" label="Full Name">{{ $patient->getFullName() }}
-                    </x-description-list>
-                    <x-description-list label="Address">{{ $patient->getAddress() }}</x-description-list>
-
-                    <x-description-list :striped="true" label="Email">{{ $patient->email }}</x-description-list>
-                    <x-description-list label="Phone">{{ $patient->cellphone }}</x-description-list>
-
-                    <x-description-list :striped="true" label="DPI Number">{{ $patient->dpi_number }}
-                    </x-description-list>
-                    <x-description-list label="Identity">{{ $patient->identity->description }}</x-description-list>
-
-                    <x-description-list :striped="true" label="Primary Language">{{ $patient->primary_language->description }}
-                    </x-description-list>
-
-                    <x-description-list :striped="false" label="Parent/Guardian">
-                        @foreach($patient->guardians as $guardian)
-                        <p>{{ $guardian->first_name }} {{ $guardian->last_name }} ({{ $guardian->parent_type->description }})</p>
-                        @endforeach
-                    </x-description-list>
-                </dl>
+    <div class="wrapper">
+        <div class="px-8 text-gray-900 bg-white rounded-md">
+            <header class="py-6 ">
+                <h3 class="text-xl font-bold">{{ __('Patient Information') }}</h3>
+            </header>
+            <div class="">
+                <div class="py-6 border-t">
+                    <dl>
+                        <x-description-list :striped="true" label="Full Name">{{ $patient->getFullName() }}
+                        </x-description-list>
+                        <x-description-list label="Address">{{ $patient->getAddress() }}</x-description-list>
+    
+                        <x-description-list :striped="true" label="Email">{{ $patient->email }}</x-description-list>
+                        <x-description-list label="Phone">{{ $patient->cellphone }}</x-description-list>
+    
+                        <x-description-list :striped="true" label="DPI Number">{{ $patient->dpi_number }}
+                        </x-description-list>
+                        <x-description-list label="Identity">{{ $patient->identity->description }}</x-description-list>
+    
+                        <x-description-list :striped="true" label="Primary Language">{{ $patient->primary_language->description }}
+                        </x-description-list>
+    
+                        <x-description-list :striped="false" label="Parent/Guardian">
+                            @foreach($patient->guardians as $guardian)
+                            <p>{{ $guardian->first_name }} {{ $guardian->last_name }} ({{ $guardian->parent_type->description }})</p>
+                            @endforeach
+                        </x-description-list>
+                    </dl>
+                </div>
             </div>
-        </div>
-
-        <header class="px-16 py-6">
-            <h3 class="text-xl font-bold">{{ __('Medical History') }}</h3>
-        </header>
-        <div class="px-16">
-            <div class="py-6 border-t">
-                <dl>
-                    <x-description-list :striped="true" label="Medical Problems">
-                        @foreach($patient->medicalProblems as $medicalProblem)
-                        <p>{{ $medicalProblem->name }}</p>
-                        @endforeach
-                    </x-description-list>
-
-                    <x-description-list :striped="false" label="Current Medications">
-                        @foreach($patient->medications as $medication)
-                        <p>{{ $medication->name }}</p>
-                        @endforeach
-                    </x-description-list>
-
-                    <x-description-list :striped="true" label="Allergies">
-                        @foreach($patient->allergies as $allergy)
-                        <p>{{ $allergy->name }}</p>
-                        @endforeach
-                    </x-description-list>
-
-                    <x-description-list :striped="false" label="Prenatal History">
-                        @if($patient->prenatal)
-                        <p>{{ $patient->prenatal->pregnancy_number }}</p>
-                        @endif
-                    </x-description-list>
-
-                    <x-description-list :striped="true" label="{{ __('Birth History') }}"></x-description-list>
-                </dl>
+    
+            <header class="py-6 ">
+                <h3 class="text-xl font-bold">{{ __('Medical History') }}</h3>
+            </header>
+            <div class="">
+                <div class="py-6 border-t">
+                    <dl>
+                        <x-description-list :striped="true" label="Medical Problems">
+                            @foreach($patient->medicalProblems as $medicalProblem)
+                            <p>{{ $medicalProblem->name }}</p>
+                            @endforeach
+                        </x-description-list>
+    
+                        <x-description-list :striped="false" label="Current Medications">
+                            @foreach($patient->medications as $medication)
+                            <p>{{ $medication->name }}</p>
+                            @endforeach
+                        </x-description-list>
+    
+                        <x-description-list :striped="true" label="Allergies">
+                            @foreach($patient->allergies as $allergy)
+                            <p>{{ $allergy->name }}</p>
+                            @endforeach
+                        </x-description-list>
+    
+                        <x-description-list :striped="false" label="Prenatal History">
+                            @if($patient->prenatal)
+                            <p>{{ $patient->prenatal->pregnancy_number }}</p>
+                            @endif
+                        </x-description-list>
+    
+                        <x-description-list :striped="true" label="{{ __('Birth History') }}"></x-description-list>
+                    </dl>
+                </div>
             </div>
         </div>
     </div>
     <div class="mt-8 wrapper">
-        @livewire('patient.patient-clinical-encounter')
+        @livewire('patient.patient-clinical-encounter', ['patientId' => $patient_id])
     </div>
 
     <div class="mt-8 wrapper">
