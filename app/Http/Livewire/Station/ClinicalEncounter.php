@@ -8,6 +8,7 @@ use App\Models\MedicalCode;
 use App\Models\ClinicEncounter;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use App\Http\Livewire\Station\SearchPatientTrait;
+use App\Models\Application;
 
 class ClinicalEncounter extends Component
 {
@@ -88,6 +89,11 @@ class ClinicalEncounter extends Component
         {
             $laboratory->update(['clinic_encounter_id' => $encounter->id]);
         }
+
+        $app = Application::wherePatientId($this->patient_id)->latest()->first();
+        $app->clinic_encounter_finished_at = now();
+        $app->clinic_encounter_user_id = auth()->id();
+        $app->save();
 
         $this->alert('success', 'Sign Encounter completed successfully!');
 

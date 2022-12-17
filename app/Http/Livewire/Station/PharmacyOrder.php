@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Station;
 
 use Livewire\Component;
 use App\Enums\OrderStatus;
+use App\Models\Application;
 use App\Models\PlanMedication;
 use Filament\Tables\Actions\Action;
 use Filament\Forms\Components\Select;
@@ -75,6 +76,12 @@ class PharmacyOrder extends Component implements HasTable
                     $record->update($data);
 
                     if($record->order_status == OrderStatus::COMPLETED){
+
+                        $app = Application::wherePatientId($this->patient_id)->latest()->first();
+                        $app->pharmacy_order_finished_at = now();
+                        $app->pharmacy_order_user_id = auth()->id();
+                        $app->save();
+                        
                         $this->alert('success', 'Order successfully completed!');
                     }
                 }),
