@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Clinic;
 use App\Models\Patient;
+use App\Models\Application;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -27,8 +28,8 @@ class DashboardController extends Controller
     {
         $clinic = Clinic::with('patients')->find($clinic_id);
         $clinics = Clinic::get();
-        $patients = $clinic->patients;
+        $checkins = Application::with('patient')->where('clinic_id', $clinic_id)->get();
 
-        return view('clinic-dashboard', compact('clinics', 'clinic', 'patients'));
+        return view('clinic-dashboard', compact('clinics', 'clinic', 'checkins'));
     }
 }

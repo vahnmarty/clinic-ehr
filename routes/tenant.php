@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Http\Livewire\ManageUsers;
 use App\Http\Livewire\InputVitalSign;
 use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\ClinicDashboard;
 use App\Http\Livewire\Station\CheckIn;
 use App\Http\Controllers\PdfController;
 use App\Http\Livewire\Patient\EditParent;
@@ -18,8 +19,8 @@ use App\Http\Livewire\Station\PatientDetails;
 use App\Http\Livewire\Pharmacy\ManageProducts;
 use App\Http\Livewire\Station\PatientVitalSign;
 use App\Http\Livewire\Station\ClinicalEncounter;
-use App\Http\Livewire\Research\MaternalHealthForm;
 use App\Http\Livewire\Pharmacy\ManageLaboratories;
+use App\Http\Livewire\Research\MaternalHealthForm;
 use App\Http\Livewire\Research\IntermittentHealthForm;
 use App\Http\Livewire\Station\Research\ViewResearchForm;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
@@ -50,7 +51,8 @@ Route::middleware([
 
     require __DIR__.'/auth.php';
 
-    Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+    Route::get('dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+    Route::get('dashboard/clinic/{clinicId}', ClinicDashboard::class);
 
     
     Route::group(['middleware' => ['auth']], function(){

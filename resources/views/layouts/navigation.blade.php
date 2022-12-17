@@ -16,10 +16,6 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('clinic')">
-                        {{ __('Clinic') }}
-                    </x-nav-link>
-
                     <x-nav-link :href="url('pharmacy/products')" :active="request()->routeIs('pharmacy')">
                         {{ __('Products') }}
                     </x-nav-link>
