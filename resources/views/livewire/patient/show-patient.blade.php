@@ -69,14 +69,14 @@
     
                         <x-description-list :striped="true" label="DPI Number">{{ $patient->dpi_number }}
                         </x-description-list>
-                        <x-description-list label="Identity">{{ $patient->identity->description }}</x-description-list>
+                        <x-description-list label="Identity">{{ $patient->identity?->description }}</x-description-list>
     
-                        <x-description-list :striped="true" label="Primary Language">{{ $patient->primary_language->description }}
+                        <x-description-list :striped="true" label="Primary Language">{{ $patient->primary_language?->description }}
                         </x-description-list>
     
                         <x-description-list :striped="false" label="Parent/Guardian">
                             @foreach($patient->guardians as $guardian)
-                            <p>{{ $guardian->first_name }} {{ $guardian->last_name }} ({{ $guardian->parent_type->description }})</p>
+                            <p>{{ $guardian->first_name }} {{ $guardian->last_name }} ({{ $guardian->parent_type?->description }})</p>
                             @endforeach
                         </x-description-list>
                     </dl>
