@@ -76,9 +76,6 @@
                                             wire:click.prevent="checkInPatient(`{{ $patient->id }}`)">
                                                 {{ __('Check In Patient') }}
                                         </x-dropdown-link>
-                                        <x-dropdown-link href="{{ route('patient.vital-sign', $patient->id) }}" >
-                                                {{ __('Input Vital Sign') }}
-                                        </x-dropdown-link>
                                     </x-slot>
                                 </x-dropdown>
 

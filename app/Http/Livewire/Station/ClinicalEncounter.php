@@ -27,6 +27,9 @@ class ClinicalEncounter extends Component
         'physical_exam' => 'required',
         'impression' => 'required',
     ];
+
+    public $patientId;
+    protected $queryString = ['patientId'];
     
     public function render()
     {
@@ -40,10 +43,10 @@ class ClinicalEncounter extends Component
         return view('livewire.station.clinical-encounter');
     }
 
-    public function mount($patientId = null)
+    public function mount()
     {
-        if($patientId){
-            $this->selectPatient($patientId);
+        if($this->patientId){
+            $this->selectPatient($this->patientId);
         }
     }
     

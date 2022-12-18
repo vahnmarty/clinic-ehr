@@ -22,16 +22,19 @@ class ResearchForms extends Component implements HasTable
     use SearchPatientTrait;
 
     protected $listeners = ['selectPatient'];
+
+    public $patientId;
+    protected $queryString = ['patientId'];
     
     public function render()
     {
         return view('livewire.station.research-forms');
     }
 
-    public function mount($patientId = null)
+    public function mount()
     {
-        if($patientId){
-            $this->selectPatient($patientId);
+        if($this->patientId){
+            $this->selectPatient($this->patientId);
         }
     }
 

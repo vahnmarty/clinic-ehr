@@ -72,23 +72,23 @@ class ClinicDashboard extends Component implements HasTable
             ActionGroup::make([
                 Action::make('edit')
                     ->label('Edit Patient Details')
-                    ->url(fn (Application $record): string => route('patient.edit', $record->patient_id))
+                    ->url(fn (Application $record): string => route('station.patient-details', ['patientId' => $record->patient_id]))
                     ->openUrlInNewTab(),
                 Action::make('vital')
                     ->label('Vital Signs')
-                    ->url(fn (Application $record): string => route('station.vital-sign', $record->patient_id))
+                    ->url(fn (Application $record): string => route('station.vital-sign', ['patientId' => $record->patient_id]))
                     ->openUrlInNewTab(),
                 Action::make('research')
                     ->label('Research Form')
-                    ->url(fn (Application $record): string => route('station.research', $record->patient_id))
+                    ->url(fn (Application $record): string => route('station.research', ['patientId' => $record->patient_id]))
                     ->openUrlInNewTab(),
                 Action::make('clinic')
                     ->label('Clinic Encounter')
-                    ->url(fn (Application $record): string => route('station.clinical-encounter', $record->patient_id))
+                    ->url(fn (Application $record): string => route('station.clinical-encounter', ['patientId' => $record->patient_id]))
                     ->openUrlInNewTab(),
                 Action::make('pharmacy')
                     ->label('Pharmacy Order')
-                    ->url(fn (Application $record): string => route('station.pharmacy-order', $record->patient_id))
+                    ->url(fn (Application $record): string => route('station.pharmacy-order', ['patientId' => $record->patient_id]))
                     ->openUrlInNewTab(),
             ]),
         ];

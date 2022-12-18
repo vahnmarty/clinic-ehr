@@ -25,16 +25,19 @@ class PharmacyOrder extends Component implements HasTable
     use LivewireAlert;
 
     protected $listeners = ['selectPatient'];
+
+    public $patientId;
+    protected $queryString = ['patientId'];
     
     public function render()
     {
         return view('livewire.station.pharmacy-order');
     }
 
-    public function mount($patientId = null)
+    public function mount()
     {
-        if($patientId){
-            $this->selectPatient($patientId);
+        if($this->patientId){
+            $this->selectPatient($this->patientId);
         }
     }
 

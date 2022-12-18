@@ -36,16 +36,19 @@ class PatientVitalSign extends Component
         'date_of_birth' => 'required',
         'date_of_visit' => 'required',
     ];
+
+    public $patientId;
+    protected $queryString = ['patientId'];
     
     public function render()
     {
         return view('livewire.station.patient-vital-sign');
     }
 
-    public function mount($patientId = null)
+    public function mount()
     {
-        if($patientId){
-            $this->selectPatient($patientId);
+        if($this->patientId){
+            $this->selectPatient($this->patientId);
         }
     }
 

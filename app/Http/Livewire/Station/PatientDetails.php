@@ -28,6 +28,9 @@ class PatientDetails extends Component implements HasForms
 
     protected $listeners = ['selectPatient' , 'confirmMedicalHistory'];
 
+    public $patientId;
+    protected $queryString = ['patientId'];
+
     public $patient_number, $first_name, $last_name, $email, $date_of_birth;
 
     public function render()
@@ -35,10 +38,10 @@ class PatientDetails extends Component implements HasForms
         return view('livewire.station.patient-details');
     }
 
-    public function mount($patientId = null)
+    public function mount()
     {
-        if($patientId){
-            $this->selectPatient($patientId);
+        if($this->patientId){
+            $this->selectPatient($this->patientId);
         }
     }
 

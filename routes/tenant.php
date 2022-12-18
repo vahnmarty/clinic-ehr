@@ -79,11 +79,11 @@ Route::middleware([
 
         
         Route::get('check-in', CheckIn::class)->name('station.checkin');
-        Route::get('patient-details/{patientId?}', PatientDetails::class)->name('station.patient-details');
-        Route::get('vital-sign/{patientId?}', PatientVitalSign::class)->name('station.vital-sign');
-        Route::get('clinical-encounter/{patientId?}', ClinicalEncounter::class)->name('station.clinical-encounter');
-        Route::get('pharmacy-order/{patientId?}', PharmacyOrder::class)->name('station.pharmacy-order');
-        Route::get('research/{patientId?}', ResearchForms::class)->name('station.research');
+        Route::get('patient-details', PatientDetails::class)->name('station.patient-details');
+        Route::get('vital-sign', PatientVitalSign::class)->name('station.vital-sign');
+        Route::get('clinical-encounter', ClinicalEncounter::class)->name('station.clinical-encounter');
+        Route::get('pharmacy-order', PharmacyOrder::class)->name('station.pharmacy-order');
+        Route::get('research', ResearchForms::class)->name('station.research');
         
         
 
