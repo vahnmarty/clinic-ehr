@@ -6,11 +6,14 @@ use App\Models\Clinic;
 use App\Models\Patient;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Contracts\HasTable;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Filament\Tables\Concerns\InteractsWithTable;
 
-class DashboardPatients extends Component
+class DashboardPatients extends Component implements HasTable
 {
-    use WithPagination;
+    use InteractsWithTable;
 
     use LivewireAlert;
 
@@ -29,6 +32,22 @@ class DashboardPatients extends Component
     public function mount()
     {
         $this->clinics = Clinic::get();
+    }
+
+    protected function getTableQuery() 
+    {
+        return Patient::query();
+    }
+
+    protected function getTableColumns(): array
+    {
+        return [
+            TextColumn::make('id')->rowIndex(),
+            TextColumn::make('patient_number')->label('Patient ID')->searchable(),
+            TextColumn::make('full_name')->label('Name')->sortable()->searchable(),
+            TextColumn::make('created_at')->dateTime(),
+            
+        ];
     }
 
     public function checkInPatient($patient_id)
