@@ -14,7 +14,7 @@ class ShowPatient extends Component
 {    
     public $patient_id;
 
-    public $app;
+    public $app, $applications = [];
 
     public function render()
     {
@@ -28,5 +28,7 @@ class ShowPatient extends Component
         $this->patient_id = $id;
 
         $this->app = Application::where('patient_id', $id)->latest()->first();
+
+        $this->applications = Application::where('patient_id', $id)->latest()->get();
     }
 }
