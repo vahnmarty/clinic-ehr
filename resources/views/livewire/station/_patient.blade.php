@@ -21,6 +21,7 @@
         </div>
     </div>
     <div>
+        @if($patient->latestApp)
         <nav aria-label="Progress" class="-mt-2">
             <ol role="list" class="flex items-center">
                 <x-progress-item label="Check-in" :done="$patient->latestApp->check_in_at ? true : false"/>
@@ -30,5 +31,16 @@
                 <x-progress-item label="Orders" :done="$patient->latestApp->pharmacy_order_finished_at ? true : false" :last="true"/>
             </ol>
         </nav>
+        @else
+        <nav aria-label="Progress" class="-mt-2">
+            <ol role="list" class="flex items-center">
+                <x-progress-item label="Check-in" :done="false" />
+                <x-progress-item label="Vitals"  :done="false" />
+                <x-progress-item label="Public Health" :done="false" />
+                <x-progress-item label="Encounter" :done="false" />
+                <x-progress-item label="Orders" :done="false" />
+            </ol>
+        </nav>
+        @endif
     </div>
 </div>

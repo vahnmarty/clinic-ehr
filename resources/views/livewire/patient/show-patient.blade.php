@@ -51,8 +51,11 @@
 
     <div class="wrapper">
         <div class="px-8 text-gray-900 bg-white rounded-md">
-            <header class="py-6 ">
+            <header class="flex items-center justify-between py-6">
                 <h3 class="text-xl font-bold">{{ __('Patient Information') }}</h3>
+                <div>
+                    <a href="{{ route('station.patient-details', $patient_id) }}" class="btn-primary">Edit</a>
+                </div>
             </header>
             <div class="">
                 <div class="py-6 border-t">

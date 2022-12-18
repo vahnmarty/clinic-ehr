@@ -35,9 +35,11 @@ class PatientDetails extends Component implements HasForms
         return view('livewire.station.patient-details');
     }
 
-    public function mount()
+    public function mount($patientId = null)
     {
-        
+        if($patientId){
+            $this->selectPatient($patientId);
+        }
     }
 
     public function fillFilamentForm()
