@@ -11,6 +11,7 @@ use App\Http\Controllers\PdfController;
 use App\Http\Livewire\Patient\EditParent;
 use App\Http\Livewire\Patient\EditPatient;
 use App\Http\Livewire\Patient\ShowPatient;
+use App\Http\Controllers\ProfileController;
 use App\Http\Livewire\Station\EditResearch;
 use App\Http\Livewire\Station\PharmacyOrder;
 use App\Http\Livewire\Station\ResearchForms;
@@ -51,6 +52,12 @@ Route::middleware([
     });
 
     require __DIR__.'/auth.php';
+
+    Route::middleware('auth')->group(function () {
+        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    });
 
     Route::get('dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
     Route::get('dashboard/clinic/{clinicId?}', ClinicDashboard::class)->name('dashboard.clinic');
