@@ -109,8 +109,8 @@ Route::middleware([
     Route::get('pdf/research/{id}', [PdfController::class, 'research']);
 
 
-    Route::get('pharmacy/products', ManageProducts::class);
-    Route::get('pharmacy/laboratories', ManageLaboratories::class);
+    Route::get('pharmacy/products', ManageProducts::class)->name('pharmacy.products');
+    Route::get('pharmacy/laboratories', ManageLaboratories::class)->name('pharmacy.laboratories');
 
 
 });

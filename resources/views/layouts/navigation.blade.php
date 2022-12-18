@@ -11,7 +11,7 @@
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                <div class="hidden sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
@@ -20,11 +20,11 @@
                         {{ __('Clinic') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="url('pharmacy/products')" :active="request()->routeIs('pharmacy')">
+                    <x-nav-link :href="url('pharmacy/products')" :active="request()->routeIs('pharmacy.products')">
                         {{ __('Products') }}
                     </x-nav-link>
                     
-                    <x-nav-link :href="url('pharmacy/laboratories')" :active="request()->routeIs('pharmacy')">
+                    <x-nav-link :href="url('pharmacy/laboratories')" :active="request()->routeIs('pharmacy.laboratories')">
                         {{ __('Laboratories') }}
                     </x-nav-link>
 

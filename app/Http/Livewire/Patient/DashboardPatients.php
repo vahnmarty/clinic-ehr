@@ -6,6 +6,7 @@ use App\Models\Clinic;
 use App\Models\Patient;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Contracts\HasTable;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
@@ -73,6 +74,15 @@ class DashboardPatients extends Component implements HasTable
             'confirmButtonText' => 'Yes, confirm delete',
             'onConfirmed' => 'confirmDelete',
         ]);
+    }
+
+    protected function getTableActions(): array
+    {
+        return [
+            Action::make('view')
+                ->url(fn (Patient $record): string => route('patient.show', $record->id))
+                ->button(),
+        ];
     }
     
 }
