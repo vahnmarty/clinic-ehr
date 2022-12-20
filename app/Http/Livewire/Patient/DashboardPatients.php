@@ -47,6 +47,7 @@ class DashboardPatients extends Component implements HasTable
             TextColumn::make('patient_number')->label('Patient ID')->searchable(),
             TextColumn::make('first_name')->sortable()->searchable(),
             TextColumn::make('last_name')->sortable()->searchable(),
+            TextColumn::make('date_of_birth'),
             TextColumn::make('created_at')->dateTime(),
             
         ];
