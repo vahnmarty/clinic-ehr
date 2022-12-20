@@ -62,6 +62,14 @@ class Patient extends Model
                     ->orWhere('last_name', 'LIKE', '%' . $keyword . '%');
     }
 
+    public function scopeMale($query){
+        return $query->where('sex', 'male');
+    }
+
+    public function scopeFemale($query){
+        return $query->where('sex', 'female');
+    }
+
     public function clinics()
     {
         return $this->belongsToMany(Clinic::class, 'clinic_patients');
