@@ -11,6 +11,7 @@ use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
 use Filament\Forms\ComponentContainer;
 use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Forms\Components\TextInput;
@@ -66,6 +67,7 @@ class VaccineRecords extends Component implements HasTable
     protected function getTableActions() : array
     {
         return [
+            ViewAction::make(),
             Action::make('edit')
                 ->label('Edit')
                 ->icon('heroicon-o-pencil')
@@ -116,8 +118,9 @@ class VaccineRecords extends Component implements HasTable
     protected function getTableColumns(): array
     {
         return [
+            TextColumn::make('id')->rowIndex(),
+            TextColumn::make('date_administered')->date(),
             TextColumn::make('name'),
-            TextColumn::make('date_administered'),
             TextColumn::make('injection_sight'),
             TextColumn::make('lot_number'),
         ];

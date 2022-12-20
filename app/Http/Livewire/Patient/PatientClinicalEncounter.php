@@ -37,9 +37,9 @@ class PatientClinicalEncounter extends Component implements HasTable
     {
         return [
             TextColumn::make('id')->sortable()->searchable(),
+            TextColumn::make('created_at')->date(),
             TextColumn::make('chief_complaint')->sortable()->searchable(),
             TextColumn::make('user.name'),
-            TextColumn::make('created_at')->date(),
         ];
     }
 
