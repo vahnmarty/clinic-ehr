@@ -186,7 +186,7 @@
                             <x-heroicon-o-check-circle class="w-6 h-6 text-gray-300"/>
                             @endif
                         </x-table.td>
-                        <x-table.td>{{ $application->vital_sign_finished_at->format('M d, Y') }}</x-table.td>
+                        <x-table.td>{{ $application->vital_sign_finished_at?->format('M d, Y') }}</x-table.td>
                         <x-table.td>{{ $application->getUser($application->vital_sign_user_id) }}</x-table.td>
                     </tr>
                     <tr>

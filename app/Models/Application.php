@@ -42,9 +42,9 @@ class Application extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function getUser($id)
+    public function getUser($id = null)
     {
-        return User::find($id)?->name;
+        return $id ?  User::find($id)?->name : '';
     }
 
     public function getCode()
