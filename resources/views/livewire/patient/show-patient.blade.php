@@ -160,7 +160,7 @@
                             <x-heroicon-o-check-circle class="w-6 h-6 text-gray-300"/>
                             @endif
                         </x-table.td>
-                        <x-table.td>{{ $application->check_in_at->format('M d, Y') }}</x-table.td>
+                        <x-table.td>{{ $application->check_in_at?->format('M d, Y') }}</x-table.td>
                         <x-table.td>{{ $application->getUser($application->check_in_user_id) }}</x-table.td>
                     </tr>
                     <tr>
@@ -173,7 +173,7 @@
                             <x-heroicon-o-check-circle class="w-6 h-6 text-gray-300"/>
                             @endif
                         </x-table.td>
-                        <x-table.td>{{ $application->patient_info_finished_at->format('M d, Y') }}</x-table.td>
+                        <x-table.td>{{ $application->patient_info_finished_at?->format('M d, Y') }}</x-table.td>
                         <x-table.td>{{ $application->getUser($application->patient_info_user_id) }}</x-table.td>
                     </tr>
                     <tr>
@@ -199,7 +199,7 @@
                             <x-heroicon-o-check-circle class="w-6 h-6 text-gray-300"/>
                             @endif
                         </x-table.td>
-                        <x-table.td>{{ $application->research_form_finished_at->format('M d, Y') }}</x-table.td>
+                        <x-table.td>{{ $application->research_form_finished_at?->format('M d, Y') }}</x-table.td>
                         <x-table.td>{{ $application->getUser($application->research_form_user_id) }}</x-table.td>
                     </tr>
                     <tr>
@@ -212,7 +212,7 @@
                             <x-heroicon-o-check-circle class="w-6 h-6 text-gray-300"/>
                             @endif
                         </x-table.td>
-                        <x-table.td>{{ $application->clinic_encounter_finished_at->format('M d, Y') }}</x-table.td>
+                        <x-table.td>{{ $application->clinic_encounter_finished_at?->format('M d, Y') }}</x-table.td>
                         <x-table.td>{{ $application->getUser($application->clinic_encounter_user_id) }}</x-table.td>
                     </tr>
                     <tr>
@@ -225,7 +225,7 @@
                             <x-heroicon-o-check-circle class="w-6 h-6 text-gray-300"/>
                             @endif
                         </x-table.td>
-                        <x-table.td>{{ $application->pharmacy_order_finished_at->format('M d, Y') }}</x-table.td>
+                        <x-table.td>{{ $application->pharmacy_order_finished_at?->format('M d, Y') }}</x-table.td>
                         <x-table.td>{{ $application->getUser($application->pharmacy_order_user_id) }}</x-table.td>
                     </tr>
                     @endforeach
