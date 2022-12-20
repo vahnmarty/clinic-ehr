@@ -21,6 +21,8 @@ class PatientCurrentMedications extends Component implements HasTable
     use InteractsWithTable;
 
     public $patient_id;
+
+    public $name, $supplements;
     
     public function render()
     {
@@ -47,13 +49,18 @@ class PatientCurrentMedications extends Component implements HasTable
     protected function getTableColumns(): array
     {
         return [
-            TextColumn::make('name')
+            TextColumn::make('id')->rowIndex(),
+            TextColumn::make('name'),
+            TextColumn::make('supplements'),
         ];
     }
 
     protected function getForm()
     {
-        return [ TextInput::make('name')->required() ];
+        return [ 
+                TextInput::make('name')->required(),
+                TextInput::make('supplements')
+             ];
     }
 
     protected function getTableEmptyStateActions(): array

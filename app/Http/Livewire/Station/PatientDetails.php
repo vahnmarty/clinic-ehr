@@ -29,7 +29,7 @@ class PatientDetails extends Component implements HasForms
     protected $listeners = ['selectPatient' , 'confirmMedicalHistory'];
 
     public $patientId;
-    protected $queryString = ['patientId'];
+    protected $queryString = ['patientId', 'step'];
 
     public $patient_number, $first_name, $last_name, $email, $date_of_birth;
 

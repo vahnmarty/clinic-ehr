@@ -1,8 +1,6 @@
-@props(['label', 'striped' => false])
+@props(['label'])
 <div
-    class="py-3 {{
-        $striped ? 'bg-indigo-50' : 'bg-white'
-    }} sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3 items-start"
+    class="items-start py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0"
 >
     <dt class="text-sm font-bold text-gray-900">
         {{ $label }}

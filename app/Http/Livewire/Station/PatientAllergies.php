@@ -48,6 +48,7 @@ class PatientAllergies extends Component implements HasTable
     protected function getTableColumns(): array
     {
         return [
+            TextColumn::make('id')->rowIndex(),
             TextColumn::make('name')
         ];
     }

@@ -13,6 +13,7 @@ trait SearchPatientTrait
     public function selectPatient($id)
     {
         $this->patient_id = $id;
+        $this->patientId = $id;
         $this->patient = Patient::find($id);
 
         try {

@@ -41,6 +41,7 @@
 
                 @if ($step == 'medical')
                     @livewire('station.patient-medical-history', ['patientId' => $patient_id])
+                    @livewire('station.patient-current-medications', ['patientId' => $patient_id])
 
                     <div class="flex justify-end gap-4 mt-8">
                         <button type="button" wire:click="promptMedicalHistory()"
