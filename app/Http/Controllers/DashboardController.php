@@ -29,7 +29,7 @@ class DashboardController extends Controller
         $total_female = Patient::female()->count();
         $age_range = range(0, 6);
         $age_groups = collect();
-
+        
         foreach($age_range as $age)
         {
             $group = $age;
@@ -40,13 +40,40 @@ class DashboardController extends Controller
             }
             $age_groups->push([
                 'group' => $group,
-                'total' => Patient::whereDate('date_of_birth', '>=', now()->subYears($age))->count(),
-                'male' => Patient::whereDate('date_of_birth', '>=', now()->subYears($age))->male()->count(),
-                'female' => Patient::whereDate('date_of_birth', '>=', now()->subYears($age))->female()->count(),
+                'total' => $this->countPatient($age),
+                'male' => $this->countPatient($age, 'male'),
+                'female' => $this->countPatient($age, 'female'),
+            ]);
+        }
+        
+        return view('dashboard', compact('total_patients', 'clinics', 'total_pharmacy', 'total_laboratory', 'age_groups', 'total_male', 'total_female'));
+    }
+
+    public function getPatients()
+    {
+        $patients = collect();
+        foreach(Patient::get() as $patient)
+        {
+            $patients->push([
+                'id' => $patient->id,
+                'sex' => $patient->sex,
+                'age' => $patient->age
             ]);
         }
 
-        return view('dashboard', compact('total_patients', 'clinics', 'total_pharmacy', 'total_laboratory', 'age_groups', 'total_male', 'total_female'));
+        return $patients;
+    }
+
+    public function countPatient($age, $gender = null)
+    {
+        $collection = $this->getPatients();
+
+        if($gender){
+            return $collection->where('age', $age)->where('sex', $gender)->count();
+        }else{
+            return $collection->where('age', $age)->count();
+        }
+
     }
 
     public function clinicDashboard($clinic_id)

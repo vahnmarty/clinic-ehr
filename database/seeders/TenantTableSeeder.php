@@ -90,7 +90,7 @@ class TenantTableSeeder extends Seeder
                 'first_name' => $faker->firstName,
                 'last_name' => $faker->lastName,
                 'email' => $faker->email,
-                'date_of_birth' => $faker->date(),
+                'date_of_birth' => $faker->dateTimeBetween('-6 years', now()),
                 'sex' => $faker->randomElement(['male', 'female']),
                 
             ]);

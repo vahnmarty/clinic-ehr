@@ -8,6 +8,7 @@ use App\Enums\PrimaryLanguage;
 use App\Models\MedicalProblem;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Carbon\Carbon;
 
 class Patient extends Model
 {
@@ -15,7 +16,7 @@ class Patient extends Model
 
     protected $guarded = [];
 
-    protected $appends = [ 'full_name', 'image_avatar' ];
+    protected $appends = [ 'full_name', 'image_avatar', 'age' ];
 
     protected $casts = [
         'identity' => RacialIdentity::class,
@@ -35,6 +36,11 @@ class Patient extends Model
     public function getImageAvatarAttribute()
     {
         return $this->getAvatar();
+    }
+
+    public function getAgeAttribute()
+    {
+        return Carbon::parse($this->date_of_birth)->age;
     }
 
     public function getFullName()
