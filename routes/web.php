@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Livewire\User\Dashboard;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\RegisteredUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,5 +18,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('register', [RegisteredUserController::class, 'create'])
+         ->name('register');
+Route::post('register', [RegisteredUserController::class, 'store']);
+
+Route::get('login', [AuthenticatedSessionController::class, 'create'])
+                ->name('login');
+
+Route::get('dashboard', Dashboard::class)->name('dashboard');
 
 
