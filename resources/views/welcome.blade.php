@@ -67,9 +67,9 @@
                             </div>
                             <div class="hidden md:absolute md:inset-y-0 md:right-0 md:flex md:items-center md:justify-end">
                                 <span class="inline-flex rounded-md shadow">
-                                    <a href="#"
-                                        class="inline-flex items-center px-4 py-2 text-base font-medium text-indigo-600 bg-white border border-transparent rounded-md hover:text-indigo-500">Log
-                                        in</a>
+                                    <a href="{{ url('login') }}"
+                                        class="inline-flex items-center px-4 py-2 text-base font-medium text-indigo-600 bg-white border border-transparent rounded-md hover:text-indigo-500">Log in
+                                    </a>
                                 </span>
                             </div>
                         </nav>

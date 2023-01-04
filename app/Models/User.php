@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Laravel\Cashier\Billable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
@@ -17,6 +18,8 @@ class User extends Authenticatable
     use HasRoles;
 
     use SoftDeletes;
+
+    use Billable;
 
     /**
      * The attributes that are mass assignable.

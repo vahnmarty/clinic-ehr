@@ -26,7 +26,7 @@
 <body class="h-full font-sans antialiased">
 
     <div class="min-h-full">
-        <div class="pb-32 bg-gray-800">
+        <div class="bg-gray-800 ">
             @include('includes.user.navigation')
 
             <header class="py-10">
@@ -36,10 +36,11 @@
             </header>
         </div>
 
-        <main class="-mt-32">
-            <div class="px-4 pb-12 mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <main class="">
+            <div class="px-4 pt-12 pb-12 mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <!-- Replace with your content -->
-                {{ $slot }}
+                {{ $slot ?? '' }}
+                @yield('content')
                 <!-- /End replace -->
             </div>
         </main>
