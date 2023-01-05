@@ -70,20 +70,22 @@
         <div>
             <h2 class="mb-4 text-xl font-bold">My Subscription</h2>
             <div class="px-6 py-6 bg-white border rounded-md shadow-sm">
-                <div>
+                @if (Auth::user()->subscribed())
                     <div>
-                        <span class="px-3 py-1 text-xs text-gray-900 bg-green-400 rounded-md">
-                            Standard
-                        </span>
-                    </div>
-                    <div>
-                        <div class="flex gap-1 mt-2">
-                            <div class="text-xl text-gray-600">$</div>
-                            <div class="text-5xl font-bold text-gray-900">300</div>
-                            <div class="self-end text-lg text-gray-600">/mo</div>
+                        <div>
+                            <span class="px-3 py-1 text-xs text-gray-900 bg-green-400 rounded-md">
+                                Standard
+                            </span>
+                        </div>
+                        <div>
+                            <div class="flex gap-1 mt-2">
+                                <div class="text-xl text-gray-600">$</div>
+                                <div class="text-5xl font-bold text-gray-900">300</div>
+                                <div class="self-end text-lg text-gray-600">/mo</div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                @endif
                 <div class="pt-4 mt-4 border-t">
                     <a href="{{ url('billing') }}" class="text-sm font-bold text-indigo-500">Manage Subscription</a>
                 </div>
