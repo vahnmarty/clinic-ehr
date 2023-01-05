@@ -12,7 +12,7 @@ class SubscriptionPage extends Component
     
     public function render()
     {
-        $intent = $user->createSetupIntent();
+        $intent = Auth::user()->createSetupIntent();
         return view('livewire.user.subscription-page', compact('intent'));
     }
 
