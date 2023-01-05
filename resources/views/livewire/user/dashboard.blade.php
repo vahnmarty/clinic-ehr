@@ -3,9 +3,9 @@
 </x-slot>
 
 <div>
-    @if (Auth::user()->tenants()->count())
-        <div class="grid grid-cols-3 gap-8">
-            <div class="col-span-2">
+    <div class="grid grid-cols-3 gap-8">
+        <div class="col-span-2">
+            @if (Auth::user()->tenants()->count())
                 <h2 class="mb-4 text-xl font-bold">My Applications</h2>
                 <div class="grid grid-cols-2 gap-5">
                     @foreach ($tenants as $tenant)
@@ -68,54 +68,74 @@
                         </div>
                     @endforeach
                 </div>
-            </div>
-            <div>
-                <h2 class="mb-4 text-xl font-bold">My Subscription</h2>
+            @else
+                <button x-data x-on:click="$dispatch('openmodal-create')" type="button"
+                    class="relative block w-full p-12 text-center border-2 border-gray-300 border-dashed rounded-lg hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                    <svg class="w-12 h-12 mx-auto text-gray-400" xmlns="http://www.w3.org/2000/svg"
+                        stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M8 14v20c0 4.418 7.163 8 16 8 1.381 0 2.721-.087 4-.252M8 14c0 4.418 7.163 8 16 8s16-3.582 16-8M8 14c0-4.418 7.163-8 16-8s16 3.582 16 8m0 0v14m0-4c0 4.418-7.163 8-16 8S8 28.418 8 24m32 10v6m0 0v6m0-6h6m-6 0h-6" />
+                    </svg>
+                    <span class="block mt-2 text-sm font-medium text-gray-900">Create a new application</span>
+                </button>
+                <div>
+
+                    <x-modal ref="create">
+                        <x-slot name="title">{{ __('Create Application') }}</x-slot>
+                        <div class="p">
+
+                            @livewire('user.applications.create-application')
+
+                        </div>
+                    </x-modal>
+                </div>
+            @endif
+        </div>
+        <div>
+
+            <h2 class="mb-4 text-xl font-bold">My Subscription</h2>
+
+            @if (Auth::user()->subscribed())
                 <div class="px-6 py-6 bg-white border rounded-md shadow-sm">
-                    @if (Auth::user()->subscribed())
+                    <div>
                         <div>
-                            <div>
-                                <span class="px-3 py-1 text-xs text-gray-900 bg-green-400 rounded-md">
-                                    Standard
-                                </span>
-                            </div>
-                            <div>
-                                <div class="flex gap-1 mt-2">
-                                    <div class="text-xl text-gray-600">$</div>
-                                    <div class="text-5xl font-bold text-gray-900">300</div>
-                                    <div class="self-end text-lg text-gray-600">/mo</div>
-                                </div>
+                            <span class="px-3 py-1 text-xs text-gray-900 bg-green-400 rounded-md">
+                                Standard
+                            </span>
+                        </div>
+                        <div>
+                            <div class="flex gap-1 mt-2">
+                                <div class="text-xl text-gray-600">$</div>
+                                <div class="text-5xl font-bold text-gray-900">300</div>
+                                <div class="self-end text-lg text-gray-600">/mo</div>
                             </div>
                         </div>
-                    @endif
+                    </div>
+
                     <div class="pt-4 mt-4 border-t">
                         <a href="{{ url('billing') }}" class="text-sm font-bold text-indigo-500">Manage Subscription</a>
                     </div>
                 </div>
-            </div>
-        </div>
-    @else
-        <button x-data x-on:click="$dispatch('openmodal-create')" type="button"
-            class="relative block w-full p-12 text-center border-2 border-gray-300 border-dashed rounded-lg hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-            <svg class="w-12 h-12 mx-auto text-gray-400" xmlns="http://www.w3.org/2000/svg" stroke="currentColor"
-                fill="none" viewBox="0 0 48 48" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M8 14v20c0 4.418 7.163 8 16 8 1.381 0 2.721-.087 4-.252M8 14c0 4.418 7.163 8 16 8s16-3.582 16-8M8 14c0-4.418 7.163-8 16-8s16 3.582 16 8m0 0v14m0-4c0 4.418-7.163 8-16 8S8 28.418 8 24m32 10v6m0 0v6m0-6h6m-6 0h-6" />
-            </svg>
-            <span class="block mt-2 text-sm font-medium text-gray-900">Create a new application</span>
-        </button>
-        <div>
+            @endif
 
-            <x-modal ref="create">
-                <x-slot name="title">{{ __('Create Application') }}</x-slot>
-                <div class="p">
+            @if (Auth::user()->onTrial())
+                <div class="px-6 py-6 bg-white border rounded-md shadow-sm">
+                    <div>
+                        <div>
+                            <span class="px-3 py-1 text-xs text-white bg-red-600 rounded-md">
+                                Free Trial
+                            </span>
+                        </div>
+                        <p class="mt-2 text-xs">Your free trial expires at
+                            {{ auth()->user()->trial_ends_at->format('F d') }}.</p>
+                    </div>
 
-                    @livewire('user.applications.create-application')
-
+                    <div class="pt-4 mt-4 border-t">
+                        <a href="{{ url('billing') }}" class="text-sm font-bold text-indigo-500">Upgrade Now</a>
+                    </div>
                 </div>
-            </x-modal>
+            @endif
+
         </div>
-    @endif
-
-
+    </div>
 </div>

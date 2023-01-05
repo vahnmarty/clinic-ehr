@@ -44,6 +44,7 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'trial_ends_at' => now()->addDays(14),
         ]);
 
         event(new Registered($user));
@@ -51,5 +52,10 @@ class RegisteredUserController extends Controller
         Auth::login($user);
 
         return redirect(RouteServiceProvider::HOME);
+    }
+
+    public function subscribeFreeTrial()
+    {
+
     }
 }
