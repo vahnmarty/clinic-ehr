@@ -19,6 +19,11 @@
                 </div>
                 <div class="hidden md:block">
                     <div class="flex items-center gap-4 ml-4 md:ml-6">
+                        @if(Auth::user()->subscribed())
+                        <div class="px-3 py-1 text-xs text-gray-900 bg-green-400 rounded-md">
+                            Standard
+                        </div>
+                        @endif
                         <button type="button"
                             class="p-1 text-gray-400 bg-gray-800 rounded-full hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                             <span class="sr-only">View notifications</span>
