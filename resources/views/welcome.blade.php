@@ -188,12 +188,12 @@
                     <div>
                         <h1 class="text-4xl font-bold tracking-tight sm:text-5xl">
                             <span class="text-gray-900">Everything you need for</span>
-                            <span class="text-indigo-600">$99 a month</span>
+                            <span class="text-indigo-600">$300 a month</span>
                         </h1>
                         <p class="mt-5 text-xl text-gray-500">Includes every feature we offer plus unlimited clinics and
                             unlimited users.</p>
                     </div>
-                    <a href="#"
+                    <a href="{{ url('register') }}"
                         class="inline-flex items-center justify-center w-full px-5 py-3 mt-8 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-700 sm:mt-10 sm:w-auto xl:mt-0">Get
                         started today</a>
                 </div>

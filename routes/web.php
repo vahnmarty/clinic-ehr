@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\User\ManageBilling;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Livewire\User\Applications\CreateApplication;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 /*
@@ -27,12 +28,14 @@ Route::get('register', [RegisteredUserController::class, 'create'])->name('regis
 Route::post('register', [RegisteredUserController::class, 'store']);
 Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
 Route::post('login', [AuthenticatedSessionController::class, 'store']);
+Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
 
 
 
 Route::group(['middleware' => 'auth'], function(){
     Route::get('dashboard', Dashboard::class)->name('home');
+    Route::get('applications/create', CreateApplication::class);
     Route::get('billing', ManageBilling::class)->name('manage-billing');
     Route::get('subscription', [SubscriptionController::class, 'intent']);
     Route::get('payment', [SubscriptionController::class, 'defaultPayment']);
