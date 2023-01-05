@@ -41,9 +41,10 @@
         );
     
         if (error) {
+            alert(error.message);
             // Display "error.message" to the user...
         } else {
-            // The card has been verified successfully...
+            alert('The card has been verified');
         }
     });
 </script>

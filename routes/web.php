@@ -35,16 +35,11 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('dashboard', Dashboard::class)->name('home');
     Route::get('billing', ManageBilling::class)->name('manage-billing');
     Route::get('subscription', [SubscriptionController::class, 'intent']);
+    Route::get('payment', [SubscriptionController::class, 'defaultPayment']);
     Route::post('subscribe', [SubscriptionController::class, 'subscribe']);
-    Route::get('checkout', function(Request $request){
-        $user = $request->user();
-        $user->createAsStripeCustomer();
-        return $user
-            ->newSubscription(config('billing.plan'), config('billing.price'))
-            ->checkout([
-                'success_url' => url('billing?checkout=success'),
-                'cancel_url' => url('billing?checkout=cancelled'),
-            ]);
-    });
+    Route::get('checkout', [SubscriptionController::class, 'checkout']);
+
+    Route::get('subscription/create-customer');
+    Route::get('subscription/payment');
 });
 
