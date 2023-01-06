@@ -27,6 +27,7 @@ use App\Http\Livewire\Patient\ViewClinicalEncounter;
 use App\Http\Livewire\Research\IntermittentHealthForm;
 use App\Http\Livewire\Station\Research\ViewResearchForm;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
+use App\Http\Livewire\Research\ParentalHistoryForm;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
 /*
@@ -83,18 +84,14 @@ Route::middleware([
     Route::group(['middleware' => ['auth'], 'prefix' => 'station'], function(){
 
 
-        
+        // Stations
         Route::get('portal/{patientId}/{action}', [PortalController::class, 'redirector'])->name('station.portal');
-
         Route::get('check-in', CheckIn::class)->name('station.checkin');
         Route::get('patient-details', PatientDetails::class)->name('station.patient-details');
         Route::get('vital-sign', PatientVitalSign::class)->name('station.vital-sign');
         Route::get('clinical-encounter', ClinicalEncounter::class)->name('station.clinical-encounter');
         Route::get('pharmacy-order', PharmacyOrder::class)->name('station.pharmacy-order');
         Route::get('research', ResearchForms::class)->name('station.research');
-        
-        
-
 
         // Research Forms
         Route::get('research/{researchId}/edit', EditResearch::class);
@@ -103,6 +100,8 @@ Route::middleware([
         Route::get('research/{patientId}/IntermittentHealthForm/{researchId?}/edit', IntermittentHealthForm::class)->name('station.research.intermittent-health-form.edit');
         Route::get('research/{patientId}/MaternalHealthQuestionairre', MaternalHealthForm::class);
         Route::get('research/{patientId}/MaternalHealthQuestionairre/{researchId?}/edit', MaternalHealthForm::class);
+        Route::get('research/{patientId}/ParentalHistoryQuestionairre', ParentalHistoryForm::class);
+        Route::get('research/{patientId}/ParentalHistoryQuestionairre/{researchId?}/edit', ParentalHistoryForm::class);
         
         
     });

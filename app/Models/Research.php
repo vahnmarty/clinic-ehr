@@ -30,4 +30,9 @@ class Research extends Model
     {
         return $this->belongsTo(ResearchMaternalHealthForm::class, 'maternal_health_id');
     }
+
+    public function parental()
+    {
+        return $this->belongsTo(ResearchParentalHistoryForm::class, 'parental_history_id');
+    }
 }
