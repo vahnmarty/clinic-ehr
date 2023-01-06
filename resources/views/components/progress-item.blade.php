@@ -19,7 +19,7 @@
     <div class="absolute inset-0 flex items-center" aria-hidden="true">
       <div class="h-0.5 w-full bg-gray-200"></div>
     </div>
-    <a href="#" class="relative flex items-center justify-center w-8 h-8 bg-white border-2 border-gray-300 rounded-full group hover:border-gray-400">
+    <a href="{{ $link }}" class="relative flex items-center justify-center w-8 h-8 bg-white border-2 border-gray-300 rounded-full group hover:border-gray-400">
       <span class="h-2.5 w-2.5 rounded-full bg-transparent group-hover:bg-gray-300" aria-hidden="true"></span>
       <span class="absolute w-20 text-xs text-center -bottom-5">{{ $label }}</span>
     </a>

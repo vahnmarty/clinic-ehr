@@ -38,7 +38,7 @@
                 <x-progress-item label="Vitals"  :done="false" />
                 <x-progress-item label="Public Health" :done="false" />
                 <x-progress-item label="Encounter" :done="false" />
-                <x-progress-item label="Orders" :done="false" />
+                <x-progress-item label="Orders" :done="false" :last="true" />
             </ol>
         </nav>
         @endif

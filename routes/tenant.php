@@ -9,6 +9,7 @@ use App\Http\Livewire\ClinicDashboard;
 use App\Http\Livewire\Station\CheckIn;
 use App\Http\Controllers\PdfController;
 use App\Http\Livewire\Patient\EditParent;
+use App\Http\Controllers\PortalController;
 use App\Http\Livewire\Patient\EditPatient;
 use App\Http\Livewire\Patient\ShowPatient;
 use App\Http\Controllers\ProfileController;
@@ -83,8 +84,8 @@ Route::middleware([
 
 
         
+        Route::get('portal/{patientId}/{action}', [PortalController::class, 'redirector'])->name('station.portal');
 
-        
         Route::get('check-in', CheckIn::class)->name('station.checkin');
         Route::get('patient-details', PatientDetails::class)->name('station.patient-details');
         Route::get('vital-sign', PatientVitalSign::class)->name('station.vital-sign');

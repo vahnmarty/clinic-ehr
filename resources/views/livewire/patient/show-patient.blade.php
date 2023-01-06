@@ -37,11 +37,31 @@
 
                     <nav aria-label="Progress">
                         <ol role="list" class="flex items-center">
-                            <x-progress-item label="Check-in" :done="$app?->check_in_at ? true : false" />
-                            <x-progress-item label="Vitals" :done="$app?->vital_sign_finished_at ? true : false" />
-                            <x-progress-item label="Public Health" :done="$app?->research_form_finished_at ? true : false" />
-                            <x-progress-item label="Encounter" :done="$app?->clinic_encounter_finished_at ? true : false" />
-                            <x-progress-item label="Orders" :done="$app?->pharmacy_order_finished_at ? true : false" :last="true" />
+                            <x-progress-item 
+                                label="Check-in" 
+                                link="{{ route('station.checkin', ['patientId' => $patient->id]) }}" 
+                                :done="$app?->check_in_at ? true : false" />
+                            <x-progress-item 
+                                label="Vitals" 
+                                link="{{ route('station.vital-sign', ['patientId' => $patient->id]) }}" 
+                                :done="$app?->vital_sign_finished_at ? true : false" />
+
+                            <x-progress-item 
+                                label="Public Health" 
+                                link="{{ route('station.research', ['patientId' => $patient->id]) }}" 
+                                :done="$app?->research_form_finished_at ? true : false" />
+
+                            <x-progress-item 
+                                label="Encounter" 
+                                link="{{ route('station.clinical-encounter', ['patientId' => $patient->id]) }}" 
+                                :done="$app?->clinic_encounter_finished_at ? true : false" />
+
+                            <x-progress-item 
+                                label="Orders" 
+                                link="{{ route('station.pharmacy-order', ['patientId' => $patient->id]) }}" 
+                                :done="$app?->pharmacy_order_finished_at ? true : false"
+                                :last="true" />
+                                
                         </ol>
                     </nav>
                 </div>
