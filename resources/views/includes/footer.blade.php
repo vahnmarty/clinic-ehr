@@ -4,7 +4,7 @@
             <p>Developed by 
                 <a href="https://www.fortlewis.edu/academics/schools-departments/departments/sociology-human-services-department/faculty/waddell">@waddell</a> & <a href="https://vahnmarty.github.io/" target="_blank">@vahnmarty</a></p>
             <div>
-                <p>{{ config('app.name') }} &copy {{ date('Y') }}</p>
+                <a href="{{ config('app.url') }}" class="block">{{ config('app.name') }} &copy {{ date('Y') }}</a>
             </div>
             <div>
                 <p>Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})

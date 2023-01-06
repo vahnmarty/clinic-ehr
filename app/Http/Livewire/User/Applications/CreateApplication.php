@@ -10,6 +10,7 @@ use Spatie\Permission\Models\Role;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
+use App\Notifications\Applications\ApplicationCreated;
 
 
 class CreateApplication extends Component implements HasForms
@@ -68,6 +69,8 @@ class CreateApplication extends Component implements HasForms
             $this->createRoles();
             $this->createAdmin();
         });
+
+        Auth::user()->notify(new ApplicationCreated($tenant));
 
         return redirect('dashboard');
     }
