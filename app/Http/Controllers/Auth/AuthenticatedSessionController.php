@@ -17,6 +17,12 @@ class AuthenticatedSessionController extends Controller
      */
     public function create()
     {
+        $tenant = tenancy()->tenant;
+        return view('auth.login-tenant', compact('tenant'));
+    }
+
+    public function loginPage()
+    {
         return view('auth.login');
     }
 

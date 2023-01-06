@@ -48,20 +48,7 @@
             </main>
         </div>
 
-        <footer class="py-3 text-xs text-gray-400 bg-indigo-900">
-            <div class="wrapper">
-                <div class="flex justify-between">
-                    <p>Developed by 
-                        <a href="https://www.fortlewis.edu/academics/schools-departments/departments/sociology-human-services-department/faculty/waddell">@waddell</a> & <a href="https://vahnmarty.github.io/" target="_blank">@vahnmarty</a></p>
-                    <div>
-                        <p>{{ config('app.name') }} &copy {{ date('Y') }}</p>
-                    </div>
-                    <div>
-                        <p>Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
-                    </div>
-                </div>
-            </div>
-        </footer>
+        @include('includes.footer')
 
         @livewireScripts
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>

@@ -68,6 +68,8 @@ class CreateApplication extends Component implements HasForms
             $this->createRoles();
             $this->createAdmin();
         });
+
+        return redirect('dashboard');
     }
 
     public function createRoles()
@@ -79,9 +81,11 @@ class CreateApplication extends Component implements HasForms
 
     public function createAdmin()
     {
-        $user = User::firstOrNew(['email' =>  'admin@app.com']);
+        $auth = Auth::user();
+
+        $user = User::firstOrNew(['email' =>  $auth->email]);
         $user->name = "Admin";
-        $user->password = bcrypt('password');
+        $user->password = $auth->password;
         $user->save();
 
         $user->assignRole('admin');
