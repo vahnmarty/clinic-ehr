@@ -31,7 +31,12 @@ class ClinicDashboard extends Component implements HasTable
 
     public function mount()
     {
-        $this->clinic = Clinic::findOrFail($this->clinic_id);
+        if($this->clinic_id){
+            $this->clinic = Clinic::findOrFail($this->clinic_id);
+        }else{
+            $this->clinic = Clinic::first();
+        }
+        
         $this->clinics = Clinic::get();
     }
 
