@@ -31,5 +31,10 @@ class EditResearch extends Component
         {
             return redirect('station/research/' . $research->patient_id . '/ParentalHistoryQuestionairre/' . $research->id . '/edit');
         }
+
+        if($research->form_type->value == FormType::AgriculturalQuestionnaire)
+        {
+            return redirect('station/research/' . $research->patient_id . '/AgriculturalQuestionnaire/' . $research->id . '/edit');
+        }
     }
 }

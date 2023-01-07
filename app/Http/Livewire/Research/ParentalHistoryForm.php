@@ -61,6 +61,11 @@ class ParentalHistoryForm extends Component implements HasForms
         }
     }
 
+    public function getForm()
+    {
+        return $this->getFormSchema();
+    }
+
     protected function getFormSchema(): array 
     {
         return [
@@ -154,7 +159,7 @@ class ParentalHistoryForm extends Component implements HasForms
         $app->research_form_user_id = auth()->id();
         $app->save();
 
-        return redirect()->route('station.research', ['patient_id' => $this->patient_id]);
+        return redirect()->route('station.research', ['patientId' => $this->patient_id]);
         
     }
 

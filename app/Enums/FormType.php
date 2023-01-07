@@ -14,5 +14,5 @@ final class FormType extends Enum
     const IntermittentHealthForm = 0;
     const MaternalHealthQuestionairre = 1;
     const ParentalHistoryQuestionairre = 2;
-    const AgriculturalQuestionairre = 3;
+    const AgriculturalQuestionnaire = 3;
 }

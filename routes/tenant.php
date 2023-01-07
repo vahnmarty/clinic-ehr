@@ -20,14 +20,15 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Livewire\Station\PatientDetails;
 use App\Http\Livewire\Pharmacy\ManageProducts;
 use App\Http\Livewire\Station\PatientVitalSign;
+use App\Http\Livewire\Research\AgriculturalForm;
 use App\Http\Livewire\Station\ClinicalEncounter;
 use App\Http\Livewire\Pharmacy\ManageLaboratories;
 use App\Http\Livewire\Research\MaternalHealthForm;
+use App\Http\Livewire\Research\ParentalHistoryForm;
 use App\Http\Livewire\Patient\ViewClinicalEncounter;
 use App\Http\Livewire\Research\IntermittentHealthForm;
 use App\Http\Livewire\Station\Research\ViewResearchForm;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
-use App\Http\Livewire\Research\ParentalHistoryForm;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
 /*
@@ -102,6 +103,8 @@ Route::middleware([
         Route::get('research/{patientId}/MaternalHealthQuestionairre/{researchId?}/edit', MaternalHealthForm::class);
         Route::get('research/{patientId}/ParentalHistoryQuestionairre', ParentalHistoryForm::class);
         Route::get('research/{patientId}/ParentalHistoryQuestionairre/{researchId?}/edit', ParentalHistoryForm::class);
+        Route::get('research/{patientId}/AgriculturalQuestionnaire', AgriculturalForm::class);
+        Route::get('research/{patientId}/AgriculturalQuestionnaire/{researchId?}/edit', AgriculturalForm::class);
         
         
     });

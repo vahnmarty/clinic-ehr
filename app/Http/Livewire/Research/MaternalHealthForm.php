@@ -63,6 +63,11 @@ class MaternalHealthForm extends Component implements HasForms
         }
     }
 
+    public function getForm()
+    {
+        return $this->getFormSchema();
+    }
+
     protected function getFormSchema(): array 
     {
         return [

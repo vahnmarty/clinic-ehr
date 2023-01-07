@@ -35,4 +35,9 @@ class Research extends Model
     {
         return $this->belongsTo(ResearchParentalHistoryForm::class, 'parental_history_id');
     }
+
+    public function agricultural()
+    {
+        return $this->belongsTo(ResearchAgriculturalForm::class, 'agricultural_id');
+    }
 }
