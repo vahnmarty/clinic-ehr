@@ -101,6 +101,10 @@ class DashboardPatients extends Component implements HasTable
                 ->button(),
             ActionGroup::make([
                 Action::make('check_in')->url(fn (Patient $record): string => route('station.checkin', ['patient_id' => $record->id])),
+                Action::make('vital_sign')->url(fn(Patient $record) => route('station.vital-sign', ['patientId' => $record->id])),
+                Action::make('research')->url(fn(Patient $record) => route('station.research', ['patientId' => $record->id])),
+                Action::make('clinical_encounter')->url(fn(Patient $record) => route('station.clinical-encounter', ['patientId' => $record->id])),
+                Action::make('pharmacy_order')->url(fn(Patient $record) => route('station.pharmacy-order', ['patientId' => $record->id])),
             ]),
         ];
     }
