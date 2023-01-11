@@ -13,7 +13,6 @@
 
             <section>
                 <div>
-                    <h2 class="font-bold">Overview</h2>
                     <dl class="grid grid-cols-1 gap-5 mt-5 sm:grid-cols-2 lg:grid-cols-4">
                         <x-dashboard-widget class="bg-green-100 border-green-200">
                             <x-slot name="icon">
@@ -60,15 +59,21 @@
                   
             </section>
 
+            
+
+            <div class="py-6">
+                @livewire('patient.dashboard-patients')
+            </div>
+
             <div>
                 <div class="grid grid-cols-4 gap-8 mt-8">
-                    <div class="col-span-2">
+                    <div class="col-span-2 border">
                         <div class="py-4 bg-white">
                             <div id="chart-agegroups"></div>
                         </div>
                     </div>
 
-                    <div class="col-span-2">
+                    <div class="col-span-2 border">
                         <div class="py-4 bg-white">
                             <div id="chart-gendergroups"></div>
                         </div>
@@ -92,10 +97,6 @@
                         @endforeach
                     </tbody>
                 </table>
-            </div>
-
-            <div class="py-6">
-                @livewire('patient.dashboard-patients')
             </div>
         </div>
     </div>

@@ -9,6 +9,9 @@ use Livewire\WithPagination;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Contracts\HasTable;
+use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Columns\BadgeColumn;
+use Filament\Tables\Actions\CreateAction;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Filament\Tables\Concerns\InteractsWithTable;
 
@@ -48,7 +51,17 @@ class DashboardPatients extends Component implements HasTable
             TextColumn::make('first_name')->sortable()->searchable(),
             TextColumn::make('last_name')->sortable()->searchable(),
             TextColumn::make('date_of_birth'),
-            TextColumn::make('created_at')->dateTime(),
+            TextColumn::make('latestApp.visit_reason')->label('Visit Reason'),
+            BadgeColumn::make('latestApp.status')
+                ->label('Status')
+                ->colors([
+                    'success' => 'PHARMACY ORDER',
+                    'primary' => 'PATIENT INFO',
+                    'warning' => 'VITAL SIGN',
+                    'secondary' => 'RESEARCH FORM',
+                    'danger' => 'CLINIC ENCOUNTER'
+                ])->sortable(),
+            TextColumn::make('created_at')->dateTime('M d, Y'),
             
         ];
     }
@@ -84,6 +97,16 @@ class DashboardPatients extends Component implements HasTable
             Action::make('view')
                 ->url(fn (Patient $record): string => route('patient.show', $record->id))
                 ->button(),
+            ActionGroup::make([
+                Action::make('check_in')->url(fn (Patient $record): string => route('station.checkin', ['patient_id' => $record->id])),
+            ]),
+        ];
+    }
+
+    protected function getTableHeaderActions() : array
+    {
+        return [
+            Action::make('create_patient')->url( route('station.checkin') )->button()
         ];
     }
     
