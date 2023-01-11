@@ -16,21 +16,6 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('dashboard.clinic')" :active="request()->routeIs('dashboard.clinic')">
-                        {{ __('Clinic') }}
-                    </x-nav-link>
-
-                    <x-nav-link :href="url('pharmacy/products')" :active="request()->routeIs('pharmacy.products')">
-                        {{ __('Products') }}
-                    </x-nav-link>
-                    
-                    <x-nav-link :href="url('pharmacy/laboratories')" :active="request()->routeIs('pharmacy.laboratories')">
-                        {{ __('Laboratories') }}
-                    </x-nav-link>
-
-                    <x-nav-link :href="route('users')" :active="request()->routeIs('users')">
-                        {{ __('Users') }}
-                    </x-nav-link>
                 </div>
             </div>
 
@@ -95,8 +80,17 @@
                     </x-slot>
 
                     <x-slot name="content">
+                        <x-dropdown-link :href="route('pharmacy.products')">
+                            {{ __('Products') }}
+                        </x-dropdown-link>
+                        <x-dropdown-link :href="route('pharmacy.laboratories')">
+                            {{ __('Laboratories') }}
+                        </x-dropdown-link>
+                        <x-dropdown-link :href="route('users')">
+                            {{ __('Users') }}
+                        </x-dropdown-link>
                         <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}">
+                        <form method="POST" action="{{ route('logout') }}" class="border-t-2">
                             @csrf
 
                             <x-dropdown-link :href="route('logout')"
