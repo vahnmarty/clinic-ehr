@@ -42,6 +42,11 @@ class Application extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function doctor()
+    {
+        return $this->belongsTo(User::class, 'doctor_id');
+    }
+
     public function getUser($id = null)
     {
         return $id ?  User::find($id)?->name : '';

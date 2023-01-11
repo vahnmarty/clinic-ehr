@@ -54,6 +54,7 @@ class DashboardPatients extends Component implements HasTable
             TextColumn::make('last_name')->sortable()->searchable(),
             TextColumn::make('date_of_birth'),
             TextColumn::make('latestApp.visit_reason')->label('Visit Reason'),
+            TextColumn::make('latestApp.doctor.name')->label('Doctor'),
             BadgeColumn::make('latestApp.status')
                 ->label('Status')
                 ->colors([
@@ -63,7 +64,6 @@ class DashboardPatients extends Component implements HasTable
                     'secondary' => 'RESEARCH FORM',
                     'danger' => 'CLINIC ENCOUNTER'
                 ]),
-            TextColumn::make('created_at')->dateTime('M d, Y'),
             
         ];
     }
