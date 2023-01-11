@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Patient;
 use App\Models\Patient;
 use App\Models\Vaccine;
 use Livewire\Component;
+use App\Models\VaccineList;
 use Filament\Forms\Components\Grid;
 use Filament\Tables\Actions\Action;
 use Filament\Forms\Components\Hidden;
@@ -79,7 +80,7 @@ class VaccineRecords extends Component implements HasTable
                 ]))
                 ->form([
                     Grid::make(2)->schema([
-                        TextInput::make('name')->required(),
+                        Select::make('name')->options(VaccineList::asSelectArray())->required(),
                         DatePicker::make('date_administered')->required(),
                         TextInput::make('injection_sight')->nullable(),
                         TextInput::make('lot_number')->nullable(),
@@ -100,7 +101,7 @@ class VaccineRecords extends Component implements HasTable
                 ->icon('heroicon-o-plus')
                 ->form([
                     Grid::make(2)->schema([
-                        TextInput::make('name')->required(),
+                        Select::make('name')->options(VaccineList::asSelectArray())->required(),
                         DatePicker::make('date_administered')->required(),
                         TextInput::make('injection_sight')->nullable(),
                         TextInput::make('lot_number')->nullable(),

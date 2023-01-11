@@ -86,6 +86,9 @@
                         <x-dropdown-link :href="route('pharmacy.laboratories')">
                             {{ __('Laboratories') }}
                         </x-dropdown-link>
+                        <x-dropdown-link :href="route('vaccines')">
+                            {{ __('Vaccines') }}
+                        </x-dropdown-link>
                         <x-dropdown-link :href="route('users')">
                             {{ __('Users') }}
                         </x-dropdown-link>

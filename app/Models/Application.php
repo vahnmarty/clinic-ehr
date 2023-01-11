@@ -75,4 +75,9 @@ class Application extends Model
             return 'PATIENT INFO';
         }
     }
+
+    public function scopeFromStatus($query, $status)
+    {
+        return $query->where('status', $status);
+    }
 }

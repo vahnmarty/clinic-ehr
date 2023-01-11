@@ -16,7 +16,7 @@ class Patient extends Model
 
     protected $guarded = [];
 
-    protected $appends = [ 'full_name', 'image_avatar', 'age' ];
+    protected $appends = [ 'full_name', 'image_avatar', 'age', 'app_status' ];
 
     protected $casts = [
         'identity' => RacialIdentity::class,
@@ -139,5 +139,40 @@ class Patient extends Model
 
     public function latestApp() {
         return $this->hasOne(Application::class)->latest();
+    }
+
+    public function getAppStatusAttribute()
+    {
+        return $this->latestApp?->status;
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->whereNotNull('id');
+    }
+
+    public function scopeWithApplication($query){
+        return $query->leftJoin('applications', 'patients.id', '=', 'applications.patient_id')
+                    ->select('patients.*', 'applications.pharmacy_order_finished_at');
+    }
+
+    public function scopeStatusPharmacyOrder($query){
+        return $query->whereNotNull('pharmacy_order_finished_at');
+    }
+
+    public function scopeStatusClinicEncounter($query){
+        return $query->whereNotNull('clinic_encounter_finished_at');
+    }
+
+    public function scopeStatusResearchForm($query){
+        return $query->whereNotNull('research_form_finished_at');
+    }
+
+    public function scopeStatusVitalSign($query){
+        return $query->whereNotNull('vital_sign_finished_at');
+    }
+
+    public function scopeStatusPatientInfo($query){
+        return $query->whereNotNull('patient_info_finished_at');
     }
 }

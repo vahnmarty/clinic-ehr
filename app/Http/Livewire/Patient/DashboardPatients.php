@@ -7,11 +7,13 @@ use App\Models\Patient;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Filament\Tables\Actions\Action;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Actions\CreateAction;
+use Illuminate\Database\Eloquent\Builder;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Filament\Tables\Concerns\InteractsWithTable;
 
@@ -29,8 +31,7 @@ class DashboardPatients extends Component implements HasTable
  
     public function render()
     {
-        $patients = Patient::orderBy('id', 'desc')->paginate(10);
-        return view('livewire.patient.dashboard-patients', compact('patients'));
+        return view('livewire.patient.dashboard-patients');
     }
 
     public function mount()
@@ -40,7 +41,7 @@ class DashboardPatients extends Component implements HasTable
 
     protected function getTableQuery() 
     {
-        return Patient::query();
+        return Patient::active();
     }
 
     protected function getTableColumns(): array
@@ -60,7 +61,7 @@ class DashboardPatients extends Component implements HasTable
                     'warning' => 'VITAL SIGN',
                     'secondary' => 'RESEARCH FORM',
                     'danger' => 'CLINIC ENCOUNTER'
-                ])->sortable(),
+                ]),
             TextColumn::make('created_at')->dateTime('M d, Y'),
             
         ];
@@ -107,6 +108,13 @@ class DashboardPatients extends Component implements HasTable
     {
         return [
             Action::make('create_patient')->url( route('station.checkin') )->button()
+        ];
+    }
+
+    protected function getTableFilters(): array
+    {
+        return [
+            
         ];
     }
     

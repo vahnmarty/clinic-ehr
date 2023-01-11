@@ -146,7 +146,7 @@
             </div>
         </div>
     </div>
-    <div class="mt-8 wrapper">
+    <div class="hidden mt-8 wrapper">
         <header>
             <h3 class="text-xl font-bold">{{ __('Application History') }}</h3>
         </header>
