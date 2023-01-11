@@ -13,6 +13,7 @@ use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Actions\CreateAction;
+use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Filament\Tables\Concerns\InteractsWithTable;
@@ -41,7 +42,7 @@ class DashboardPatients extends Component implements HasTable
 
     protected function getTableQuery() 
     {
-        return Patient::active();
+        return Patient::withApplication();
     }
 
     protected function getTableColumns(): array
@@ -114,7 +115,7 @@ class DashboardPatients extends Component implements HasTable
     protected function getTableFilters(): array
     {
         return [
-            
+            SelectFilter::make('clinic_id')->options(Clinic::pluck('name','id'))
         ];
     }
     

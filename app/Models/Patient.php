@@ -153,7 +153,7 @@ class Patient extends Model
 
     public function scopeWithApplication($query){
         return $query->leftJoin('applications', 'patients.id', '=', 'applications.patient_id')
-                    ->select('patients.*', 'applications.pharmacy_order_finished_at');
+                    ->select('patients.*', 'applications.clinic_id', 'applications.pharmacy_order_finished_at');
     }
 
     public function scopeStatusPharmacyOrder($query){
