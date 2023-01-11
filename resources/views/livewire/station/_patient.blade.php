@@ -52,15 +52,9 @@
             </ol>
         </nav>
         @else
-        <nav aria-label="Progress" class="-mt-2">
-            <ol role="list" class="flex items-center">
-                <x-progress-item 
-                    label="Check-in" 
-                    link="{{ route('station.checkin', ['patient_id' => $patient->id]) }}" 
-                    :last="true"
-                    :done="false" />
-            </ol>
-        </nav>
+        @if(!Route::is('station.checkin'))
+        <a href="{{ route('station.checkin', ['patientId' => $patient->id]) }}" class="btn-primary">Check In Patient</a>
+        @endif
         @endif
     </div>
 </div>
