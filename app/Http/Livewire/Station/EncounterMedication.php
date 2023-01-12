@@ -57,10 +57,12 @@ class EncounterMedication extends Component implements HasTable
                     ->label('Search')
                     ->searchable()
                     ->reactive()
+                    ->options(Product::get()->pluck('name','id'))
                     ->getSearchResultsUsing(fn (string $search) => Product::search($search)->limit(50)->get()->pluck('name', 'id'))
                     ->afterStateUpdated(function (Closure $set, $state) {
                         $product = Product::find($state);
                         $set('drug', $product->name);
+                        $set('dosage', $product->unit);
                     }),
                 Hidden::make('drug'),
                 TextInput::make('description')->disabled(),

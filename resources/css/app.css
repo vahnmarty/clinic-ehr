@@ -35,3 +35,7 @@
 .btn-icon {
     @apply inline-flex justify-center px-1 py-1 text-xs font-medium text-white border border-transparent rounded-md shadow-sm bg-emerald-500 hover:bg-emerald-600 focus:ring-emerald-500 focus:ring-offset-2;
 }
+
+input:disabled{
+    @apply bg-gray-200;
+}
