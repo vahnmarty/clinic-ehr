@@ -21,6 +21,11 @@ class Research extends Model
         return $this->belongsTo(Patient::class);
     }
 
+    public function application()
+    {
+        return $this->belongsTo(Application::class);
+    }
+
     public function intermittent()
     {
         return $this->belongsTo(ResearchIntermittentHealthForm::class, 'intermittent_form_id');

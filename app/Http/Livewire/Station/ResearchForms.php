@@ -12,6 +12,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\ComponentContainer;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Contracts\HasTable;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Filament\Tables\Concerns\InteractsWithTable;
 use App\Http\Livewire\Station\SearchPatientTrait;
 use Illuminate\Contracts\Database\Eloquent\Builder;
@@ -20,10 +21,12 @@ class ResearchForms extends Component implements HasTable
 {
     use InteractsWithTable;
     use SearchPatientTrait;
+    use LivewireAlert;
 
     protected $listeners = ['selectPatient'];
 
     public $patientId;
+    public $app;
     protected $queryString = ['patientId'];
     
     public function render()
@@ -36,6 +39,8 @@ class ResearchForms extends Component implements HasTable
         if($this->patientId){
             $this->selectPatient($this->patientId);
         }
+
+        $this->app = Application::where('patient_id', $this->patient_id)->first();
     }
 
     protected function getTableQuery(): Builder 
@@ -67,6 +72,21 @@ class ResearchForms extends Component implements HasTable
                     return redirect('station/research/' . $this->patient_id . '/' . $type->key);
                     
                 })
+                ->button(),
+            Action::make('mark_complete')
+                ->label('Mark as Complete')
+                ->icon('heroicon-o-check')
+                ->action(function (array $data) {
+                    $app = Application::where('patient_id', $this->patient_id)->latest()->first();
+                    $app->research_form_finished_at = now();
+                    $app->research_form_user_id = auth()->id();
+                    $app->save();
+
+                    $this->alert('success', 'Research form completed!');
+                })
+                ->color('warning')
+                ->requiresConfirmation()
+                ->visible($this->app?->research_form_finished_at ? false : true)
                 ->button()
         ];
     }
