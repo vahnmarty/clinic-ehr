@@ -30,7 +30,7 @@ class CheckIn extends Component  implements HasForms
 
     public $clinic_id, $visit_reason, $doctor_id, $appointment_date;
 
-    protected $queryString = ['patient_id'];
+    protected $queryString = ['patient_id', 'type'];
 
     public function render()
     {

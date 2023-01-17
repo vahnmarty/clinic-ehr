@@ -1,4 +1,5 @@
 <form method="POST" wire:submit.prevent="store">
+    @if(null)
     <section>
         <label for="avatar">
 
@@ -15,6 +16,7 @@
             </div>
         </label>
     </section>
+    @endif
 
     <section class="grid grid-cols-3 gap-6 mt-8">
         <x-form.form-group>

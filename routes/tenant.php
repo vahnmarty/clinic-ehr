@@ -17,6 +17,7 @@ use App\Http\Livewire\Patient\EditPatient;
 use App\Http\Livewire\Patient\ShowPatient;
 use App\Http\Controllers\ProfileController;
 use App\Http\Livewire\Station\EditResearch;
+use App\Http\Livewire\Patient\CreatePatient;
 use App\Http\Livewire\Station\PharmacyOrder;
 use App\Http\Livewire\Station\ResearchForms;
 use App\Http\Controllers\DashboardController;
@@ -76,6 +77,7 @@ Route::middleware([
     Route::group(['middleware' => ['auth']], function(){
         
         Route::get('patients', [DashboardController::class, 'patients'])->name('patients.index');
+        Route::get('patient/create', CreatePatient::class)->name('patient.create');
         Route::get('patient/{id}', ShowPatient::class)->name('patient.show');
         Route::get('patient/{id}/edit', EditPatient::class)->name('patient.edit');
         Route::get('patient/{id}/parent/{parentId}', EditParent::class)->name('patient.edit-parent');

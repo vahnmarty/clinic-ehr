@@ -141,7 +141,7 @@ class DashboardPatients extends Component implements HasTable
     protected function getTableHeaderActions() : array
     {
         return [
-            Action::make('create_patient')->url( route('station.checkin') )->button()
+            Action::make('create_patient')->url( route('station.checkin', ['type' => 'new']) )->button()
         ];
     }
 

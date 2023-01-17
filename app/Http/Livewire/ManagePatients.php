@@ -43,6 +43,13 @@ class ManagePatients extends Component implements HasTable
         ];
     }
 
+    protected function getTableHeaderActions() : array
+    {
+        return [
+            Action::make('create_patient')->url( route('station.checkin', ['type' => 'new']) )->button()
+        ];
+    }
+
     protected function getTableActions(): array
     {
         return [
