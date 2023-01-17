@@ -22,6 +22,34 @@ class DashboardController extends Controller
         
     }
 
+    public function patients()
+    {
+        $total_patients = Patient::count();
+        $total_male = Patient::male()->count();
+        $total_female = Patient::female()->count();
+        $active = Application::today()->count();
+        $age_range = range(0, 6);
+        $age_groups = collect();
+        
+        foreach($age_range as $age)
+        {
+            $group = $age;
+            if($age <= 0){
+                $group = '< 1'; 
+            }elseif($age > 5){
+                $group = '6+'; 
+            }
+            $age_groups->push([
+                'group' => $group,
+                'total' => $this->countPatient($age),
+                'male' => $this->countPatient($age, 'male'),
+                'female' => $this->countPatient($age, 'female'),
+            ]);
+        }
+        
+        return view('patient-dashboard', compact('total_patients', 'age_groups', 'total_male', 'total_female', 'active'));
+    }
+
     public function dashboard()
     {
         $total_patients = Patient::count();

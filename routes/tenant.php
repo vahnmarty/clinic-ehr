@@ -75,7 +75,7 @@ Route::middleware([
     
     Route::group(['middleware' => ['auth']], function(){
         
-        Route::get('patients', ManagePatients::class)->name('patients.index');
+        Route::get('patients', [DashboardController::class, 'patients'])->name('patients.index');
         Route::get('patient/{id}', ShowPatient::class)->name('patient.show');
         Route::get('patient/{id}/edit', EditPatient::class)->name('patient.edit');
         Route::get('patient/{id}/parent/{parentId}', EditParent::class)->name('patient.edit-parent');
