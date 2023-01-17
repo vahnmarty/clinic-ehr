@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Station;
 
+use App\Models\User;
 use App\Models\Clinic;
 use App\Models\Doctor;
 use App\Models\Patient;
@@ -11,6 +12,8 @@ use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\DateTimePicker;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Filament\Forms\Concerns\InteractsWithForms;
 
@@ -25,7 +28,7 @@ class CheckIn extends Component  implements HasForms
 
     public $patient_id, $patient;
 
-    public $clinic_id, $visit_reason, $doctor_id;
+    public $clinic_id, $visit_reason, $doctor_id, $appointment_date;
 
     protected $queryString = ['patient_id'];
 
@@ -58,7 +61,10 @@ class CheckIn extends Component  implements HasForms
                 ->schema([
                     Select::make('clinic_id')->label('Clinic')->options(Clinic::all()->pluck('name', 'id'))->required(),
                     TextInput::make('visit_reason')->label('Visit Reason')->required(),
-                    Select::make('doctor_id')->label('Doctor')->options(Doctor::all()->pluck('name', 'id'))->required(),
+                    Select::make('doctor_id')->label('Doctor')->options(User::role('provider')->get()->pluck('name', 'id'))->required(),
+                    DateTimePicker::make('appointment_date')
+                    ->default(date('Y-m-d'))
+                    ->minDate(now())
                 ]),
             
         ];

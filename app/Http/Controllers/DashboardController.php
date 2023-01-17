@@ -8,11 +8,14 @@ use App\Models\Product;
 use App\Models\Laboratory;
 use App\Models\Application;
 use Illuminate\Http\Request;
+use Auth;
 
 class DashboardController extends Controller
 {
     public function index(Request $request)
     {
+        $user = Auth::user();
+
         return $request->clinic_id 
             ? $this->clinicDashboard($request->clinic_id)
             : $this->dashboard();

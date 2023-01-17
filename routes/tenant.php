@@ -7,6 +7,7 @@ use App\Http\Livewire\InputVitalSign;
 use App\Http\Livewire\ManageVaccines;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\ClinicDashboard;
+use App\Http\Livewire\DoctorDashboard;
 use App\Http\Livewire\Station\CheckIn;
 use App\Http\Controllers\PdfController;
 use App\Http\Livewire\Patient\EditParent;
@@ -63,8 +64,11 @@ Route::middleware([
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     });
 
-    Route::get('dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
-    Route::get('dashboard/clinic/{clinicId?}', ClinicDashboard::class)->name('dashboard.clinic');
+    Route::group(['middleware' => ['auth', 'verified']], function(){
+        Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        Route::get('dashboard/doctor', DoctorDashboard::class)->name('dashboard.doctor');
+    });
+    
 
     
     Route::group(['middleware' => ['auth']], function(){

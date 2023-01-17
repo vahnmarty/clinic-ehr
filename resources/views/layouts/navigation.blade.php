@@ -16,6 +16,11 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
+                    @role('provider')
+                    <x-nav-link :href="route('dashboard.doctor')" :active="request()->routeIs('dashboard.doctor')">
+                        {{ __("Doctor's Dashboard") }}
+                    </x-nav-link>
+                    @endrole
                 </div>
             </div>
 
