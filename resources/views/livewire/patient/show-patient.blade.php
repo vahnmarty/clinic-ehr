@@ -70,7 +70,28 @@
     </div>
 
     <div class="wrapper">
-        <div class="grid grid-cols-2 gap-8">
+        @if($app)
+        <div class="mt-8">
+            <div class="p-4 bg-white rounded-md">
+                <header class="flex items-start justify-between h-16 py-2">
+                    <h3 class="text-xl font-bold">{{ __('Check-in Information') }}</h3>
+                    <div>
+                        <a href="{{ route('station.patient-details', ['patientId' => $patient_id]) }}"
+                            class="btn-primary">Edit</a>
+                    </div>
+                </header>
+                <div class="px-16 py-6 border-t">
+                    <div class="divide-y">
+                        <x-description-list label="{{ __('Visit Reason') }}">{{ $app->visit_reason }}</x-description-list>
+                        <x-description-list label="{{ __('Assigned Doctor') }}">{{ $app->doctor->name }}</x-description-list>
+                        <x-description-list label="{{ __('Appointment Date') }}">{{ $app->appointment_date->format('F d, Y h:i a') }}</x-description-list>
+                        <x-description-list label="{{ __('Checked In at') }}">{{ $app->check_in_at->format('F d, Y h:i a') }}</x-description-list>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif
+        <div class="grid grid-cols-2 gap-8 mt-8">
             <div class="p-4 bg-white rounded-md">
                 <header class="flex items-start justify-between h-16 py-2">
                     <h3 class="text-xl font-bold">{{ __('Patient Information') }}</h3>

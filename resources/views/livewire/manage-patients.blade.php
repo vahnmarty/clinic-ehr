@@ -1,10 +1,10 @@
 <x-app-layout>
 
-    @section('title', 'Dashboard')
+    @section('title', 'Manage Patients')
     
     <x-slot name="header">
         <h2 class="text-xl font-semibold leading-tight text-gray-800">
-            {{ __('Dashboard') }}
+            {{ __('Manage Patients') }}
         </h2>
     </x-slot>
 
@@ -62,9 +62,126 @@
             
 
             <div class="py-6">
-                @livewire('patient.dashboard-patients')
+                
             </div>
 
+            <div>
+                <div class="grid grid-cols-4 gap-8 mt-8">
+                    <div class="col-span-2 border">
+                        <div class="py-4 bg-white">
+                            <div id="chart-agegroups"></div>
+                        </div>
+                    </div>
+
+                    <div class="col-span-2 border">
+                        <div class="py-4 bg-white">
+                            <div id="chart-gendergroups"></div>
+                        </div>
+                    </div>
+                </div>
+                <table id="datatable" class="hidden">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Male</th>
+                            <th>Female</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($age_groups as $ageGroup)
+                        <tr>
+                            <th>{{ $ageGroup['group'] }} y.o</th>
+                            <td>{{ $ageGroup['male'] }}</td>
+                            <td>{{ $ageGroup['female'] }}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
+
+@push('scripts')
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/data.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<script>
+    window.onload = (event) => {
+        chartAgeGroups();
+        chartGenderGroups({{ $total_male}}, {{ $total_female }});
+    };
+
+    function chartAgeGroups()
+    {
+        Highcharts.chart('chart-agegroups', {
+            data: {
+                table: 'datatable'
+            },
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Age Groups and Gender'
+            },
+            xAxis: {
+                type: 'category'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.y}</b>'
+            },
+            yAxis: {
+                allowDecimals: false,
+                title: {
+                    text: 'Total'
+                }
+            },
+        });
+        
+    }
+
+    function chartGenderGroups($total_male, $total_female)
+    {
+        Highcharts.chart('chart-gendergroups', {
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie'
+            },
+            title: {
+                text: 'Gender',
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.y}</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b>: {point.y}'
+                    }
+                }
+            },
+            series: [{
+                name: 'Group',
+                colorByPoint: true,
+                data: [{
+                    name: 'Male',
+                    y: $total_male,
+                }, {
+                    name: 'Female',
+                    y: $total_female,
+                    color: 'pink'
+                }]
+            }]
+        });
+
+        
+    }
+      
+</script>
+@endpush
 </x-app-layout>

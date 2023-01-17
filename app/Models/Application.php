@@ -20,6 +20,7 @@ class Application extends Model
         'research_form_finished_at' => 'datetime',
         'clinic_encounter_finished_at' => 'datetime',
         'pharmacy_order_finished_at' => 'datetime',
+        'appointment_date' => 'datetime'
     ];
 
     public function patient()
@@ -79,10 +80,20 @@ class Application extends Model
         if($this->patient_info_finished_at){
             return 'PATIENT INFO';
         }
+
+        if($this->check_in_at){
+            return 'CHECKED IN';
+        }
+
+        
     }
 
     public function scopeFromStatus($query, $status)
     {
         return $query->where('status', $status);
+    }
+
+    public function scopeToday($query){
+        return $query->whereDate('check_in_at', date('Y-m-d'));
     }
 }

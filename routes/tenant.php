@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Http\Livewire\ManageUsers;
 use App\Http\Livewire\InputVitalSign;
+use App\Http\Livewire\ManagePatients;
 use App\Http\Livewire\ManageVaccines;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\ClinicDashboard;
@@ -67,12 +68,14 @@ Route::middleware([
     Route::group(['middleware' => ['auth', 'verified']], function(){
         Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
         Route::get('dashboard/doctor', DoctorDashboard::class)->name('dashboard.doctor');
+        
     });
     
 
     
     Route::group(['middleware' => ['auth']], function(){
-
+        
+        Route::get('patients', ManagePatients::class)->name('patients.index');
         Route::get('patient/{id}', ShowPatient::class)->name('patient.show');
         Route::get('patient/{id}/edit', EditPatient::class)->name('patient.edit');
         Route::get('patient/{id}/parent/{parentId}', EditParent::class)->name('patient.edit-parent');
