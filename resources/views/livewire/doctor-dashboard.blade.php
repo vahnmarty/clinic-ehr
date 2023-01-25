@@ -62,7 +62,7 @@
                         @endforelse
                     </ol>
                 </div>
-                <div>
+                <div class="bg-white">
                     <div id="calendar"></div>
                 </div>
             </div>
@@ -83,7 +83,7 @@
                 headerToolbar: {
                     left: 'prev,next today',
                     center: 'title',
-                    right: ''
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
                 },
                 events: @json($events)
 
