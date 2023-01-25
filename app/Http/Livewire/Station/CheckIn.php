@@ -82,6 +82,8 @@ class CheckIn extends Component  implements HasForms
         $app->check_in_at = now();
         $app->check_in_user_id = auth()->id();
         $app->save();
+
+        return redirect()->route('patient.show', $this->patient_id);
         
         $this->alert('success', 'Checked-in successfully. Proceed to Step 2: Update Patient Information');
 
