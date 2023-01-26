@@ -5,9 +5,11 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Enums\OrderStatus;
 use App\Models\PlanMedication;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Columns\BadgeColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Concerns\InteractsWithTable;
 
 class ManagePharmacy extends Component implements HasTable
@@ -41,6 +43,20 @@ class ManagePharmacy extends Component implements HasTable
                     'danger' => 'rejected',
                 ]),
             TextColumn::make('created_at'),
+        ];
+    }
+
+    protected function getTableFilters(): array
+    {
+        return [
+            SelectFilter::make('order_status')->options(OrderStatus::asSelectArray())
+        ];
+    }
+
+    protected function getTableHeaderActions() : array
+    {
+        return [
+            Action::make('create_pharmacy_order')->url( route('station.pharmacy-order') )->button()
         ];
     }
 }

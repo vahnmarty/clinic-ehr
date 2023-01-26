@@ -7,7 +7,7 @@
 <div class="py-12">
     <div class="space-y-8 wrapper">
 
-        <div class="mt-8">
+        <div>
             {{ $this->table }}
         </div>
     </div>
