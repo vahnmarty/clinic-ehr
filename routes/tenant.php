@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Http\Livewire\ManageUsers;
 use App\Http\Livewire\InputVitalSign;
 use App\Http\Livewire\ManagePatients;
+use App\Http\Livewire\ManagePharmacy;
 use App\Http\Livewire\ManageVaccines;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\ClinicDashboard;
@@ -121,10 +122,13 @@ Route::middleware([
 
     Route::get('pdf/research/{id}', [PdfController::class, 'research']);
 
-
-    Route::get('pharmacy/products', ManageProducts::class)->name('pharmacy.products');
-    Route::get('pharmacy/laboratories', ManageLaboratories::class)->name('pharmacy.laboratories');
-    Route::get('vaccines', ManageVaccines::class)->name('vaccines');
+    Route::group(['middleware' => 'auth'], function(){
+        Route::get('pharmacy', ManagePharmacy::class)->name('pharmacy.index');
+        Route::get('pharmacy/products', ManageProducts::class)->name('pharmacy.products');
+        Route::get('pharmacy/laboratories', ManageLaboratories::class)->name('pharmacy.laboratories');
+        Route::get('vaccines', ManageVaccines::class)->name('vaccines');
+    });
+    
 
 
 });

@@ -15,4 +15,9 @@ class PlanMedication extends Model
     {
         return 'SW-' . date('ymd') . '-' . $this->id; 
     }
+
+    public function patient()
+    {
+        return $this->belongsTo(Patient::class);
+    }
 }
