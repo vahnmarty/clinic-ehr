@@ -19,7 +19,7 @@ trait SearchPatientTrait
         try {
             $this->fillFilamentForm();
         } catch (\Throwable $th) {
-            throw $th;
+            \Log::info('Skipped fillFilamentForm()');
         }
 
         try {
