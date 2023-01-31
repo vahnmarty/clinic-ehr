@@ -53,8 +53,7 @@ class AssessmentMedicalCoding extends Component implements HasTable
                 Select::make('medical_code_id')
                     ->label('Search')
                     ->searchable()
-                    ->options(MedicalCode::get()->take(50)->pluck('option_result', 'id'))
-                    ->getSearchResultsUsing(fn (string $search) => MedicalCode::search($search)->limit(50)->get()->pluck('option_result', 'id')),
+                    ->getSearchResultsUsing(fn (string $search) => MedicalCode::search($search)->limit(20)->get()->pluck('option_result', 'id')),
             ])
         ];
     }
