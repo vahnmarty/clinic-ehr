@@ -25,7 +25,7 @@ trait SearchPatientTrait
         try {
             $this->fillForm();
         } catch (\Throwable $th) {
-            throw $th;
+            \Log::info('Skipped fillForm()');
         }
         
     }
