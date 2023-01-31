@@ -59,6 +59,11 @@ class ClinicalEncounter extends Component
         ]);
     }
 
+    public function fillFom()
+    {
+        
+    }
+
     public function save()
     {
         $data = $this->validate();

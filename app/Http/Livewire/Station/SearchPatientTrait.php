@@ -19,11 +19,13 @@ trait SearchPatientTrait
         try {
             $this->fillFilamentForm();
         } catch (\Throwable $th) {
+            throw $th;
         }
 
         try {
             $this->fillForm();
         } catch (\Throwable $th) {
+            throw $th;
         }
         
     }
