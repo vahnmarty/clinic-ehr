@@ -26,11 +26,11 @@ class CheckIn extends Component  implements HasForms
 
     public $type, $search;
 
-    public $patient_id, $patient;
+    public $patientId, $patient_id, $patient;
 
     public $clinic_id, $visit_reason, $doctor_id, $appointment_date;
 
-    protected $queryString = ['patient_id', 'type'];
+    protected $queryString = ['patient_id', 'type', 'patientId'];
 
     public function render()
     {
@@ -41,6 +41,10 @@ class CheckIn extends Component  implements HasForms
 
     public function mount()
     {
+        if($this->patientId){
+            $this->patient_id = $this->patientId;
+        }
+
         if($this->patient_id)
         {
             $this->type = 'old';
