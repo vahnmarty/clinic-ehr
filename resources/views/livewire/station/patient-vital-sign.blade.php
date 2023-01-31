@@ -193,6 +193,9 @@
                     <div class="wrapper">
                         <div class="flex items-center justify-between">
                             <h1 class="text-xl font-bold">{{ __('Results') }}</h1>
+                            <div>
+                                @include('includes.partials.errors')
+                            </div>
                             <button type="button" class="btn-secondary"
                                 wire:click="calculator">{{ __('Calculate') }}</button>
                         </div>
