@@ -90,13 +90,13 @@
                 <div class="px-16 py-6 border-t">
                     <div class="divide-y">
                         <x-description-list label="{{ __('Visit Reason') }}">{{ $app->visit_reason }}</x-description-list>
-                        <x-description-list label="{{ __('Assigned Doctor') }}">{{ $app->doctor->name }}</x-description-list>
-                        <x-description-list label="{{ __('Appointment Date') }}">{{ $app->appointment_date->format('F d, Y h:i a') }}</x-description-list>
-                        <x-description-list label="{{ __('Checked In at') }}">{{ $app->check_in_at->format('F d, Y h:i a') }}</x-description-list>
+                        <x-description-list label="{{ __('Assigned Doctor') }}">{{ $app->doctor?->name }}</x-description-list>
+                        <x-description-list label="{{ __('Appointment Date') }}">{{ $app->appointment_date?->format('F d, Y h:i a') }}</x-description-list>
+                        <x-description-list label="{{ __('Checked In at') }}">{{ $app->check_in_at?->format('F d, Y h:i a') }}</x-description-list>
 
                         @if($app->isCheckedOut())
                         <div class="bg-red-100">
-                            <x-description-list label="{{ __('Checked Out at') }}">{{ $app->check_out_at->format('F d, Y h:i a') }}</x-description-list>
+                            <x-description-list label="{{ __('Checked Out at') }}">{{ $app->check_out_at?->format('F d, Y h:i a') }}</x-description-list>
                         </div>
                         @endif
                     </div>
