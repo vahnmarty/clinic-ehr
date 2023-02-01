@@ -30,6 +30,11 @@ class ManagePatients extends Component implements HasTable
         return Patient::query();
     }
 
+    protected function getTableHeading()
+    {
+        return 'All Patients';
+    }
+
     protected function getTableColumns(): array
     {
         return [
