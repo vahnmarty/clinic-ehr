@@ -20,7 +20,8 @@ class Application extends Model
         'research_form_finished_at' => 'datetime',
         'clinic_encounter_finished_at' => 'datetime',
         'pharmacy_order_finished_at' => 'datetime',
-        'appointment_date' => 'datetime'
+        'appointment_date' => 'datetime',
+        'check_out_at' => 'datetime'
     ];
 
     public function patient()
@@ -61,6 +62,10 @@ class Application extends Model
 
     public function getStatusAttribute()
     {
+        if($this->check_out_at){
+            return 'CHECKED OUT';
+        }
+
         if($this->pharmacy_order_finished_at){
             return 'PHARMACY ORDER';
         }
@@ -86,6 +91,11 @@ class Application extends Model
         }
 
         
+    }
+
+    public function isCheckedOut()
+    {
+        return $this->check_out_at ? true : false;
     }
 
     public function scopeFromStatus($query, $status)

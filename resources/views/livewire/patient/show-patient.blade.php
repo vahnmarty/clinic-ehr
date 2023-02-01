@@ -34,7 +34,9 @@
                     </div>
                 </div>
                 <div class="self-center">
+                    @if($app)
 
+                    @if(!$app->isCheckedOut())
                     <nav aria-label="Progress">
                         <ol role="list" class="flex items-center">
                             <x-progress-item 
@@ -64,6 +66,11 @@
                                 
                         </ol>
                     </nav>
+                    @else
+                    <p class="text-red-600">*This patient has been checked out last {{ $patient->latestApp->check_out_at }}
+                    </p>
+                    @endif
+                    @endif
                 </div>
             </div>
         </div>
@@ -86,6 +93,12 @@
                         <x-description-list label="{{ __('Assigned Doctor') }}">{{ $app->doctor->name }}</x-description-list>
                         <x-description-list label="{{ __('Appointment Date') }}">{{ $app->appointment_date->format('F d, Y h:i a') }}</x-description-list>
                         <x-description-list label="{{ __('Checked In at') }}">{{ $app->check_in_at->format('F d, Y h:i a') }}</x-description-list>
+
+                        @if($app->isCheckedOut())
+                        <div class="bg-red-100">
+                            <x-description-list label="{{ __('Checked Out at') }}">{{ $app->check_out_at->format('F d, Y h:i a') }}</x-description-list>
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>

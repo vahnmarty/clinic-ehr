@@ -21,40 +21,45 @@
         </div>
     </div>
     <div>
-        @if($patient->latestApp)
-        <nav aria-label="Progress" class="-mt-2">
-            <ol role="list" class="flex items-center">
-                <x-progress-item 
-                    label="Check-in" 
-                    link="{{ route('station.checkin', ['patientId' => $patient->id]) }}" 
-                    :done="$patient->latestApp?->check_in_at ? true : false" />
-                <x-progress-item 
-                    label="Vitals" 
-                    link="{{ route('station.vital-sign', ['patientId' => $patient->id]) }}" 
-                    :done="$patient->latestApp?->vital_sign_finished_at ? true : false" />
+        @if ($patient->latestApp)
+            @if ($patient->latestApp->isCheckedOut())
+                <p class="text-red-600">*This patient has been checked out last {{ $patient->latestApp->check_out_at }}
+                </p>
+            @else
+                <nav aria-label="Progress" class="-mt-2">
+                    <ol role="list" class="flex items-center">
+                        <x-progress-item label="Check-in"
+                            link="{{ route('station.checkin', ['patientId' => $patient->id]) }}" :done="$patient->latestApp?->check_in_at ? true : false" />
+                        <x-progress-item label="Vitals"
+                            link="{{ route('station.vital-sign', ['patientId' => $patient->id]) }}" :done="$patient->latestApp?->vital_sign_finished_at ? true : false" />
 
-                <x-progress-item 
-                    label="Public Health" 
-                    link="{{ route('station.research', ['patientId' => $patient->id]) }}" 
-                    :done="$patient->latestApp?->research_form_finished_at ? true : false" />
+                        <x-progress-item label="Public Health"
+                            link="{{ route('station.research', ['patientId' => $patient->id]) }}" :done="$patient->latestApp?->research_form_finished_at ? true : false" />
 
-                <x-progress-item 
-                    label="Encounter" 
-                    link="{{ route('station.clinical-encounter', ['patientId' => $patient->id]) }}" 
-                    :done="$patient->latestApp?->clinic_encounter_finished_at ? true : false" />
+                        <x-progress-item label="Encounter"
+                            link="{{ route('station.clinical-encounter', ['patientId' => $patient->id]) }}"
+                            :done="$patient->latestApp?->clinic_encounter_finished_at ? true : false" />
 
-                <x-progress-item 
-                    label="Orders" 
-                    link="{{ route('station.pharmacy-order', ['patientId' => $patient->id]) }}" 
-                    :done="$patient->latestApp?->pharmacy_order_finished_at ? true : false"
-                    :last="true" />
-                    
-            </ol>
-        </nav>
+                        <x-progress-item label="Orders"
+                            link="{{ route('station.pharmacy-order', ['patientId' => $patient->id]) }}"
+                            :done="$patient->latestApp?->pharmacy_order_finished_at ? true : false" :last="true" />
+
+                    </ol>
+                </nav>
+            @endif
         @else
-        @if(!Route::is('station.checkin'))
-        <a href="{{ route('station.checkin', ['patientId' => $patient->id]) }}" class="btn-primary">Check In Patient</a>
+            @if (!Route::is('station.checkin'))
+                <a href="{{ route('station.checkin', ['patientId' => $patient->id]) }}" class="btn-primary">Check In
+                    Patient</a>
+            @endif
         @endif
-        @endif
+
+
     </div>
+
+    @if (!$patient->latestApp->isCheckedOut())
+        <div>
+            @livewire('station.checkout-patient', ['patientId' => $patient->id])
+        </div>
+    @endif
 </div>
