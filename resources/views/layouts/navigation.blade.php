@@ -108,6 +108,10 @@
                         <form method="POST" action="{{ route('logout') }}" class="border-t-2">
                             @csrf
 
+                            <x-dropdown-link :href="route('profile.edit')">
+                                {{ __('Profile') }}
+                            </x-dropdown-link>
+
                             <x-dropdown-link :href="route('logout')"
                                 onclick="event.preventDefault();
                                                 this.closest('form').submit();">
