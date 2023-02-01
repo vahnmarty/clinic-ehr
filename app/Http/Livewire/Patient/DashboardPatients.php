@@ -48,7 +48,7 @@ class DashboardPatients extends Component implements HasTable
 
     protected function getTableQuery() 
     {
-        return Application::today();
+        return Application::whereDate('check_in_at','>=' , date('Y-m-d', strtotime('-30 days')));
     }
 
     protected function getTableHeading()
