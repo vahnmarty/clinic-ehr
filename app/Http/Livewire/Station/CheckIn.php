@@ -63,6 +63,7 @@ class CheckIn extends Component  implements HasForms
     {
         $intervals = array();
         $intervals = array();
+
         for ($i = 7; $i < 19; $i++) {
             $hour = ($i % 12 == 0) ? 12 : $i % 12;
             $start = str_pad($hour, 2, '0', STR_PAD_LEFT) . ':00';
@@ -88,26 +89,29 @@ class CheckIn extends Component  implements HasForms
                 ->schema([
                     Select::make('clinic_id')->label('Clinic')->options(Clinic::all()->pluck('name', 'id'))->required(),
                     TextInput::make('visit_reason')->label('Visit Reason')->required(),
-                    Select::make('doctor_id')->label('Doctor')->options(User::role('provider')->get()->pluck('name', 'id'))->required(),
+                    Select::make('doctor_id')->reactive()->label('Doctor')->options(User::role('provider')->get()->pluck('name', 'id'))->required(),
                     DatePicker::make('appointment_date')
                     ->default(date('Y-m-d'))
                     ->minDate(now())
-                    ->reactive(),
+                    ->reactive()
+                    ->hidden(fn (Closure $get) => $get('doctor_id') === null),
                     Select::make('hour_slot')->options($this->schedules)
                     ->reactive()
+                    ->label('Schedule')
                     ->afterStateUpdated(function (Closure $set, $state) {
                         $this->reset('time_slots');
                         foreach([15, 30, 45] as $interval)
                         {
-                            $time = Carbon::parse($state)->addMinutes($interval)->format('h:i');
+                            $time = Carbon::parse($state)->addMinutes($interval)->format('h:i A');
                             $this->time_slots[$time] = $time;
-
                         }
 
-                    }),
+                    })
+                    ->hidden(fn (Closure $get) => $get('appointment_date') === null),
                     Select::make('minute_slot')->reactive()->options(function () {
                         return $this->time_slots;
-                    }),
+                    })->label('Available Time Slot')
+                    ->hidden(fn (Closure $get) => $get('hour_slot') === null),
                 ]),
             
         ];

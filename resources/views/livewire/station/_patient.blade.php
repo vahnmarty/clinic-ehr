@@ -51,12 +51,13 @@
             @if (!Route::is('station.checkin'))
                 <a href="{{ route('station.checkin', ['patientId' => $patient->id]) }}" class="btn-primary">Check In
                     Patient</a>
+            @else
             @endif
         @endif
 
 
     </div>
-    
+
     @if (!$patient->latestApp?->isCheckedOut())
         <div>
             @livewire('station.checkout-patient', ['patientId' => $patient->id])
