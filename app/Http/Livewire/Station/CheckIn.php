@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Station;
 
+use Closure;
 use App\Models\User;
 use App\Models\Clinic;
 use App\Models\Doctor;
@@ -13,9 +14,11 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\TimePicker;
 use Filament\Forms\Components\DateTimePicker;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Filament\Forms\Concerns\InteractsWithForms;
+use Carbon\Carbon;
 
 class CheckIn extends Component  implements HasForms
 {
@@ -29,6 +32,8 @@ class CheckIn extends Component  implements HasForms
     public $patientId, $patient_id, $patient;
 
     public $clinic_id, $visit_reason, $doctor_id, $appointment_date;
+
+    public $schedules = [], $schedule, $hour_slot, $minute_slot, $hour_selected, $time_slots = [];
 
     protected $queryString = ['patient_id', 'type', 'patientId'];
 
@@ -50,6 +55,24 @@ class CheckIn extends Component  implements HasForms
             $this->type = 'old';
             $this->setPatient($this->patient_id);
         }
+
+        $this->generateSchedules();
+    }
+
+    public function generateSchedules()
+    {
+        $intervals = array();
+        $intervals = array();
+        for ($i = 7; $i < 19; $i++) {
+            $hour = ($i % 12 == 0) ? 12 : $i % 12;
+            $start = str_pad($hour, 2, '0', STR_PAD_LEFT) . ':00';
+            $hour = ($hour % 12) + 1;
+            $ampm_start = ($i < 12) ? 'AM' : 'PM';
+            $intervals[$start] = "$start $ampm_start";
+        }
+
+
+        $this->schedules = $intervals;
     }
 
     public function setPatient($patientId)
@@ -66,9 +89,25 @@ class CheckIn extends Component  implements HasForms
                     Select::make('clinic_id')->label('Clinic')->options(Clinic::all()->pluck('name', 'id'))->required(),
                     TextInput::make('visit_reason')->label('Visit Reason')->required(),
                     Select::make('doctor_id')->label('Doctor')->options(User::role('provider')->get()->pluck('name', 'id'))->required(),
-                    DateTimePicker::make('appointment_date')
+                    DatePicker::make('appointment_date')
                     ->default(date('Y-m-d'))
                     ->minDate(now())
+                    ->reactive(),
+                    Select::make('hour_slot')->options($this->schedules)
+                    ->reactive()
+                    ->afterStateUpdated(function (Closure $set, $state) {
+                        $this->reset('time_slots');
+                        foreach([15, 30, 45] as $interval)
+                        {
+                            $time = Carbon::parse($state)->addMinutes($interval)->format('h:i');
+                            $this->time_slots[$time] = $time;
+
+                        }
+
+                    }),
+                    Select::make('minute_slot')->reactive()->options(function () {
+                        return $this->time_slots;
+                    }),
                 ]),
             
         ];

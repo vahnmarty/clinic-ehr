@@ -56,8 +56,8 @@
 
 
     </div>
-
-    @if (!$patient->latestApp->isCheckedOut())
+    
+    @if (!$patient->latestApp?->isCheckedOut())
         <div>
             @livewire('station.checkout-patient', ['patientId' => $patient->id])
         </div>
