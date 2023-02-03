@@ -102,8 +102,15 @@ class CheckIn extends Component  implements HasForms
                         $this->reset('time_slots');
                         foreach([15, 30, 45] as $interval)
                         {
-                            $time = Carbon::parse($state)->addMinutes($interval)->format('h:i A');
-                            $this->time_slots[$time] = $time;
+                            $date = Carbon::parse($this->appointment_date)->format('Y-m-d') . ' ' . $state . ':00';
+                            $newDate = Carbon::parse($date)->addMinutes($interval)->format('Y-m-d H:i:00');
+
+                            if($this->availableSchedule($newDate))
+                            {   
+                                $time = Carbon::parse($newDate)->format('H:i A');
+                                $this->time_slots[$time] = $time;
+                            }
+                            
                         }
 
                     })
@@ -117,15 +124,29 @@ class CheckIn extends Component  implements HasForms
         ];
     }
 
+    public function availableSchedule($date)
+    {
+        $doctor_id = $this->doctor_id;
+
+        return Application::where('appointment_date', $date)->where('doctor_id', $doctor_id)->exists() ? false : true;
+
+
+    }
 
     public function save()
     {
         $data = $this->validate();
 
+        $appointment_date = Carbon::parse($this->appointment_date)->format('Y-m-d');
+        $newDate = Carbon::parse($appointment_date. ' ' . $this->minute_slot)->format('Y-m-d H:i:00 A');
+
         $app = new Application;
         $app->uuid = \Str::uuid();
         $app->patient_id = $this->patient_id;
-        $app->fill($data);
+        $app->clinic_id = $this->clinic_id;
+        $app->visit_reason = $this->visit_reason;
+        $app->doctor_id = $this->doctor_id;
+        $app->appointment_date = $newDate;
         $app->check_in_at = now();
         $app->check_in_user_id = auth()->id();
         $app->save();

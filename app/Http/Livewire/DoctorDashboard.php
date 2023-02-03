@@ -23,7 +23,7 @@ class DoctorDashboard extends Component
         {
             $json->push([
                 'title' => $app->patient->patient_number,
-                'start' => $app->appointment_date?->toIso8601String()
+                'start' => $app->appointment_date?->format('Y-m-d H:i:s')
             ]);
         }
 
@@ -34,7 +34,15 @@ class DoctorDashboard extends Component
 
     public function mount()
     {
-        $this->date = date('Y-m-d');
+        if(!$this->date){
+            $this->date = date('Y-m-d');
+        }
+        
         $this->appointments = Application::orderBy('appointment_date', 'asc')->whereDate('appointment_date', $this->date)->get();//->all();
+    }
+
+    public function setDate($date)
+    {
+        $this->date = $date;
     }
 }

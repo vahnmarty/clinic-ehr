@@ -9,6 +9,7 @@
     <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
 
         <div>
+            <h1 class="mb-3 text-xl font-bold">{{ date('F d, Y', strtotime($date)) }}</h1>
             <h2 class="text-lg font-semibold text-gray-900">Upcoming appointments</h2>
             <div class="grid grid-cols-2">
 
@@ -76,6 +77,9 @@
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.0.3/index.global.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+
+            console.log(@json($events));
+
             var calendarEl = document.getElementById('calendar');
 
             var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -85,7 +89,24 @@
                     center: 'title',
                     right: 'dayGridMonth,timeGridWeek,timeGridDay'
                 },
-                events: @json($events)
+                events: @json($events),
+                dateClick: function(info) {
+                    @this.setDate(info.dateStr);
+                    var date = info.dateStr;
+                    var currentUrl = window.location.href;
+                    var newUrl;
+
+                    if (currentUrl.indexOf("?") === -1) {
+                        newUrl = currentUrl + "?date=" + date;
+                    } else {
+                        var queryParams = new URLSearchParams(currentUrl.split("?")[1]);
+                        queryParams.set("date", date);
+                        newUrl = currentUrl.split("?")[0] + "?" + queryParams.toString();
+                    }
+
+                    window.location.href = newUrl;
+                    //location.reload();
+                }
 
             });
 
