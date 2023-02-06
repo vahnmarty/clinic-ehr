@@ -33,7 +33,7 @@ class CheckIn extends Component  implements HasForms
 
     public $clinic_id, $visit_reason, $doctor_id, $appointment_date;
 
-    public $schedules = [], $schedule, $hour_slot, $minute_slot, $hour_selected, $time_slots = [], $time_slot;
+    public $schedules = [], $schedule, $hour_slot, $minute_slot, $hour_selected, $time_slots = [], $time_slot, $default_time_slot;
 
     protected $queryString = ['patient_id', 'type', 'patientId'];
 
@@ -105,10 +105,15 @@ class CheckIn extends Component  implements HasForms
                         $date = date('Y-m-d', strtotime($state));
                         $taken = $this->timeWithAppointments($date);
                         $slots = [];
+                        $default = 0;
                         foreach($this->schedules as $i => $sched)
                         {   
                             if(!in_array($sched, $taken))
                             {
+                                if($default == 0){
+                                    $this->default_time_slot = $i;
+                                    $default++;
+                                }
                                 $slots[$i] = $sched;
                             }
                         }
@@ -118,6 +123,7 @@ class CheckIn extends Component  implements HasForms
                     })
                     ->hidden(fn (Closure $get) => $get('doctor_id') === null),
                     Select::make('time_slot')
+                    ->default($this->default_time_slot)
                     ->options(function () {
                         return $this->schedules;
                     })
