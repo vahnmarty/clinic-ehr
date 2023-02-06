@@ -57,6 +57,8 @@ class CheckIn extends Component  implements HasForms
         }
 
         $this->generateSchedules();
+
+        $this->schedules = $this->time_slots;
     }
 
     public function generateSchedules()
@@ -79,7 +81,7 @@ class CheckIn extends Component  implements HasForms
             $intervals[$start4 . ':00'] = "$start4 $ampm_start";
         }
         
-        $this->schedules = $intervals;
+        $this->time_slots = $intervals;
     }
 
     public function setPatient($patientId)
@@ -106,7 +108,7 @@ class CheckIn extends Component  implements HasForms
                         $taken = $this->timeWithAppointments($date);
                         $slots = [];
                         $default = 0;
-                        foreach($this->schedules as $i => $sched)
+                        foreach($this->time_slots as $i => $sched)
                         {   
                             if(!in_array($sched, $taken))
                             {
@@ -120,16 +122,19 @@ class CheckIn extends Component  implements HasForms
 
                         $this->reset('schedules');
                         $this->schedules = $slots;
+                        $set('time_slot', $this->default_time_slot);
                     })
                     ->hidden(fn (Closure $get) => $get('doctor_id') === null),
                     Select::make('time_slot')
-                    ->default($this->default_time_slot)
                     ->options(function () {
                         return $this->schedules;
                     })
                     ->reactive()
                     ->label('Schedule')
-                    ->hidden(fn (Closure $get) => $get('appointment_date') === null),
+                    ->hidden(function(Closure $get, Closure $set){
+                        //$set('time_slot', $this->default_time_slot);
+                        return $get('appointment_date') === null;
+                    })
                 ]),
             
         ];
