@@ -33,7 +33,7 @@ class CheckIn extends Component  implements HasForms
 
     public $clinic_id, $visit_reason, $doctor_id, $appointment_date;
 
-    public $schedules = [], $schedule, $hour_slot, $minute_slot, $hour_selected, $time_slots = [];
+    public $schedules = [], $schedule, $hour_slot, $minute_slot, $hour_selected, $time_slots = [], $time_slot;
 
     protected $queryString = ['patient_id', 'type', 'patientId'];
 
@@ -64,15 +64,21 @@ class CheckIn extends Component  implements HasForms
         $intervals = array();
         $intervals = array();
 
-        for ($i = 7; $i < 19; $i++) {
+        for ($i = 6; $i < 17; $i++) {
             $hour = ($i % 12 == 0) ? 12 : $i % 12;
-            $start = str_pad($hour, 2, '0', STR_PAD_LEFT) . ':00';
             $hour = ($hour % 12) + 1;
             $ampm_start = ($i < 12) ? 'AM' : 'PM';
-            $intervals[$start] = "$start $ampm_start";
+
+            $start1 = str_pad($hour, 2, '0', STR_PAD_LEFT) . ':00';
+            $start2 = str_pad($hour, 2, '0', STR_PAD_LEFT) . ':15';
+            $start3 = str_pad($hour, 2, '0', STR_PAD_LEFT) . ':30';
+            $start4 = str_pad($hour, 2, '0', STR_PAD_LEFT) . ':45';
+            $intervals[$start1 . ':00'] = "$start1 $ampm_start";
+            $intervals[$start2 . ':00'] = "$start2 $ampm_start";
+            $intervals[$start3 . ':00'] = "$start3 $ampm_start";
+            $intervals[$start4 . ':00'] = "$start4 $ampm_start";
         }
-
-
+        
         $this->schedules = $intervals;
     }
 
@@ -94,31 +100,30 @@ class CheckIn extends Component  implements HasForms
                     ->default(date('Y-m-d'))
                     ->minDate(now())
                     ->reactive()
-                    ->hidden(fn (Closure $get) => $get('doctor_id') === null),
-                    Select::make('hour_slot')->options($this->schedules)
-                    ->reactive()
                     ->label('Schedule')
                     ->afterStateUpdated(function (Closure $set, $state) {
-                        $this->reset('time_slots');
-                        foreach([15, 30, 45] as $interval)
-                        {
-                            $date = Carbon::parse($this->appointment_date)->format('Y-m-d') . ' ' . $state . ':00';
-                            $newDate = Carbon::parse($date)->addMinutes($interval)->format('Y-m-d H:i:00');
-
-                            if($this->availableSchedule($newDate))
-                            {   
-                                $time = Carbon::parse($newDate)->format('H:i A');
-                                $this->time_slots[$time] = $time;
+                        $date = date('Y-m-d', strtotime($state));
+                        $taken = $this->timeWithAppointments($date);
+                        $slots = [];
+                        foreach($this->schedules as $i => $sched)
+                        {   
+                            if(!in_array($sched, $taken))
+                            {
+                                $slots[$i] = $sched;
                             }
-                            
                         }
 
+                        $this->reset('schedules');
+                        $this->schedules = $slots;
                     })
+                    ->hidden(fn (Closure $get) => $get('doctor_id') === null),
+                    Select::make('time_slot')
+                    ->options(function () {
+                        return $this->schedules;
+                    })
+                    ->reactive()
+                    ->label('Schedule')
                     ->hidden(fn (Closure $get) => $get('appointment_date') === null),
-                    Select::make('minute_slot')->reactive()->options(function () {
-                        return $this->time_slots;
-                    })->label('Available Time Slot')
-                    ->hidden(fn (Closure $get) => $get('hour_slot') === null),
                 ]),
             
         ];
@@ -129,8 +134,20 @@ class CheckIn extends Component  implements HasForms
         $doctor_id = $this->doctor_id;
 
         return Application::where('appointment_date', $date)->where('doctor_id', $doctor_id)->exists() ? false : true;
+    }
 
+    public function timeWithAppointments($date)
+    {
+        $time_slots = [];
+        $doctor_id = $this->doctor_id;
+        $appointments = Application::whereDate('appointment_date', $date)->where('doctor_id', $doctor_id)->get();
+        
+        foreach($appointments as $app)
+        {
+            $time_slots[] = $app->appointment_date->format('h:i A');
+        }
 
+        return $time_slots;
     }
 
     public function save()
@@ -138,7 +155,7 @@ class CheckIn extends Component  implements HasForms
         $data = $this->validate();
 
         $appointment_date = Carbon::parse($this->appointment_date)->format('Y-m-d');
-        $newDate = Carbon::parse($appointment_date. ' ' . $this->minute_slot)->format('Y-m-d H:i:00 A');
+        $newDate = Carbon::parse($appointment_date. ' ' . $this->time_slot)->format('Y-m-d H:i:00 A');
 
         $app = new Application;
         $app->uuid = \Str::uuid();
