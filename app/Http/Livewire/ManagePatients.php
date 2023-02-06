@@ -13,6 +13,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Actions\DeleteAction;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Tables\Concerns\InteractsWithTable;
 
@@ -86,6 +87,7 @@ class ManagePatients extends Component implements HasTable
             Action::make('patient_chart')
                 ->url(fn (Patient $record): string => route('patient.show', $record->id))
                 ->button(),
+            DeleteAction::make(),
         ];
     }
 }

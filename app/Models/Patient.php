@@ -3,16 +3,19 @@
 namespace App\Models;
 
 use Storage;
+use Carbon\Carbon;
 use App\Enums\RacialIdentity;
 use App\Enums\PrimaryLanguage;
 use App\Models\MedicalProblem;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Carbon\Carbon;
 
 class Patient extends Model
 {
     use HasFactory;
+
+    use SoftDeletes;
 
     protected $guarded = [];
 
