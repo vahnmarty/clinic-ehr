@@ -107,6 +107,10 @@ class DashboardPatients extends Component implements HasTable
     protected function getTableActions(): array
     {
         return [
+            Action::make('patient_chart')
+                ->url(fn (Application $record): string => route('patient.show', $record->patient_id))
+                ->button(),
+            
             ActionGroup::make([
                 Action::make('update_check_in')
                     ->form([
@@ -132,9 +136,6 @@ class DashboardPatients extends Component implements HasTable
                 Action::make('clinical_encounter')->url(fn(Application $record) => route('station.clinical-encounter', ['patientId' => $record->patient_id])),
                 Action::make('pharmacy_order')->url(fn(Application $record) => route('station.pharmacy-order', ['patientId' => $record->patient_id])),
             ]),
-            Action::make('patient_chart')
-                ->url(fn (Application $record): string => route('patient.show', $record->patient_id))
-                ->button(),
         ];
     }
 
